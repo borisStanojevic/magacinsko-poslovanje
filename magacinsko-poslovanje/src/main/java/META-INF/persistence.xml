@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="magacinsko-poslovanje">
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.AnalitikaMagacinskeKartice</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.Artikal</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.JedinicaMere</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.KategorijaArtikala</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.Magacin</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.MagacinskaKartica</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.Mesto</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.PoslovnaGodina</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.PoslovniPartner</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.Preduzece</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.PrometniDokument</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.Radnik</class>
+		<class>ftn.sit.pi.magacinskoposlovanje.entities.StavkePrometnogDokumenta</class>
+	</persistence-unit>
+</persistence>
