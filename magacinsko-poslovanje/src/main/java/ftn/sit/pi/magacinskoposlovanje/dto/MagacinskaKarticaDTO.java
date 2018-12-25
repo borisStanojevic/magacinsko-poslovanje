@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.MagacinskaKartica;
+import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 
 public class MagacinskaKarticaDTO implements Serializable {
 	

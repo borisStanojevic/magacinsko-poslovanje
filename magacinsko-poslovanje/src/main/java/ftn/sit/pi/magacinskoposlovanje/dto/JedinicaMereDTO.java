@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.JedinicaMere;
+import ftn.sit.pi.magacinskoposlovanje.domain.JedinicaMere;
 
 public class JedinicaMereDTO implements Serializable {
 

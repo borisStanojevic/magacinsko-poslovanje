@@ -1,14 +1,10 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
 
-/**
- * The persistent class for the preduzece database table.
- * 
- */
 @Entity
 @NamedQuery(name="Preduzece.findAll", query="SELECT p FROM Preduzece p")
 public class Preduzece implements Serializable {
@@ -17,7 +13,7 @@ public class Preduzece implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="SIFRA_PREDUZECA")
-	private int sifraPreduzeca;
+	private Integer sifraPreduzeca;
 
 	@Column(name="ADRESA_PREDUZECA")
 	private String adresaPreduzeca;
@@ -48,11 +44,11 @@ public class Preduzece implements Serializable {
 	public Preduzece() {
 	}
 
-	public int getSifraPreduzeca() {
+	public Integer getSifraPreduzeca() {
 		return this.sifraPreduzeca;
 	}
 
-	public void setSifraPreduzeca(int sifraPreduzeca) {
+	public void setSifraPreduzeca(Integer sifraPreduzeca) {
 		this.sifraPreduzeca = sifraPreduzeca;
 	}
 
@@ -88,18 +84,18 @@ public class Preduzece implements Serializable {
 		this.kategorijeArtikala = kategorijeArtikala;
 	}
 
-	public KategorijaArtikala addKategorijeArtikala(KategorijaArtikala kategorijeArtikala) {
-		getKategorijeArtikala().add(kategorijeArtikala);
-		kategorijeArtikala.setPreduzece(this);
+	public KategorijaArtikala addKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
+		getKategorijeArtikala().add(kategorijaArtikala);
+		kategorijaArtikala.setPreduzece(this);
 
-		return kategorijeArtikala;
+		return kategorijaArtikala;
 	}
 
-	public KategorijaArtikala removeKategorijeArtikala(KategorijaArtikala kategorijeArtikala) {
-		getKategorijeArtikala().remove(kategorijeArtikala);
-		kategorijeArtikala.setPreduzece(null);
+	public KategorijaArtikala removeKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
+		getKategorijeArtikala().remove(kategorijaArtikala);
+		kategorijaArtikala.setPreduzece(null);
 
-		return kategorijeArtikala;
+		return kategorijaArtikala;
 	}
 
 	public Set<Magacin> getMagacini() {
@@ -110,18 +106,18 @@ public class Preduzece implements Serializable {
 		this.magacini = magacini;
 	}
 
-	public Magacin addMagacini(Magacin magacini) {
-		getMagacini().add(magacini);
-		magacini.setPreduzece(this);
+	public Magacin addMagacin(Magacin magacin) {
+		getMagacini().add(magacin);
+		magacin.setPreduzece(this);
 
-		return magacini;
+		return magacin;
 	}
 
-	public Magacin removeMagacini(Magacin magacini) {
-		getMagacini().remove(magacini);
-		magacini.setPreduzece(null);
+	public Magacin removeMagacin(Magacin magacin) {
+		getMagacini().remove(magacin);
+		magacin.setPreduzece(null);
 
-		return magacini;
+		return magacin;
 	}
 
 	public Mesto getMesto() {

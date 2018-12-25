@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.StavkePrometnogDokumenta;
+import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
 
 public class StavkePrometnogDokumentaDTO implements Serializable {
 	
@@ -18,11 +18,11 @@ public class StavkePrometnogDokumentaDTO implements Serializable {
 	private PrometniDokumentDTO prometniDokument;
 	
 	
-	public static Set<StavkePrometnogDokumentaDTO> convert(Set<StavkePrometnogDokumenta> stavkePrometnogDokumentaEntitySet) {
+	public static Set<StavkePrometnogDokumentaDTO> convert(Set<StavkaPrometnogDokumenta> stavkePrometnogDokumentaEntitySet) {
 		Set<StavkePrometnogDokumentaDTO> stavkePrometnogDokumentaDTOSet = new HashSet<>();
-		Iterator<StavkePrometnogDokumenta> iterator = stavkePrometnogDokumentaEntitySet.iterator();
+		Iterator<StavkaPrometnogDokumenta> iterator = stavkePrometnogDokumentaEntitySet.iterator();
 		while (iterator.hasNext()) {
-			StavkePrometnogDokumenta stavkePrometnogDokumenta = (StavkePrometnogDokumenta) iterator.next();
+			StavkaPrometnogDokumenta stavkePrometnogDokumenta = (StavkaPrometnogDokumenta) iterator.next();
 			StavkePrometnogDokumentaDTO stavkePrometnogDokumentaDTO = new StavkePrometnogDokumentaDTO(stavkePrometnogDokumenta);
 			stavkePrometnogDokumentaDTOSet.add(stavkePrometnogDokumentaDTO);			
 		}
@@ -44,7 +44,7 @@ public class StavkePrometnogDokumentaDTO implements Serializable {
 		this.prometniDokument = prometniDokument;
 	}
 
-	public StavkePrometnogDokumentaDTO(StavkePrometnogDokumenta stavkePrometnogDokumenta) {
+	public StavkePrometnogDokumentaDTO(StavkaPrometnogDokumenta stavkePrometnogDokumenta) {
 		this(stavkePrometnogDokumenta.getIdStavkePrometnogDokumenta(), stavkePrometnogDokumenta.getCena(), stavkePrometnogDokumenta.getKolicina(), 
 				stavkePrometnogDokumenta.getVrednost(), new ArtikalDTO(stavkePrometnogDokumenta.getArtikal()), new PrometniDokumentDTO(stavkePrometnogDokumenta.getPrometniDokument()));
 	}

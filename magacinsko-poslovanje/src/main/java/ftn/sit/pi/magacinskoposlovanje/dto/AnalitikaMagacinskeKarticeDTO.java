@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.AnalitikaMagacinskeKartice;
+import ftn.sit.pi.magacinskoposlovanje.domain.AnalitikaMagacinskeKartice;
+import ftn.sit.pi.magacinskoposlovanje.domain.Smer;
+import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometa;
 
 public class AnalitikaMagacinskeKarticeDTO implements Serializable {
 
@@ -15,8 +17,8 @@ public class AnalitikaMagacinskeKarticeDTO implements Serializable {
 	private BigDecimal cena;
 	private Date datumNastanka;
 	private BigDecimal kolicina;
-	private String smer;
-	private String tipPrometa;
+	private Smer smer;
+	private TipPrometa tipPrometa;
 	private BigDecimal vrednost;
 	private MagacinskaKarticaDTO magacinskaKartica;
 	
@@ -35,7 +37,7 @@ public class AnalitikaMagacinskeKarticeDTO implements Serializable {
 	}
 
 	public AnalitikaMagacinskeKarticeDTO(Integer idAnalitike, BigDecimal cena, Date datumNastanka, BigDecimal kolicina,
-			String smer, String tipPrometa, BigDecimal vrednost, MagacinskaKarticaDTO magacinskaKartica) {
+			Smer smer, TipPrometa tipPrometa, BigDecimal vrednost, MagacinskaKarticaDTO magacinskaKartica) {
 		super();
 		this.idAnalitike = idAnalitike;
 		this.cena = cena;
@@ -87,19 +89,19 @@ public class AnalitikaMagacinskeKarticeDTO implements Serializable {
 		this.kolicina = kolicina;
 	}
 
-	public String getSmer() {
+	public Smer getSmer() {
 		return smer;
 	}
 
-	public void setSmer(String smer) {
+	public void setSmer(Smer smer) {
 		this.smer = smer;
 	}
 
-	public String getTipPrometa() {
+	public TipPrometa getTipPrometa() {
 		return tipPrometa;
 	}
 
-	public void setTipPrometa(String tipPrometa) {
+	public void setTipPrometa(TipPrometa tipPrometa) {
 		this.tipPrometa = tipPrometa;
 	}
 

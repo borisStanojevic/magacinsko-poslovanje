@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.PoslovniPartner;
+import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
+import ftn.sit.pi.magacinskoposlovanje.domain.TipPartnera;
 
 public class PoslovniPartnerDTO implements Serializable {
 	
@@ -13,7 +14,7 @@ public class PoslovniPartnerDTO implements Serializable {
 	private String adresaPoslovnogPartnera;
 	private String nazivPartnera;
 	private String pib;
-	private String tipPartnera;
+	private TipPartnera tipPartnera;
 	private MestoDTO mesto;
 	private Set<PrometniDokumentDTO> prometniDokumenti;
 	
@@ -34,7 +35,7 @@ public class PoslovniPartnerDTO implements Serializable {
 	}
 
 	public PoslovniPartnerDTO(Integer sifraPartnera, String adresaPoslovnogPartnera, String nazivPartnera, String pib,
-			String tipPartnera, MestoDTO mesto, Set<PrometniDokumentDTO> prometniDokumenti) {
+			TipPartnera tipPartnera, MestoDTO mesto, Set<PrometniDokumentDTO> prometniDokumenti) {
 		super();
 		this.sifraPartnera = sifraPartnera;
 		this.adresaPoslovnogPartnera = adresaPoslovnogPartnera;
@@ -83,11 +84,11 @@ public class PoslovniPartnerDTO implements Serializable {
 		this.pib = pib;
 	}
 
-	public String getTipPartnera() {
+	public TipPartnera getTipPartnera() {
 		return tipPartnera;
 	}
 
-	public void setTipPartnera(String tipPartnera) {
+	public void setTipPartnera(TipPartnera tipPartnera) {
 		this.tipPartnera = tipPartnera;
 	}
 

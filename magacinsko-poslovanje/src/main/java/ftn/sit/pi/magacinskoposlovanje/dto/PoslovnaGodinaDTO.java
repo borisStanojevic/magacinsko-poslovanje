@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.PoslovnaGodina;
+import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 
 public class PoslovnaGodinaDTO implements Serializable {
 
 	private Integer idGodine;
 	private Date godina;
-	private Byte zakljucena;
+	private Boolean zakljucena;
 	private Set<MagacinskaKarticaDTO> magacinskeKartice;
 	private Set<PrometniDokumentDTO> prometniDokumenti;
 	
@@ -32,7 +32,7 @@ public class PoslovnaGodinaDTO implements Serializable {
 	public PoslovnaGodinaDTO() {		
 	}
 
-	public PoslovnaGodinaDTO(Integer idGodine, Date godina, Byte zakljucena,
+	public PoslovnaGodinaDTO(Integer idGodine, Date godina, Boolean zakljucena,
 			Set<MagacinskaKarticaDTO> magacinskeKartice, Set<PrometniDokumentDTO> prometniDokumenti) {
 		super();
 		this.idGodine = idGodine;
@@ -63,11 +63,11 @@ public class PoslovnaGodinaDTO implements Serializable {
 		this.godina = godina;
 	}
 
-	public Byte getZakljucena() {
+	public Boolean getZakljucena() {
 		return zakljucena;
 	}
 
-	public void setZakljucena(Byte zakljucena) {
+	public void setZakljucena(Boolean zakljucena) {
 		this.zakljucena = zakljucena;
 	}
 

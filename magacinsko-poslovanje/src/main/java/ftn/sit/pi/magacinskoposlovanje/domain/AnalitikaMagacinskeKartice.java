@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,10 +6,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 
-/**
- * The persistent class for the analitika_magacinske_kartice database table.
- * 
- */
 @Entity
 @Table(name="analitika_magacinske_kartice")
 @NamedQuery(name="AnalitikaMagacinskeKartice.findAll", query="SELECT a FROM AnalitikaMagacinskeKartice a")
@@ -19,7 +15,7 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_ANALITIKE")
-	private int idAnalitike;
+	private Integer idAnalitike;
 
 	private BigDecimal cena;
 
@@ -29,10 +25,10 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 
 	private BigDecimal kolicina;
 
-	private String smer;
+	private Smer smer;
 
 	@Column(name="TIP_PROMETA")
-	private String tipPrometa;
+	private TipPrometa tipPrometa;
 
 	private BigDecimal vrednost;
 
@@ -44,11 +40,11 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	public AnalitikaMagacinskeKartice() {
 	}
 
-	public int getIdAnalitike() {
+	public Integer getIdAnalitike() {
 		return this.idAnalitike;
 	}
 
-	public void setIdAnalitike(int idAnalitike) {
+	public void setIdAnalitike(Integer idAnalitike) {
 		this.idAnalitike = idAnalitike;
 	}
 
@@ -76,19 +72,19 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 		this.kolicina = kolicina;
 	}
 
-	public String getSmer() {
+	public Smer getSmer() {
 		return this.smer;
 	}
 
-	public void setSmer(String smer) {
+	public void setSmer(Smer smer) {
 		this.smer = smer;
 	}
 
-	public String getTipPrometa() {
+	public TipPrometa getTipPrometa() {
 		return this.tipPrometa;
 	}
 
-	public void setTipPrometa(String tipPrometa) {
+	public void setTipPrometa(TipPrometa tipPrometa) {
 		this.tipPrometa = tipPrometa;
 	}
 

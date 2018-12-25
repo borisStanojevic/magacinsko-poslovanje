@@ -1,14 +1,10 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
 
-/**
- * The persistent class for the jedinica_mere database table.
- * 
- */
 @Entity
 @Table(name="jedinica_mere")
 @NamedQuery(name="JedinicaMere.findAll", query="SELECT j FROM JedinicaMere j")
@@ -18,7 +14,7 @@ public class JedinicaMere implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_JED_MERE")
-	private int idJedMere;
+	private Integer idJedMere;
 
 	@Column(name="NAZIV_JEDINICE_MERE")
 	private String nazivJediniceMere;
@@ -30,11 +26,11 @@ public class JedinicaMere implements Serializable {
 	public JedinicaMere() {
 	}
 
-	public int getIdJedMere() {
+	public Integer getIdJedMere() {
 		return this.idJedMere;
 	}
 
-	public void setIdJedMere(int idJedMere) {
+	public void setIdJedMere(Integer idJedMere) {
 		this.idJedMere = idJedMere;
 	}
 
@@ -54,18 +50,18 @@ public class JedinicaMere implements Serializable {
 		this.artikli = artikli;
 	}
 
-	public Artikal addArtikli(Artikal artikli) {
-		getArtikli().add(artikli);
-		artikli.setJedinicaMere(this);
+	public Artikal addArtikal(Artikal artikal) {
+		getArtikli().add(artikal);
+		artikal.setJedinicaMere(this);
 
-		return artikli;
+		return artikal;
 	}
 
-	public Artikal removeArtikli(Artikal artikli) {
-		getArtikli().remove(artikli);
-		artikli.setJedinicaMere(null);
+	public Artikal removeArtikal(Artikal artikal) {
+		getArtikli().remove(artikal);
+		artikal.setJedinicaMere(null);
 
-		return artikli;
+		return artikal;
 	}
 
 }

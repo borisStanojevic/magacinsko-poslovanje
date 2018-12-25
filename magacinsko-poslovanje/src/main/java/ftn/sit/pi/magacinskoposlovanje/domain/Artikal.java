@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class Artikal implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="SIFRA_ARTIKLA")
-	private int sifraArtikla;
+	private Integer sifraArtikla;
 
 	@Column(name="NAZIV_ARTIKLA")
 	private String nazivArtikla;
@@ -38,16 +38,16 @@ public class Artikal implements Serializable {
 
 	//bi-directional many-to-one association to StavkePrometnogDokumenta
 	@OneToMany(mappedBy="artikal")
-	private Set<StavkePrometnogDokumenta> stavkePrometnogDokumenta;
+	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta;
 
 	public Artikal() {
 	}
 
-	public int getSifraArtikla() {
+	public Integer getSifraArtikla() {
 		return this.sifraArtikla;
 	}
 
-	public void setSifraArtikla(int sifraArtikla) {
+	public void setSifraArtikla(Integer sifraArtikla) {
 		this.sifraArtikla = sifraArtikla;
 	}
 
@@ -83,40 +83,40 @@ public class Artikal implements Serializable {
 		this.magacinskeKartice = magacinskeKartice;
 	}
 
-	public MagacinskaKartica addMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().add(magacinskeKartice);
-		magacinskeKartice.setArtikal(this);
+	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartice) {
+		getMagacinskeKartice().add(magacinskaKartice);
+		magacinskaKartice.setArtikal(this);
 
-		return magacinskeKartice;
+		return magacinskaKartice;
 	}
 
-	public MagacinskaKartica removeMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().remove(magacinskeKartice);
-		magacinskeKartice.setArtikal(null);
+	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
+		getMagacinskeKartice().remove(magacinskaKartica);
+		magacinskaKartica.setArtikal(null);
 
-		return magacinskeKartice;
+		return magacinskaKartica;
 	}
 
-	public Set<StavkePrometnogDokumenta> getStavkePrometnogDokumenta() {
+	public Set<StavkaPrometnogDokumenta> getStavkePrometnogDokumenta() {
 		return this.stavkePrometnogDokumenta;
 	}
 
-	public void setStavkePrometnogDokumenta(Set<StavkePrometnogDokumenta> stavkePrometnogDokumenta) {
+	public void setStavkePrometnogDokumenta(Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta) {
 		this.stavkePrometnogDokumenta = stavkePrometnogDokumenta;
 	}
 
-	public StavkePrometnogDokumenta addStavkePrometnogDokumenta(StavkePrometnogDokumenta stavkePrometnogDokumenta) {
-		getStavkePrometnogDokumenta().add(stavkePrometnogDokumenta);
-		stavkePrometnogDokumenta.setArtikal(this);
+	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
+		getStavkePrometnogDokumenta().add(stavkaPrometnogDokumenta);
+		stavkaPrometnogDokumenta.setArtikal(this);
 
-		return stavkePrometnogDokumenta;
+		return stavkaPrometnogDokumenta;
 	}
 
-	public StavkePrometnogDokumenta removeStavkePrometnogDokumenta(StavkePrometnogDokumenta stavkePrometnogDokumenta) {
-		getStavkePrometnogDokumenta().remove(stavkePrometnogDokumenta);
-		stavkePrometnogDokumenta.setArtikal(null);
+	public StavkaPrometnogDokumenta removeStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
+		getStavkePrometnogDokumenta().remove(stavkaPrometnogDokumenta);
+		stavkaPrometnogDokumenta.setArtikal(null);
 
-		return stavkePrometnogDokumenta;
+		return stavkaPrometnogDokumenta;
 	}
 
 }

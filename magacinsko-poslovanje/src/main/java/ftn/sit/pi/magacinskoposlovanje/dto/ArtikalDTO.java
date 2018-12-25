@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.Artikal;
+import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
 
 public class ArtikalDTO implements Serializable {
 

@@ -1,14 +1,10 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
 
-/**
- * The persistent class for the radnik database table.
- * 
- */
 @Entity
 @NamedQuery(name="Radnik.findAll", query="SELECT r FROM Radnik r")
 public class Radnik implements Serializable {
@@ -17,7 +13,7 @@ public class Radnik implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_RADNIKA")
-	private int idRadnika;
+	private Integer idRadnika;
 
 	@Column(name="IME_PREZIME")
 	private String imePrezime;
@@ -37,11 +33,11 @@ public class Radnik implements Serializable {
 	public Radnik() {
 	}
 
-	public int getIdRadnika() {
+	public Integer getIdRadnika() {
 		return this.idRadnika;
 	}
 
-	public void setIdRadnika(int idRadnika) {
+	public void setIdRadnika(Integer idRadnika) {
 		this.idRadnika = idRadnika;
 	}
 
@@ -77,18 +73,18 @@ public class Radnik implements Serializable {
 		this.magacini = magacini;
 	}
 
-	public Magacin addMagacini(Magacin magacini) {
-		getMagacini().add(magacini);
-		magacini.setRadnik(this);
+	public Magacin addMagacin(Magacin magacin) {
+		getMagacini().add(magacin);
+		magacin.setRadnik(this);
 
-		return magacini;
+		return magacin;
 	}
 
-	public Magacin removeMagacini(Magacin magacini) {
-		getMagacini().remove(magacini);
-		magacini.setRadnik(null);
+	public Magacin removeMagacin(Magacin magacin) {
+		getMagacini().remove(magacin);
+		magacin.setRadnik(null);
 
-		return magacini;
+		return magacin;
 	}
 
 	public Set<Preduzece> getPreduzeca() {
@@ -99,18 +95,18 @@ public class Radnik implements Serializable {
 		this.preduzeca = preduzeca;
 	}
 
-	public Preduzece addPreduzeca(Preduzece preduzeca) {
-		getPreduzeca().add(preduzeca);
-		preduzeca.setRadnik(this);
+	public Preduzece addPreduzece(Preduzece preduzece) {
+		getPreduzeca().add(preduzece);
+		preduzece.setRadnik(this);
 
-		return preduzeca;
+		return preduzece;
 	}
 
-	public Preduzece removePreduzeca(Preduzece preduzeca) {
-		getPreduzeca().remove(preduzeca);
-		preduzeca.setRadnik(null);
+	public Preduzece removePreduzece(Preduzece preduzece) {
+		getPreduzeca().remove(preduzece);
+		preduzece.setRadnik(null);
 
-		return preduzeca;
+		return preduzece;
 	}
 
 }

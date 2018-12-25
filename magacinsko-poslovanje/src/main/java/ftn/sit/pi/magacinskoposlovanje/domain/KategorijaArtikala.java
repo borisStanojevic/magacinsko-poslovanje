@@ -1,14 +1,10 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
 
-/**
- * The persistent class for the kategorija_artikala database table.
- * 
- */
 @Entity
 @Table(name="kategorija_artikala")
 @NamedQuery(name="KategorijaArtikala.findAll", query="SELECT k FROM KategorijaArtikala k")
@@ -18,7 +14,7 @@ public class KategorijaArtikala implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_KATEGORIJE")
-	private int idKategorije;
+	private Integer idKategorije;
 
 	@Column(name="NAZIV_KATEGORIJE")
 	private String nazivKategorije;
@@ -35,11 +31,11 @@ public class KategorijaArtikala implements Serializable {
 	public KategorijaArtikala() {
 	}
 
-	public int getIdKategorije() {
+	public Integer getIdKategorije() {
 		return this.idKategorije;
 	}
 
-	public void setIdKategorije(int idKategorije) {
+	public void setIdKategorije(Integer idKategorije) {
 		this.idKategorije = idKategorije;
 	}
 
@@ -59,18 +55,18 @@ public class KategorijaArtikala implements Serializable {
 		this.artikli = artikli;
 	}
 
-	public Artikal addArtikli(Artikal artikli) {
-		getArtikli().add(artikli);
-		artikli.setKategorijaArtikala(this);
+	public Artikal addArtikal(Artikal artikal) {
+		getArtikli().add(artikal);
+		artikal.setKategorijaArtikala(this);
 
-		return artikli;
+		return artikal;
 	}
 
-	public Artikal removeArtikli(Artikal artikli) {
-		getArtikli().remove(artikli);
-		artikli.setKategorijaArtikala(null);
+	public Artikal removeArtikal(Artikal artikal) {
+		getArtikli().remove(artikal);
+		artikal.setKategorijaArtikala(null);
 
-		return artikli;
+		return artikal;
 	}
 
 	public Preduzece getPreduzece() {

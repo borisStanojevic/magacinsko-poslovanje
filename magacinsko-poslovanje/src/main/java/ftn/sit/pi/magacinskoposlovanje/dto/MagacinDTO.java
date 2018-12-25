@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.Magacin;
+import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
 
 public class MagacinDTO implements Serializable {
 

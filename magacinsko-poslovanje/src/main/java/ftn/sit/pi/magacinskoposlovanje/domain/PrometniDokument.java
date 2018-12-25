@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,10 +6,6 @@ import java.util.Date;
 import java.util.Set;
 
 
-/**
- * The persistent class for the prometni_dokument database table.
- * 
- */
 @Entity
 @Table(name="prometni_dokument")
 @NamedQuery(name="PrometniDokument.findAll", query="SELECT p FROM PrometniDokument p")
@@ -19,10 +15,10 @@ public class PrometniDokument implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_PROMETNOG_DOKUMENTA")
-	private int idPrometnogDokumenta;
+	private Integer idPrometnogDokumenta;
 
 	@Column(name="BROJ_PROMETNOG_DOKUMENTA")
-	private int brojPrometnogDokumenta;
+	private Integer brojPrometnogDokumenta;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DATUM_FORMIRANJA")
@@ -33,12 +29,12 @@ public class PrometniDokument implements Serializable {
 	private Date datumKnjizenja;
 
 	@Column(name="REDNI_BROJ_DOKUMETNA")
-	private int redniBrojDokumetna;
+	private Integer redniBrojDokumetna;
 
-	private String status;
+	private Status status;
 
 	@Column(name="TIP_PROMETNOG_DOKUMENTA")
-	private String tipPrometnogDokumenta;
+	private TipPrometnogDokumenta tipPrometnogDokumenta;
 
 	//bi-directional many-to-one association to Magacin
 	@ManyToOne
@@ -57,24 +53,24 @@ public class PrometniDokument implements Serializable {
 
 	//bi-directional many-to-one association to StavkePrometnogDokumenta
 	@OneToMany(mappedBy="prometniDokument")
-	private Set<StavkePrometnogDokumenta> stavkePrometnogDokumenta;
+	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta;
 
 	public PrometniDokument() {
 	}
 
-	public int getIdPrometnogDokumenta() {
+	public Integer getIdPrometnogDokumenta() {
 		return this.idPrometnogDokumenta;
 	}
 
-	public void setIdPrometnogDokumenta(int idPrometnogDokumenta) {
+	public void setIdPrometnogDokumenta(Integer idPrometnogDokumenta) {
 		this.idPrometnogDokumenta = idPrometnogDokumenta;
 	}
 
-	public int getBrojPrometnogDokumenta() {
+	public Integer getBrojPrometnogDokumenta() {
 		return this.brojPrometnogDokumenta;
 	}
 
-	public void setBrojPrometnogDokumenta(int brojPrometnogDokumenta) {
+	public void setBrojPrometnogDokumenta(Integer brojPrometnogDokumenta) {
 		this.brojPrometnogDokumenta = brojPrometnogDokumenta;
 	}
 
@@ -94,27 +90,27 @@ public class PrometniDokument implements Serializable {
 		this.datumKnjizenja = datumKnjizenja;
 	}
 
-	public int getRedniBrojDokumetna() {
+	public Integer getRedniBrojDokumetna() {
 		return this.redniBrojDokumetna;
 	}
 
-	public void setRedniBrojDokumetna(int redniBrojDokumetna) {
+	public void setRedniBrojDokumetna(Integer redniBrojDokumetna) {
 		this.redniBrojDokumetna = redniBrojDokumetna;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public String getTipPrometnogDokumenta() {
+	public TipPrometnogDokumenta getTipPrometnogDokumenta() {
 		return this.tipPrometnogDokumenta;
 	}
 
-	public void setTipPrometnogDokumenta(String tipPrometnogDokumenta) {
+	public void setTipPrometnogDokumenta(TipPrometnogDokumenta tipPrometnogDokumenta) {
 		this.tipPrometnogDokumenta = tipPrometnogDokumenta;
 	}
 
@@ -142,26 +138,26 @@ public class PrometniDokument implements Serializable {
 		this.poslovniPartner = poslovniPartner;
 	}
 
-	public Set<StavkePrometnogDokumenta> getStavkePrometnogDokumenta() {
+	public Set<StavkaPrometnogDokumenta> getStavkePrometnogDokumenta() {
 		return this.stavkePrometnogDokumenta;
 	}
 
-	public void setStavkePrometnogDokumenta(Set<StavkePrometnogDokumenta> stavkePrometnogDokumenta) {
+	public void setStavkePrometnogDokumenta(Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta) {
 		this.stavkePrometnogDokumenta = stavkePrometnogDokumenta;
 	}
 
-	public StavkePrometnogDokumenta addStavkePrometnogDokumenta(StavkePrometnogDokumenta stavkePrometnogDokumenta) {
-		getStavkePrometnogDokumenta().add(stavkePrometnogDokumenta);
-		stavkePrometnogDokumenta.setPrometniDokument(this);
+	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
+		getStavkePrometnogDokumenta().add(stavkaPrometnogDokumenta);
+		stavkaPrometnogDokumenta.setPrometniDokument(this);
 
-		return stavkePrometnogDokumenta;
+		return stavkaPrometnogDokumenta;
 	}
 
-	public StavkePrometnogDokumenta removeStavkePrometnogDokumenta(StavkePrometnogDokumenta stavkePrometnogDokumenta) {
-		getStavkePrometnogDokumenta().remove(stavkePrometnogDokumenta);
-		stavkePrometnogDokumenta.setPrometniDokument(null);
+	public StavkaPrometnogDokumenta removeStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
+		getStavkePrometnogDokumenta().remove(stavkaPrometnogDokumenta);
+		stavkaPrometnogDokumenta.setPrometniDokument(null);
 
-		return stavkePrometnogDokumenta;
+		return stavkaPrometnogDokumenta;
 	}
 
 }

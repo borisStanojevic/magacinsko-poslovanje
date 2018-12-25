@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.domain.Status;
+import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometnogDokumenta;
 
 public class PrometniDokumentDTO implements Serializable {
 	
@@ -15,8 +17,8 @@ public class PrometniDokumentDTO implements Serializable {
 	private Date datumFormiranja;
 	private Date datumKnjizenja;
 	private Integer redniBrojDokumetna;
-	private String status;
-	private String tipPrometnogDokumenta;
+	private Status status;
+	private TipPrometnogDokumenta tipPrometnogDokumenta;
 	private MagacinDTO magacin;
 	private PoslovnaGodinaDTO poslovnaGodina;
 	private PoslovniPartnerDTO poslovniPartner;
@@ -39,7 +41,7 @@ public class PrometniDokumentDTO implements Serializable {
 	}
 
 	public PrometniDokumentDTO(Integer idPrometnogDokumenta, Integer brojPrometnogDokumenta, Date datumFormiranja,
-			Date datumKnjizenja, Integer redniBrojDokumetna, String status, String tipPrometnogDokumenta,
+			Date datumKnjizenja, Integer redniBrojDokumetna, Status status, TipPrometnogDokumenta tipPrometnogDokumenta,
 			MagacinDTO magacin, PoslovnaGodinaDTO poslovnaGodina, PoslovniPartnerDTO poslovniPartner,
 			Set<StavkePrometnogDokumentaDTO> stavkePrometnogDokumenta) {
 		super();
@@ -104,19 +106,19 @@ public class PrometniDokumentDTO implements Serializable {
 		this.redniBrojDokumetna = redniBrojDokumetna;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public String getTipPrometnogDokumenta() {
+	public TipPrometnogDokumenta getTipPrometnogDokumenta() {
 		return tipPrometnogDokumenta;
 	}
 
-	public void setTipPrometnogDokumenta(String tipPrometnogDokumenta) {
+	public void setTipPrometnogDokumenta(TipPrometnogDokumenta tipPrometnogDokumenta) {
 		this.tipPrometnogDokumenta = tipPrometnogDokumenta;
 	}
 

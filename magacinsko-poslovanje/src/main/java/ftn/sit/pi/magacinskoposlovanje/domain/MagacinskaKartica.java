@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,10 +6,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 
-/**
- * The persistent class for the magacinska_kartica database table.
- * 
- */
 @Entity
 @Table(name="magacinska_kartica")
 @NamedQuery(name="MagacinskaKartica.findAll", query="SELECT m FROM MagacinskaKartica m")
@@ -19,7 +15,7 @@ public class MagacinskaKartica implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_MAGACINSKE_KARTICE")
-	private int idMagacinskeKartice;
+	private Integer idMagacinskeKartice;
 
 	private BigDecimal cena;
 
@@ -33,7 +29,7 @@ public class MagacinskaKartica implements Serializable {
 	private BigDecimal kolicinaUlaza;
 
 	@Column(name="REDNI_BR_MAGACINSKE_KAR")
-	private int redniBrMagacinskeKar;
+	private Integer redniBrMagacinskeKar;
 
 	@Column(name="UKUPNA_KOLICINA")
 	private BigDecimal ukupnaKolicina;
@@ -72,11 +68,11 @@ public class MagacinskaKartica implements Serializable {
 	public MagacinskaKartica() {
 	}
 
-	public int getIdMagacinskeKartice() {
+	public Integer getIdMagacinskeKartice() {
 		return this.idMagacinskeKartice;
 	}
 
-	public void setIdMagacinskeKartice(int idMagacinskeKartice) {
+	public void setIdMagacinskeKartice(Integer idMagacinskeKartice) {
 		this.idMagacinskeKartice = idMagacinskeKartice;
 	}
 
@@ -112,11 +108,11 @@ public class MagacinskaKartica implements Serializable {
 		this.kolicinaUlaza = kolicinaUlaza;
 	}
 
-	public int getRedniBrMagacinskeKar() {
+	public Integer getRedniBrMagacinskeKar() {
 		return this.redniBrMagacinskeKar;
 	}
 
-	public void setRedniBrMagacinskeKar(int redniBrMagacinskeKar) {
+	public void setRedniBrMagacinskeKar(Integer redniBrMagacinskeKar) {
 		this.redniBrMagacinskeKar = redniBrMagacinskeKar;
 	}
 
@@ -168,18 +164,18 @@ public class MagacinskaKartica implements Serializable {
 		this.analitikeMagacinskeKartice = analitikeMagacinskeKartice;
 	}
 
-	public AnalitikaMagacinskeKartice addAnalitikeMagacinskeKartice(AnalitikaMagacinskeKartice analitikeMagacinskeKartice) {
-		getAnalitikeMagacinskeKartice().add(analitikeMagacinskeKartice);
-		analitikeMagacinskeKartice.setMagacinskaKartica(this);
+	public AnalitikaMagacinskeKartice addAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
+		getAnalitikeMagacinskeKartice().add(analitikaMagacinskeKartice);
+		analitikaMagacinskeKartice.setMagacinskaKartica(this);
 
-		return analitikeMagacinskeKartice;
+		return analitikaMagacinskeKartice;
 	}
 
-	public AnalitikaMagacinskeKartice removeAnalitikeMagacinskeKartice(AnalitikaMagacinskeKartice analitikeMagacinskeKartice) {
-		getAnalitikeMagacinskeKartice().remove(analitikeMagacinskeKartice);
-		analitikeMagacinskeKartice.setMagacinskaKartica(null);
+	public AnalitikaMagacinskeKartice removeAnalitikaMagacinskeKartice(AnalitikaMagacinskeKartice analitikaMagacinskeKartice) {
+		getAnalitikeMagacinskeKartice().remove(analitikaMagacinskeKartice);
+		analitikaMagacinskeKartice.setMagacinskaKartica(null);
 
-		return analitikeMagacinskeKartice;
+		return analitikaMagacinskeKartice;
 	}
 
 	public Artikal getArtikal() {

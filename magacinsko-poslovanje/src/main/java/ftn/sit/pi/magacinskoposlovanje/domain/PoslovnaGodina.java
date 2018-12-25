@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,10 +6,6 @@ import java.util.Date;
 import java.util.Set;
 
 
-/**
- * The persistent class for the poslovna_godina database table.
- * 
- */
 @Entity
 @Table(name="poslovna_godina")
 @NamedQuery(name="PoslovnaGodina.findAll", query="SELECT p FROM PoslovnaGodina p")
@@ -19,12 +15,12 @@ public class PoslovnaGodina implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID_GODINE")
-	private int idGodine;
+	private Integer idGodine;
 
 	@Temporal(TemporalType.DATE)
 	private Date godina;
 
-	private byte zakljucena;
+	private Boolean zakljucena;
 
 	//bi-directional many-to-one association to MagacinskaKartica
 	@OneToMany(mappedBy="poslovnaGodina")
@@ -37,11 +33,11 @@ public class PoslovnaGodina implements Serializable {
 	public PoslovnaGodina() {
 	}
 
-	public int getIdGodine() {
+	public Integer getIdGodine() {
 		return this.idGodine;
 	}
 
-	public void setIdGodine(int idGodine) {
+	public void setIdGodine(Integer idGodine) {
 		this.idGodine = idGodine;
 	}
 
@@ -53,11 +49,11 @@ public class PoslovnaGodina implements Serializable {
 		this.godina = godina;
 	}
 
-	public byte getZakljucena() {
+	public Boolean getZakljucena() {
 		return this.zakljucena;
 	}
 
-	public void setZakljucena(byte zakljucena) {
+	public void setZakljucena(Boolean zakljucena) {
 		this.zakljucena = zakljucena;
 	}
 
@@ -69,18 +65,18 @@ public class PoslovnaGodina implements Serializable {
 		this.magacinskeKartice = magacinskeKartice;
 	}
 
-	public MagacinskaKartica addMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().add(magacinskeKartice);
-		magacinskeKartice.setPoslovnaGodina(this);
+	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskeKartica) {
+		getMagacinskeKartice().add(magacinskeKartica);
+		magacinskeKartica.setPoslovnaGodina(this);
 
-		return magacinskeKartice;
+		return magacinskeKartica;
 	}
 
-	public MagacinskaKartica removeMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().remove(magacinskeKartice);
-		magacinskeKartice.setPoslovnaGodina(null);
+	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskeKartica) {
+		getMagacinskeKartice().remove(magacinskeKartica);
+		magacinskeKartica.setPoslovnaGodina(null);
 
-		return magacinskeKartice;
+		return magacinskeKartica;
 	}
 
 	public Set<PrometniDokument> getPrometniDokumenti() {
@@ -91,18 +87,18 @@ public class PoslovnaGodina implements Serializable {
 		this.prometniDokumenti = prometniDokumenti;
 	}
 
-	public PrometniDokument addPrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().add(prometniDokumenti);
-		prometniDokumenti.setPoslovnaGodina(this);
+	public PrometniDokument addPrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().add(prometniDokument);
+		prometniDokument.setPoslovnaGodina(this);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
-	public PrometniDokument removePrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().remove(prometniDokumenti);
-		prometniDokumenti.setPoslovnaGodina(null);
+	public PrometniDokument removePrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().remove(prometniDokument);
+		prometniDokument.setPoslovnaGodina(null);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
 }

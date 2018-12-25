@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import ftn.sit.pi.magacinskoposlovanje.entities.Mesto;
+import ftn.sit.pi.magacinskoposlovanje.domain.Mesto;
 
 public class MestoDTO implements Serializable {
 

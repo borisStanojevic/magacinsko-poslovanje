@@ -1,14 +1,10 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
 
-/**
- * The persistent class for the magacin database table.
- * 
- */
 @Entity
 @NamedQuery(name="Magacin.findAll", query="SELECT m FROM Magacin m")
 public class Magacin implements Serializable {
@@ -17,7 +13,7 @@ public class Magacin implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="SIFRA_MAGACINA")
-	private int sifraMagacina;
+	private Integer sifraMagacina;
 
 	@Column(name="NAZIV_MAGACINA")
 	private String nazivMagacina;
@@ -43,11 +39,11 @@ public class Magacin implements Serializable {
 	public Magacin() {
 	}
 
-	public int getSifraMagacina() {
+	public Integer getSifraMagacina() {
 		return this.sifraMagacina;
 	}
 
-	public void setSifraMagacina(int sifraMagacina) {
+	public void setSifraMagacina(Integer sifraMagacina) {
 		this.sifraMagacina = sifraMagacina;
 	}
 
@@ -83,18 +79,18 @@ public class Magacin implements Serializable {
 		this.magacinskeKartice = magacinskeKartice;
 	}
 
-	public MagacinskaKartica addMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().add(magacinskeKartice);
-		magacinskeKartice.setMagacin(this);
+	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
+		getMagacinskeKartice().add(magacinskaKartica);
+		magacinskaKartica.setMagacin(this);
 
-		return magacinskeKartice;
+		return magacinskaKartica;
 	}
 
-	public MagacinskaKartica removeMagacinskeKartice(MagacinskaKartica magacinskeKartice) {
-		getMagacinskeKartice().remove(magacinskeKartice);
-		magacinskeKartice.setMagacin(null);
+	public MagacinskaKartica removeMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
+		getMagacinskeKartice().remove(magacinskaKartica);
+		magacinskaKartica.setMagacin(null);
 
-		return magacinskeKartice;
+		return magacinskaKartica;
 	}
 
 	public Set<PrometniDokument> getPrometniDokumenti() {
@@ -105,18 +101,18 @@ public class Magacin implements Serializable {
 		this.prometniDokumenti = prometniDokumenti;
 	}
 
-	public PrometniDokument addPrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().add(prometniDokumenti);
-		prometniDokumenti.setMagacin(this);
+	public PrometniDokument addPrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().add(prometniDokument);
+		prometniDokument.setMagacin(this);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
-	public PrometniDokument removePrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().remove(prometniDokumenti);
-		prometniDokumenti.setMagacin(null);
+	public PrometniDokument removePrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().remove(prometniDokument);
+		prometniDokument.setMagacin(null);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
 }

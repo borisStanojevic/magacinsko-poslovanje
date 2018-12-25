@@ -1,14 +1,9 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 
-
-/**
- * The persistent class for the poslovni_partner database table.
- * 
- */
 @Entity
 @Table(name="poslovni_partner")
 @NamedQuery(name="PoslovniPartner.findAll", query="SELECT p FROM PoslovniPartner p")
@@ -18,7 +13,7 @@ public class PoslovniPartner implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="SIFRA_PARTNERA")
-	private int sifraPartnera;
+	private Integer sifraPartnera;
 
 	@Column(name="ADRESA_POSLOVNOG_PARTNERA")
 	private String adresaPoslovnogPartnera;
@@ -29,7 +24,7 @@ public class PoslovniPartner implements Serializable {
 	private String pib;
 
 	@Column(name="TIP_PARTNERA")
-	private String tipPartnera;
+	private TipPartnera tipPartnera;
 
 	//bi-directional many-to-one association to Mesto
 	@ManyToOne
@@ -43,11 +38,11 @@ public class PoslovniPartner implements Serializable {
 	public PoslovniPartner() {
 	}
 
-	public int getSifraPartnera() {
+	public Integer getSifraPartnera() {
 		return this.sifraPartnera;
 	}
 
-	public void setSifraPartnera(int sifraPartnera) {
+	public void setSifraPartnera(Integer sifraPartnera) {
 		this.sifraPartnera = sifraPartnera;
 	}
 
@@ -75,11 +70,11 @@ public class PoslovniPartner implements Serializable {
 		this.pib = pib;
 	}
 
-	public String getTipPartnera() {
+	public TipPartnera getTipPartnera() {
 		return this.tipPartnera;
 	}
 
-	public void setTipPartnera(String tipPartnera) {
+	public void setTipPartnera(TipPartnera tipPartnera) {
 		this.tipPartnera = tipPartnera;
 	}
 
@@ -99,18 +94,18 @@ public class PoslovniPartner implements Serializable {
 		this.prometniDokumenti = prometniDokumenti;
 	}
 
-	public PrometniDokument addPrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().add(prometniDokumenti);
-		prometniDokumenti.setPoslovniPartner(this);
+	public PrometniDokument addPrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().add(prometniDokument);
+		prometniDokument.setPoslovniPartner(this);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
-	public PrometniDokument removePrometniDokumenti(PrometniDokument prometniDokumenti) {
-		getPrometniDokumenti().remove(prometniDokumenti);
-		prometniDokumenti.setPoslovniPartner(null);
+	public PrometniDokument removePrometniDokument(PrometniDokument prometniDokument) {
+		getPrometniDokumenti().remove(prometniDokument);
+		prometniDokument.setPoslovniPartner(null);
 
-		return prometniDokumenti;
+		return prometniDokument;
 	}
 
 }

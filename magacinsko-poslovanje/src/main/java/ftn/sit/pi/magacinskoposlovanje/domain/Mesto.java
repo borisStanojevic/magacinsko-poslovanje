@@ -1,4 +1,4 @@
-package ftn.sit.pi.magacinskoposlovanje.entities;
+package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,7 +15,6 @@ public class Mesto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="POSTANSKI_BROJ")
 	private String postanskiBroj;
 
@@ -67,18 +66,18 @@ public class Mesto implements Serializable {
 		this.poslovniPartneri = poslovniPartneri;
 	}
 
-	public PoslovniPartner addPoslovniPartneri(PoslovniPartner poslovniPartneri) {
-		getPoslovniPartneri().add(poslovniPartneri);
-		poslovniPartneri.setMesto(this);
+	public PoslovniPartner addPoslovniPartner(PoslovniPartner poslovniPartner) {
+		getPoslovniPartneri().add(poslovniPartner);
+		poslovniPartner.setMesto(this);
 
-		return poslovniPartneri;
+		return poslovniPartner;
 	}
 
-	public PoslovniPartner removePoslovniPartneri(PoslovniPartner poslovniPartneri) {
-		getPoslovniPartneri().remove(poslovniPartneri);
-		poslovniPartneri.setMesto(null);
+	public PoslovniPartner removePoslovniPartner(PoslovniPartner poslovniPartner) {
+		getPoslovniPartneri().remove(poslovniPartner);
+		poslovniPartner.setMesto(null);
 
-		return poslovniPartneri;
+		return poslovniPartner;
 	}
 
 	public Set<Preduzece> getPreduzeca() {
@@ -89,11 +88,11 @@ public class Mesto implements Serializable {
 		this.preduzeca = preduzeca;
 	}
 
-	public Preduzece addPreduzeca(Preduzece preduzeca) {
-		getPreduzeca().add(preduzeca);
-		preduzeca.setMesto(this);
+	public Preduzece addPreduzece(Preduzece preduzece) {
+		getPreduzeca().add(preduzece);
+		preduzece.setMesto(this);
 
-		return preduzeca;
+		return preduzece;
 	}
 
 	public Preduzece removePreduzeca(Preduzece preduzeca) {
