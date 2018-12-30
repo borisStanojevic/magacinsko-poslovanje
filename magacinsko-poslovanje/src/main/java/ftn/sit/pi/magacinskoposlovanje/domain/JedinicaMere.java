@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -24,6 +26,7 @@ public class JedinicaMere implements Serializable {
 	private Set<Artikal> artikli;
 
 	public JedinicaMere() {
+		artikli = new HashSet<>();
 	}
 
 	public Integer getIdJedMere() {

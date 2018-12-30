@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -42,6 +44,8 @@ public class Preduzece implements Serializable {
 	private Radnik radnik;
 
 	public Preduzece() {
+		kategorijeArtikala = new HashSet<>();
+		magacini = new HashSet<>();
 	}
 
 	public Integer getSifraPreduzeca() {

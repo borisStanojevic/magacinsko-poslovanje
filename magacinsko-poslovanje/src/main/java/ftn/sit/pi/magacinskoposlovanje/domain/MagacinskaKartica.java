@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -66,6 +67,7 @@ public class MagacinskaKartica implements Serializable {
 	private PoslovnaGodina poslovnaGodina;
 
 	public MagacinskaKartica() {
+		analitikeMagacinskeKartice = new HashSet<>();
 	}
 
 	public Integer getIdMagacinskeKartice() {

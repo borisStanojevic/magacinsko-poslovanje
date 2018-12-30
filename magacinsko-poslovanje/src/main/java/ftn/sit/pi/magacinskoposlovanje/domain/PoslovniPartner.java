@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -36,6 +38,7 @@ public class PoslovniPartner implements Serializable {
 	private Set<PrometniDokument> prometniDokumenti;
 
 	public PoslovniPartner() {
+		prometniDokumenti = new HashSet<>();
 	}
 
 	public Integer getSifraPartnera() {

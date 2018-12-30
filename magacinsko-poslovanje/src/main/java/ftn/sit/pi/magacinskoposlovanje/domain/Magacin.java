@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -37,6 +39,8 @@ public class Magacin implements Serializable {
 	private Set<PrometniDokument> prometniDokumenti;
 
 	public Magacin() {
+		magacinskeKartice = new HashSet<>();
+		prometniDokumenti = new HashSet<>();
 	}
 
 	public Integer getSifraMagacina() {

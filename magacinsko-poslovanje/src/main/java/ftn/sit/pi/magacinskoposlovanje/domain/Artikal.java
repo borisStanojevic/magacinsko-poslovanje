@@ -2,13 +2,11 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
-/**
- * The persistent class for the artikal database table.
- * 
- */
 @Entity
 @NamedQuery(name="Artikal.findAll", query="SELECT a FROM Artikal a")
 public class Artikal implements Serializable {
@@ -41,6 +39,8 @@ public class Artikal implements Serializable {
 	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta;
 
 	public Artikal() {
+		magacinskeKartice = new HashSet<>();
+		stavkePrometnogDokumenta = new HashSet<>();
 	}
 
 	public Integer getSifraArtikla() {

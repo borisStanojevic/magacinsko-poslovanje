@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -56,6 +57,7 @@ public class PrometniDokument implements Serializable {
 	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta;
 
 	public PrometniDokument() {
+		stavkePrometnogDokumenta = new HashSet<>();
 	}
 
 	public Integer getIdPrometnogDokumenta() {

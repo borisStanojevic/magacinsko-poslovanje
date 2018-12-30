@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -29,6 +31,7 @@ public class KategorijaArtikala implements Serializable {
 	private Preduzece preduzece;
 
 	public KategorijaArtikala() {
+		artikli = new HashSet<>();
 	}
 
 	public Integer getIdKategorije() {
