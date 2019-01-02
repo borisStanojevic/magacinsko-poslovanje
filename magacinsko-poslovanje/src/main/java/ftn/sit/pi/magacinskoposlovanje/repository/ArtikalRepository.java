@@ -10,7 +10,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
 public interface ArtikalRepository extends PagingAndSortingRepository<Artikal, Integer>
 {
 	// S save(S entity) - Sacuvava entitet, metoda za add i update operacije
-	// T findOne(Integer primaryKey)
+	// Optional<T> findById(Integer primaryKey)
 	// Iterable<T> findAll(); - Vraca sve entitete specificne za ovaj repozitorijum, Iterable - bilo koja kolekcija kroz koju se moze iterirati
 	// Long count(); - Broj entiteta
 	// void delete(T entity);
@@ -20,5 +20,6 @@ public interface ArtikalRepository extends PagingAndSortingRepository<Artikal, I
 	// Iterable<T> findAll(Sort sort);
 	// Page<T> findAll(Pageable pageable);
 	
+	Artikal findBySifraArtikla(Integer sifraArtikla);
 	void deleteBySifraArtikla(Integer sifraArtikla);
 }
