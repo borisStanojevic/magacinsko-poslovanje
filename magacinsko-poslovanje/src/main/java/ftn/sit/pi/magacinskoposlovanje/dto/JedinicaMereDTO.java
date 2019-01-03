@@ -1,69 +1,47 @@
 package ftn.sit.pi.magacinskoposlovanje.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.JedinicaMere;
+import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
+import ftn.sit.pi.magacinskoposlovanje.domain.Smer;
+import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometa;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class JedinicaMereDTO implements Serializable {
 
 	private Integer idJedMere;
 	private String nazivJediniceMere;
 	private Set<ArtikalDTO> artikli;
-	
+
 	public static Set<JedinicaMereDTO> convert(Set<JedinicaMere> jedinicaMereEntitySet) {
 		Set<JedinicaMereDTO> jedinicaMereDTOSet = new HashSet<>();
 		Iterator<JedinicaMere> iterator = jedinicaMereEntitySet.iterator();
 		while (iterator.hasNext()) {
 			JedinicaMere jedinicaMere = (JedinicaMere) iterator.next();
 			JedinicaMereDTO jedinicaMereDTO = new JedinicaMereDTO(jedinicaMere);
-			jedinicaMereDTOSet.add(jedinicaMereDTO);			
+			jedinicaMereDTOSet.add(jedinicaMereDTO);
 		}
 		return jedinicaMereDTOSet;
 	}
-	
-	public JedinicaMereDTO() {
-	}
 
-	public JedinicaMereDTO(Integer idJedMere, String nazivJediniceMere, Set<ArtikalDTO> artikli) {
-		super();
-		this.idJedMere = idJedMere;
-		this.nazivJediniceMere = nazivJediniceMere;
-		this.artikli = artikli;
-	}
-
-	
 	public JedinicaMereDTO(JedinicaMere jedinicaMere) {
-		this(jedinicaMere.getIdJedMere(), jedinicaMere.getNazivJediniceMere(), ArtikalDTO.convert(jedinicaMere.getArtikli()));
+		this(jedinicaMere.getIdJedMere(), jedinicaMere.getNazivJediniceMere(),
+				ArtikalDTO.convert(jedinicaMere.getArtikli()));
 	}
 
-	public Integer getIdJedMere() {
-		return idJedMere;
-	}
-
-	public void setIdJedMere(Integer idJedMere) {
-		this.idJedMere = idJedMere;
-	}
-
-	public String getNazivJediniceMere() {
-		return nazivJediniceMere;
-	}
-
-	public void setNazivJediniceMere(String nazivJediniceMere) {
-		this.nazivJediniceMere = nazivJediniceMere;
-	}
-
-	public Set<ArtikalDTO> getArtikli() {
-		return artikli;
-	}
-
-	public void setArtikli(Set<ArtikalDTO> artikli) {
-		this.artikli = artikli;
-	}
-	
-	
-	
-	
 }

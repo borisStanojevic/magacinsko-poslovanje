@@ -3,85 +3,51 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Entity
-@NamedQuery(name="Artikal.findAll", query="SELECT a FROM Artikal a")
+@NamedQuery(name = "Artikal.findAll", query = "SELECT a FROM Artikal a")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class Artikal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="SIFRA_ARTIKLA")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "SIFRA_ARTIKLA")
 	private Integer sifraArtikla;
 
-	@Column(name="NAZIV_ARTIKLA")
+	@Column(name = "NAZIV_ARTIKLA")
 	private String nazivArtikla;
 
-	//bi-directional many-to-one association to JedinicaMere
+	// bi-directional many-to-one association to JedinicaMere
 	@ManyToOne
-	@JoinColumn(name="ID_JED_MERE")
+	@JoinColumn(name = "ID_JED_MERE")
 	private JedinicaMere jedinicaMere;
 
-	//bi-directional many-to-one association to KategorijaArtikala
+	// bi-directional many-to-one association to KategorijaArtikala
 	@ManyToOne
-	@JoinColumn(name="ID_KATEGORIJE")
+	@JoinColumn(name = "ID_KATEGORIJE")
 	private KategorijaArtikala kategorijaArtikala;
 
-	//bi-directional many-to-one association to MagacinskaKartica
-	@OneToMany(mappedBy="artikal")
-	private Set<MagacinskaKartica> magacinskeKartice;
+	// bi-directional many-to-one association to MagacinskaKartica
+	@OneToMany(mappedBy = "artikal")
+	private Set<MagacinskaKartica> magacinskeKartice = new HashSet<>();
 
-	//bi-directional many-to-one association to StavkePrometnogDokumenta
-	@OneToMany(mappedBy="artikal")
-	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta;
+	// bi-directional many-to-one association to StavkePrometnogDokumenta
+	@OneToMany(mappedBy = "artikal")
+	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta = new HashSet<>();
 
-	public Artikal() {
-		magacinskeKartice = new HashSet<>();
-		stavkePrometnogDokumenta = new HashSet<>();
-	}
-
-	public Integer getSifraArtikla() {
-		return this.sifraArtikla;
-	}
-
-	public void setSifraArtikla(Integer sifraArtikla) {
-		this.sifraArtikla = sifraArtikla;
-	}
-
-	public String getNazivArtikla() {
-		return this.nazivArtikla;
-	}
-
-	public void setNazivArtikla(String nazivArtikla) {
-		this.nazivArtikla = nazivArtikla;
-	}
-
-	public JedinicaMere getJedinicaMere() {
-		return this.jedinicaMere;
-	}
-
-	public void setJedinicaMere(JedinicaMere jedinicaMere) {
-		this.jedinicaMere = jedinicaMere;
-	}
-
-	public KategorijaArtikala getKategorijaArtikala() {
-		return this.kategorijaArtikala;
-	}
-
-	public void setKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
-		this.kategorijaArtikala = kategorijaArtikala;
-	}
-
-	public Set<MagacinskaKartica> getMagacinskeKartice() {
-		return this.magacinskeKartice;
-	}
-
-	public void setMagacinskeKartice(Set<MagacinskaKartica> magacinskeKartice) {
-		this.magacinskeKartice = magacinskeKartice;
-	}
+	@Version
+	private Integer version;
 
 	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartice) {
 		getMagacinskeKartice().add(magacinskaKartice);
@@ -95,14 +61,6 @@ public class Artikal implements Serializable {
 		magacinskaKartica.setArtikal(null);
 
 		return magacinskaKartica;
-	}
-
-	public Set<StavkaPrometnogDokumenta> getStavkePrometnogDokumenta() {
-		return this.stavkePrometnogDokumenta;
-	}
-
-	public void setStavkePrometnogDokumenta(Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta) {
-		this.stavkePrometnogDokumenta = stavkePrometnogDokumenta;
 	}
 
 	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
