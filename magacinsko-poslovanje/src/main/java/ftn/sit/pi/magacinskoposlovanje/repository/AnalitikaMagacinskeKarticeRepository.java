@@ -10,5 +10,4 @@ public interface AnalitikaMagacinskeKarticeRepository extends PagingAndSortingRe
 	
 	AnalitikaMagacinskeKartice findByIdAnalitike(Integer idAnalitike);
 	void deleteByIdAnalitike(Integer idAnalitike);
-	
 }
