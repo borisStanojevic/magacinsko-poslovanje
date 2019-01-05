@@ -9,11 +9,7 @@ import ftn.sit.pi.magacinskoposlovanje.repository.MagacinRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IMagacinService;
 
 public class MagacinService implements IMagacinService {
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 6b033200d45f6e00a493e1d847fd6213c598d9ec
 	@Autowired
 	private MagacinRepository magacinRepository;
 
@@ -34,14 +30,9 @@ public class MagacinService implements IMagacinService {
 
 	@Override
 	public Magacin update(Magacin magacin) {
-<<<<<<< HEAD
 		Magacin magacinToBeUpdated = magacinRepository.findBySifraMagacina(magacin.getSifraMagacina());
 		magacinToBeUpdated.setNazivMagacina(magacin.getNazivMagacina());
 		return magacinRepository.save(magacinToBeUpdated);
-=======
-		// TODO Auto-generated method stub
-		return null;
->>>>>>> 6b033200d45f6e00a493e1d847fd6213c598d9ec
 	}
 
 	@Override
@@ -52,15 +43,7 @@ public class MagacinService implements IMagacinService {
 
 	@Override
 	public void deleteById(Integer sifraMagacina) {
-<<<<<<< HEAD
 		magacinRepository.deleteById(sifraMagacina);
 	}
-
-=======
-		magacinRepository.deleteBySifraMagacina(sifraMagacina);
-	}
 	
-	
-	
->>>>>>> 6b033200d45f6e00a493e1d847fd6213c598d9ec
 }
