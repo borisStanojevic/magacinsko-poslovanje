@@ -3,11 +3,15 @@ package ftn.sit.pi.magacinskoposlovanje.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.repository.PoslovniPartnerRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IPoslovniPartnerService;
 
+@Service
+@Transactional
 public class PoslovniPartnerService implements IPoslovniPartnerService {
 
 	@Autowired
