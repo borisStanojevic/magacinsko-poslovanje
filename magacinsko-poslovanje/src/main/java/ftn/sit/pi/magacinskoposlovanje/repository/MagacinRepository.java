@@ -8,5 +8,5 @@ import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
 @Repository
 public interface MagacinRepository extends PagingAndSortingRepository<Magacin, Integer> {
 	
-	void deleteBySifraMagacina(Integer sifraMagacina);
+	Magacin findBySifraMagacina(Integer sifraMagacina);
 }

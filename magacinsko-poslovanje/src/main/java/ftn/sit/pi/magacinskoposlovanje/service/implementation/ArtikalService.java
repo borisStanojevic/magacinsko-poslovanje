@@ -17,6 +17,7 @@ public class ArtikalService implements IArtikalService {
 	@Autowired
 	private ArtikalRepository artikalRepository;
 	
+	
 	@Override
 	public Artikal getById(Integer sifraArtikla) {
 		return artikalRepository.findBySifraArtikla(sifraArtikla);
@@ -37,7 +38,9 @@ public class ArtikalService implements IArtikalService {
 
 	@Override
 	public Artikal update(Artikal artikal) {
-		return null; // Nisam jos siguran kako konkretno da implementiram update
+		Artikal artikalToBeUpdated = artikalRepository.findBySifraArtikla(artikal.getSifraArtikla());
+		artikalToBeUpdated.setNazivArtikla(artikal.getNazivArtikla());
+		return artikalRepository.save(artikalToBeUpdated);
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class ArtikalService implements IArtikalService {
 
 	@Override
 	public void deleteById(Integer sifraArtikla) {
-		artikalRepository.deleteBySifraArtikla(sifraArtikla);
+		artikalRepository.deleteById(sifraArtikla);
 	}
 
 }

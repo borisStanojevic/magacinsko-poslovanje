@@ -21,5 +21,4 @@ public interface ArtikalRepository extends PagingAndSortingRepository<Artikal, I
 	// Page<T> findAll(Pageable pageable);
 	
 	Artikal findBySifraArtikla(Integer sifraArtikla);
-	void deleteBySifraArtikla(Integer sifraArtikla);
 }
