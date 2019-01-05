@@ -8,6 +8,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
 @Repository
 public interface PoslovniPartnerRepository extends PagingAndSortingRepository<PoslovniPartner, Integer> {
 	
+	PoslovniPartner findBySifraPartnera(Integer sifraPartnera);
 	void deleteBySifraPartnera(Integer sifraPartnera);
 	
 }

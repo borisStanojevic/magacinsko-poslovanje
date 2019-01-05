@@ -8,5 +8,6 @@ import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 @Repository
 public interface MagacinskaKarticaRepository extends PagingAndSortingRepository<MagacinskaKartica, Integer> {
 	
+	MagacinskaKartica findByIdMagacinskeKartice(Integer idMagacinskeKartice);
 	void deleteByIdMagacinskeKartice(Integer idMagacinskeKartice);
 }

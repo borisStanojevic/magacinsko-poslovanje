@@ -8,6 +8,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 @Repository
 public interface PoslovnaGodinaRepository extends PagingAndSortingRepository<PoslovnaGodina, Integer> {
 	
+	PoslovnaGodina findByIdGodine(Integer idGodine);
 	void deleteByIdGodine(Integer idGodine);
 	
 }

@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import ftn.sit.pi.magacinskoposlovanje.domain.AnalitikaMagacinskeKartice;
 
 @Repository
-public interface AnalitkaMagacinskeKarticeRepository extends PagingAndSortingRepository<AnalitikaMagacinskeKartice, Integer> {
+public interface AnalitikaMagacinskeKarticeRepository extends PagingAndSortingRepository<AnalitikaMagacinskeKartice, Integer> {
 	
+	AnalitikaMagacinskeKartice findByIdAnalitike(Integer idAnalitike);
 	void deleteByIdAnalitike(Integer idAnalitike);
 	
 }
