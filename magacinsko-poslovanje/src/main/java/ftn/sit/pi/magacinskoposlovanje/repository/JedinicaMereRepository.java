@@ -8,6 +8,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.JedinicaMere;
 @Repository
 public interface JedinicaMereRepository extends PagingAndSortingRepository<JedinicaMere, Integer> {
 	
+	JedinicaMere findByIdJedMere(Integer idJedMere);
 	void deleteByIdJedMere(Integer idJedMere);
 	
 }

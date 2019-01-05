@@ -8,5 +8,6 @@ import ftn.sit.pi.magacinskoposlovanje.domain.KategorijaArtikala;
 @Repository
 public interface KategorijaArtikalaRepository extends PagingAndSortingRepository<KategorijaArtikala, Integer> {
 	
+	KategorijaArtikala findByIdKategorije(Integer idKategorije);
 	void deleteByIdKategorije(Integer idKategorije);
 }

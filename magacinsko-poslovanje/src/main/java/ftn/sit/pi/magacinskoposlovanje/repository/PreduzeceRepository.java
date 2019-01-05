@@ -8,4 +8,6 @@ import ftn.sit.pi.magacinskoposlovanje.domain.Preduzece;
 @Repository
 public interface PreduzeceRepository extends PagingAndSortingRepository<Preduzece, Integer> {
 
+	Preduzece findBySifraPreduzeca(Integer sifraPreduzeca);
+	void deleteBySifraPreduzeca(Integer sifraPreduzeca);
 }

@@ -8,6 +8,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.Mesto;
 @Repository
 public interface MestoRepository extends PagingAndSortingRepository<Mesto, String> {
 	
+	Mesto findByPostanskiBroj(String postanskiBroj);
 	void deleteByPostanskiBroj(String postanskiBroj);
 	
 }

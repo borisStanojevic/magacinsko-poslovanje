@@ -9,6 +9,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
 public interface StavkaPrometnogDokumentaRepository
 		extends PagingAndSortingRepository<StavkaPrometnogDokumenta, Integer> {
 	
+	StavkaPrometnogDokumenta findByIdStavkePrometnogDokumenta(Integer idStavkePrometnogDokumenta);
 	void deleteByIdStavkePrometnogDokumenta(Integer idStavkePrometnogDokumenta);
 
 }
