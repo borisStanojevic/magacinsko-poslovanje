@@ -17,12 +17,15 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 	@Autowired
 	private PoslovnaGodinaRepository poslovnaGodinaRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public PoslovnaGodina getById(Integer idGodine) {
 		return poslovnaGodinaRepository.findByIdGodine(idGodine);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<PoslovnaGodina> getAll(Pageable pageable) {
 		return poslovnaGodinaRepository.findAll(pageable);
 	}

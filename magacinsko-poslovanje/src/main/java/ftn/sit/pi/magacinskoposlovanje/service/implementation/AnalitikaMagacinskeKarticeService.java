@@ -17,12 +17,15 @@ public class AnalitikaMagacinskeKarticeService implements IAnalitikaMagacinskeKa
 	@Autowired
 	private AnalitikaMagacinskeKarticeRepository analitikaMagKartRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public AnalitikaMagacinskeKartice getById(Integer idAnalitike) {
 		return analitikaMagKartRepository.findByIdAnalitike(idAnalitike);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<AnalitikaMagacinskeKartice> getAll(Pageable pageable) {
 		return analitikaMagKartRepository.findAll(pageable);
 	}

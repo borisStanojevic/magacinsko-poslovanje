@@ -17,12 +17,15 @@ public class MestoService implements IMestoService {
 	@Autowired
 	private MestoRepository mestoRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public Mesto getById(String postanskiBroj) {
 		return mestoRepository.findByPostanskiBroj(postanskiBroj);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<Mesto> getAll(Pageable pageable) {
 		return mestoRepository.findAll(pageable);
 	}

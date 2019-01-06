@@ -17,12 +17,15 @@ public class StavkaPrometnogDokumentaService implements IStavkaPrometnogDokument
 	@Autowired
 	private StavkaPrometnogDokumentaRepository stavkaPromDokRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public StavkaPrometnogDokumenta getById(Integer idStavkePrometnogDokumenta) {
 		return stavkaPromDokRepository.findByIdStavkePrometnogDokumenta(idStavkePrometnogDokumenta);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<StavkaPrometnogDokumenta> getAll(Pageable pageable) {
 		return stavkaPromDokRepository.findAll(pageable);
 	}

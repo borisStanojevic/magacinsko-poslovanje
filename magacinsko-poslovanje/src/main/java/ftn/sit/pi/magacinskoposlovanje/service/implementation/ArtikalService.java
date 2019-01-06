@@ -19,11 +19,13 @@ public class ArtikalService implements IArtikalService {
 	
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Artikal getById(Integer sifraArtikla) {
 		return artikalRepository.findBySifraArtikla(sifraArtikla);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<Artikal> getAll(Pageable pageable) {
 		// Samo proslijedjujem pageable, ne radim konkretnu implementaciju
 		// jer postoji opcija da kontroler podesimo da iz url-a izvuce

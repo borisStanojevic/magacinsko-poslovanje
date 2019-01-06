@@ -17,12 +17,15 @@ public class RadnikService implements IRadnikService {
 	@Autowired
 	private RadnikRepository radnikRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public Radnik getById(Integer idRadnika) {
 		return radnikRepository.findByIdRadnika(idRadnika);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<Radnik> getAll(Pageable pageable) {
 		return radnikRepository.findAll(pageable);
 	}
@@ -48,7 +51,5 @@ public class RadnikService implements IRadnikService {
 	public void deleteById(Integer idRadnika) {
 		radnikRepository.deleteByIdRadnika(idRadnika);
 	}
-	
-	
 	
 }

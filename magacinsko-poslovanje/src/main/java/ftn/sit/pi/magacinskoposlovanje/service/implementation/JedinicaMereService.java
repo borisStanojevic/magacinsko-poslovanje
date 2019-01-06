@@ -17,12 +17,15 @@ public class JedinicaMereService implements IJedinicaMereService {
 	@Autowired
 	private JedinicaMereRepository jedinicaMereRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public JedinicaMere getById(Integer idJedMere) {
 		return jedinicaMereRepository.findByIdJedMere(idJedMere);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<JedinicaMere> getAll(Pageable pageable) {
 		return jedinicaMereRepository.findAll(pageable);
 	}

@@ -17,12 +17,15 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	@Autowired
 	private PoslovniPartnerRepository poslovniPartnerRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public PoslovniPartner getById(Integer sifraPartnera) {
 		return poslovniPartnerRepository.findBySifraPartnera(sifraPartnera);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<PoslovniPartner> getAll(Pageable pageable) {
 		return poslovniPartnerRepository.findAll(pageable);
 	}

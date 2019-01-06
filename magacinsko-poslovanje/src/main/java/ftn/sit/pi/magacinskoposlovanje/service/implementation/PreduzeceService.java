@@ -17,12 +17,15 @@ public class PreduzeceService implements IPreduzeceService {
 	@Autowired
 	private PreduzeceRepository preduzeceRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public Preduzece getById(Integer sifraPreduzeca) {
 		return preduzeceRepository.findBySifraPreduzeca(sifraPreduzeca);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<Preduzece> getAll(Pageable pageable) {
 		return preduzeceRepository.findAll(pageable);
 	}

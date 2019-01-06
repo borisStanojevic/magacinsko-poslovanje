@@ -17,12 +17,15 @@ public class MagacinskaKarticaService implements IMagacinskaKarticaService {
 	@Autowired
 	private MagacinskaKarticaRepository magacinskaKarticaRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public MagacinskaKartica getById(Integer idMagacinskeKartice) {
 		return magacinskaKarticaRepository.findByIdMagacinskeKartice(idMagacinskeKartice);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<MagacinskaKartica> getAll(Pageable pageable) {
 		return magacinskaKarticaRepository.findAll(pageable);
 	}

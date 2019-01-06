@@ -17,12 +17,15 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 	@Autowired
 	private PrometniDokumentRepository prometniDokumentRepository;
 
+	
 	@Override
+	@Transactional(readOnly = true)
 	public PrometniDokument getById(Integer idPrometnogDokumenta) {
 		return prometniDokumentRepository.findByIdPrometnogDokumenta(idPrometnogDokumenta);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<PrometniDokument> getAll(Pageable pageable) {
 		return prometniDokumentRepository.findAll(pageable);
 	}
