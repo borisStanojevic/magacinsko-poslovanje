@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Mesto;
@@ -11,7 +12,7 @@ import ftn.sit.pi.magacinskoposlovanje.repository.MestoRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IMestoService;
 
 @Service
-@Transactional
+@Transactional(propagation = Propagation.SUPPORTS)
 public class MestoService implements IMestoService {
 
 	@Autowired
@@ -31,23 +32,27 @@ public class MestoService implements IMestoService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Mesto add(Mesto mesto) {
 		return mestoRepository.save(mesto);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Mesto update(Mesto mesto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Mesto mesto) {
 		Mesto mestoToBeDeleted = mestoRepository.findByPostanskiBroj(mesto.getPostanskiBroj());
 		mestoRepository.delete(mestoToBeDeleted);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteById(String postanskiBroj) {
 		mestoRepository.deleteByPostanskiBroj(postanskiBroj);
 	}

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
@@ -11,7 +12,7 @@ import ftn.sit.pi.magacinskoposlovanje.repository.PoslovniPartnerRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IPoslovniPartnerService;
 
 @Service
-@Transactional
+@Transactional(propagation = Propagation.SUPPORTS)
 public class PoslovniPartnerService implements IPoslovniPartnerService {
 
 	@Autowired
@@ -31,23 +32,27 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public PoslovniPartner add(PoslovniPartner poslovniPartner) {
 		return poslovniPartnerRepository.save(poslovniPartner);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public PoslovniPartner update(PoslovniPartner PoslovniPartner) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(PoslovniPartner poslovniPartner) {
 		PoslovniPartner poslovniPartnerToBeDeleted = poslovniPartnerRepository.findBySifraPartnera(poslovniPartner.getSifraPartnera());
 		poslovniPartnerRepository.delete(poslovniPartnerToBeDeleted);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteById(Integer sifraPartnera) {
 		poslovniPartnerRepository.deleteBySifraPartnera(sifraPartnera);	
 	}

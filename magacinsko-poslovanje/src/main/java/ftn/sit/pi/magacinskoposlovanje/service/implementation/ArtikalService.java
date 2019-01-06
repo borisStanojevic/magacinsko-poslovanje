@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
@@ -11,7 +12,7 @@ import ftn.sit.pi.magacinskoposlovanje.repository.ArtikalRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IArtikalService;
 
 @Service
-@Transactional
+@Transactional(propagation = Propagation.SUPPORTS)
 public class ArtikalService implements IArtikalService {
 	
 	@Autowired
@@ -34,11 +35,13 @@ public class ArtikalService implements IArtikalService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Artikal add(Artikal artikal) {
 		return artikalRepository.save(artikal);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public Artikal update(Artikal artikal) {
 		Artikal artikalToBeUpdated = artikalRepository.findBySifraArtikla(artikal.getSifraArtikla());
 		artikalToBeUpdated.setNazivArtikla(artikal.getNazivArtikla());
@@ -46,12 +49,14 @@ public class ArtikalService implements IArtikalService {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(Artikal artikal) {
 		Artikal artikalToBeDeleted = artikalRepository.findBySifraArtikla(artikal.getSifraArtikla());
 		artikalRepository.delete(artikalToBeDeleted);
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteById(Integer sifraArtikla) {
 		artikalRepository.deleteById(sifraArtikla);
 	}
