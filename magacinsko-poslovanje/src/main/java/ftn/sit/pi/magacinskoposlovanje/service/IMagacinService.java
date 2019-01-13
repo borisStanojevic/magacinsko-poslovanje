@@ -2,6 +2,7 @@ package ftn.sit.pi.magacinskoposlovanje.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
 

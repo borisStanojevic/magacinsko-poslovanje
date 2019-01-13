@@ -2,13 +2,15 @@ package ftn.sit.pi.magacinskoposlovanje.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 
 public interface IMagacinskaKarticaService {
 	
 	MagacinskaKartica getById(Integer idMagacinskeKartice);
-	Page<MagacinskaKartica> getAll(Pageable pageable);
+	Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, Pageable pageable);
+	Page<MagacinskaKartica> getAllForPoslovnaGodina(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
 
 	MagacinskaKartica add(MagacinskaKartica magacinskaKartica);
 	MagacinskaKartica update(MagacinskaKartica magacinskaKartica);
