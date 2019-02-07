@@ -25,11 +25,11 @@ public class StavkaPrometnogDokumenta implements Serializable {
 	@Column(name = "ID_STAVKE_PROMETNOG_DOKUMENTA")
 	private Integer idStavkePrometnogDokumenta;
 
-	private BigDecimal cena;
+	private Double cena;
 
-	private BigDecimal kolicina;
+	private Double kolicina;
 
-	private BigDecimal vrednost;
+	private Double vrednost;
 
 	// bi-directional many-to-one association to Artikal
 	@ManyToOne(fetch = FetchType.EAGER)

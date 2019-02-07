@@ -21,9 +21,9 @@ import lombok.ToString;
 public class StavkePrometnogDokumentaDTO implements Serializable {
 
 	private Integer idStavkePrometnogDokumenta;
-	private BigDecimal cena;
-	private BigDecimal kolicina;
-	private BigDecimal vrednost;
+	private Double cena;
+	private Double kolicina;
+	private Double vrednost;
 	private ArtikalDTO artikal;
 	private PrometniDokumentDTO prometniDokument;
 

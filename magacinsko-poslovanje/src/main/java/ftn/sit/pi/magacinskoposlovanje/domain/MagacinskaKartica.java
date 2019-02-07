@@ -27,34 +27,34 @@ public class MagacinskaKartica implements Serializable {
 	@Column(name = "ID_MAGACINSKE_KARTICE")
 	private Integer idMagacinskeKartice;
 
-	private BigDecimal cena;
+	private Double cena;
 
 	@Column(name = "KOLICINA_IZLAZA")
-	private BigDecimal kolicinaIzlaza;
+	private Double kolicinaIzlaza;
 
 	@Column(name = "KOLICINA_POCETNOG_STANJA")
-	private BigDecimal kolicinaPocetnogStanja;
+	private Double kolicinaPocetnogStanja;
 
 	@Column(name = "KOLICINA_ULAZA")
-	private BigDecimal kolicinaUlaza;
+	private Double kolicinaUlaza;
 
 	@Column(name = "REDNI_BR_MAGACINSKE_KAR")
 	private Integer redniBrMagacinskeKar;
 
 	@Column(name = "UKUPNA_KOLICINA")
-	private BigDecimal ukupnaKolicina;
+	private Double ukupnaKolicina;
 
 	@Column(name = "UKUPNA_VREDNOST")
-	private BigDecimal ukupnaVrednost;
+	private Double ukupnaVrednost;
 
 	@Column(name = "VREDNOST_IZLAZA")
-	private BigDecimal vrednostIzlaza;
+	private Double vrednostIzlaza;
 
 	@Column(name = "VREDNOST_POCETNOG_STANJA")
-	private BigDecimal vrednostPocetnogStanja;
+	private Double vrednostPocetnogStanja;
 
 	@Column(name = "VREDNOST_ULAZA")
-	private BigDecimal vrednostUlaza;
+	private Double vrednostUlaza;
 
 	// bi-directional many-to-one association to AnalitikaMagacinskeKartice
 	@OneToMany(mappedBy = "magacinskaKartica", fetch = FetchType.EAGER)

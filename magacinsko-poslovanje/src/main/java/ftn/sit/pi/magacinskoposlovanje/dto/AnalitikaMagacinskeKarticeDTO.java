@@ -24,12 +24,12 @@ import lombok.ToString;
 public class AnalitikaMagacinskeKarticeDTO implements Serializable {
 
 	private Integer idAnalitike;
-	private BigDecimal cena;
+	private Double cena;
 	private Date datumNastanka;
-	private BigDecimal kolicina;
+	private Double kolicina;
 	private Smer smer;
 	private TipPrometa tipPrometa;
-	private BigDecimal vrednost;
+	private Double vrednost;
 	private MagacinskaKarticaDTO magacinskaKartica;
 
 	public static Set<AnalitikaMagacinskeKarticeDTO> convert(

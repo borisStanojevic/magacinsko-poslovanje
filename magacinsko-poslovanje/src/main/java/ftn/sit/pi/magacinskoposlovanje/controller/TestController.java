@@ -60,30 +60,30 @@ public class TestController{
 		return artikli;
 	}
 	
-	@GetMapping(value="/magacini/{sifraMagacina}/magacinske-kartice")
-	public List<Integer> testMkQuery(@PathVariable("sifraMagacina") Integer sifraMagacina, Pageable pageable)
-	{
-		Page<MagacinskaKartica> mkPage = mkService.getAll(sifraMagacina, pageable);
-		
-		List<Integer> mks = new ArrayList<>();
-		for(MagacinskaKartica mk : mkPage.getContent())
-		{
-			mks.add(mk.getIdMagacinskeKartice());
-		}
-		return mks;
-	}
+//	@GetMapping(value="/magacini/{sifraMagacina}/magacinske-kartice")
+//	public List<Integer> testMkQuery(@PathVariable("sifraMagacina") Integer sifraMagacina, Pageable pageable)
+//	{
+//		Page<MagacinskaKartica> mkPage = mkService.getAll(sifraMagacina, pageable);
+//		
+//		List<Integer> mks = new ArrayList<>();
+//		for(MagacinskaKartica mk : mkPage.getContent())
+//		{
+//			mks.add(mk.getIdMagacinskeKartice());
+//		}
+//		return mks;
+//	}
 	
-	@GetMapping(value="/magacini/{sifraMagacina}/magacinske-kartice/{idGodine}")
-	public List<Integer> testMkQuery(@PathVariable("sifraMagacina") Integer sifraMagacina, @PathVariable("idGodine") Integer idGodine, Pageable pageable)
-	{
-		Page<MagacinskaKartica> mkPage = mkService.getAllForPoslovnaGodina(sifraMagacina, idGodine, pageable);
-
-		List<Integer> mks = new ArrayList<>();
-		for(MagacinskaKartica mk : mkPage.getContent())
-		{
-			mks.add(mk.getIdMagacinskeKartice());
-		}
-		return mks;
-	}
+//	@GetMapping(value="/magacini/{sifraMagacina}/magacinske-kartice/{idGodine}")
+//	public List<Integer> testMkQuery(@PathVariable("sifraMagacina") Integer sifraMagacina, @PathVariable("idGodine") Integer idGodine, Pageable pageable)
+//	{
+//		Page<MagacinskaKartica> mkPage = mkService.getAllForPoslovnaGodina(sifraMagacina, idGodine, pageable);
+//
+//		List<Integer> mks = new ArrayList<>();
+//		for(MagacinskaKartica mk : mkPage.getContent())
+//		{
+//			mks.add(mk.getIdMagacinskeKartice());
+//		}
+//		return mks;
+//	}
 
 }

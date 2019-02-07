@@ -26,20 +26,20 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	@Column(name = "ID_ANALITIKE")
 	private Integer idAnalitike;
 
-	private BigDecimal cena;
+	private Double cena;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATUM_NASTANKA")
 	private Date datumNastanka;
 
-	private BigDecimal kolicina;
+	private Double kolicina;
 
 	private Smer smer;
 
 	@Column(name = "TIP_PROMETA")
 	private TipPrometa tipPrometa;
 
-	private BigDecimal vrednost;
+	private Double vrednost;
 
 	// bi-directional many-to-one association to MagacinskaKartica
 	@ManyToOne

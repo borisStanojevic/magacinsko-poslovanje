@@ -21,16 +21,16 @@ import lombok.ToString;
 public class MagacinskaKarticaDTO implements Serializable {
 
 	private Integer idMagacinskeKartice;
-	private BigDecimal cena;
-	private BigDecimal kolicinaIzlaza;
-	private BigDecimal kolicinaPocetnogStanja;
-	private BigDecimal kolicinaUlaza;
+	private Double cena;
+	private Double kolicinaIzlaza;
+	private Double kolicinaPocetnogStanja;
+	private Double kolicinaUlaza;
 	private Integer redniBrMagacinskeKar;
-	private BigDecimal ukupnaKolicina;
-	private BigDecimal ukupnaVrednost;
-	private BigDecimal vrednostIzlaza;
-	private BigDecimal vrednostPocetnogStanja;
-	private BigDecimal vrednostUlaza;
+	private Double ukupnaKolicina;
+	private Double ukupnaVrednost;
+	private Double vrednostIzlaza;
+	private Double vrednostPocetnogStanja;
+	private Double vrednostUlaza;
 	private Set<AnalitikaMagacinskeKarticeDTO> analitikeMagacinskeKartice;
 	private ArtikalDTO artikal;
 	private MagacinDTO magacin;
