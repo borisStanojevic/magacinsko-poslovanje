@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +31,11 @@ public class Preduzece implements Serializable {
 	private String adresaPreduzeca;
 
 	@Column(name = "NAZIV_PREDUZECA")
+	@NotBlank(message = "Morate navesti naziv preduzeca")
 	private String nazivPreduzeca;
 
+	@NotBlank(message = "Morate navesti PIB preduzeca")
+	@Size(min=8, max=8, message = "PIB mora sadrzati tacno 8 cifara")
 	private String pib;
 
 	// bi-directional many-to-one association to KategorijaArtikala

@@ -2,6 +2,9 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +30,13 @@ public class Radnik implements Serializable {
 
 	@Column(name = "IME_PREZIME")
 	private String imePrezime;
-
+	
+	@NotBlank(message = "Morate navesti sifru")
+	@Size(min=6, message = "Sifra mora sadrzati minimum 6 karaktera")
 	private String password;
-
+	
+	@NotBlank(message = "Morate navesti korisnicko ime")
+	@Pattern(regexp = "^\\w{6,20}$", message = "Korisnicko ime mora biti izmedju 6 i 20 karaktera, i sadrzati samo slova, cifre i _")
 	private String username;
 
 	// bi-directional many-to-one association to Magacin

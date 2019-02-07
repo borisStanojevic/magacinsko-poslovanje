@@ -2,6 +2,7 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,12 @@ public class Mesto implements Serializable {
 	@Id
 	@Column(name = "POSTANSKI_BROJ")
 	private String postanskiBroj;
-
+	
+	@NotBlank(message = "Morate navesti drzavu")
 	private String drzava;
 
 	@Column(name = "NAZIV_MESTA")
+	@NotBlank(message = "Morate navesti naziv mesta")
 	private String nazivMesta;
 
 	// bi-directional many-to-one association to PoslovniPartner

@@ -2,6 +2,8 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,8 +32,11 @@ public class PoslovniPartner implements Serializable {
 	private String adresaPoslovnogPartnera;
 
 	@Column(name = "NAZIV_PARTNERA")
+	@NotBlank(message = "Morate navesti naziv poslovnog partnera")
 	private String nazivPartnera;
-
+	
+	@NotBlank(message = "Morate navesti PIB poslovnog partnera")
+	@Size(min=8, max=8, message = "PIB mora sadrzati tacno 8 cifara")
 	private String pib;
 
 	@Column(name = "TIP_PARTNERA")

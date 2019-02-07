@@ -2,6 +2,7 @@ package ftn.sit.pi.magacinskoposlovanje.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Magacin implements Serializable {
 	private Integer sifraMagacina;
 
 	@Column(name = "NAZIV_MAGACINA")
+	@NotBlank(message = "Morate navesti naziv magacina")
 	private String nazivMagacina;
 
 	// bi-directional many-to-one association to Preduzece
