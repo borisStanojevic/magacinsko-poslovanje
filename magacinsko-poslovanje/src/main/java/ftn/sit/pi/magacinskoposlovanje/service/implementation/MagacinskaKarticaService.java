@@ -28,16 +28,10 @@ public class MagacinskaKarticaService implements IMagacinskaKarticaService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, Pageable pageable) {
-		return magacinskaKarticaRepository.findAll(pageable);
+	public Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable) {
+		return magacinskaKarticaRepository.findAll(sifraMagacina, idGodine, pageable);
 	}
 	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<MagacinskaKartica> getAllForPoslovnaGodina(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable) {
-		return magacinskaKarticaRepository.getAllForPoslovnaGodina(sifraMagacina, idGodine, pageable);
-	}
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public MagacinskaKartica add(MagacinskaKartica magacinskaKartica) {

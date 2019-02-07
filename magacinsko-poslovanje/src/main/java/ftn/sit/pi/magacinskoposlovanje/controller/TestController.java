@@ -30,7 +30,7 @@ import ftn.sit.pi.magacinskoposlovanje.service.implementation.MagacinskaKarticaS
 public class TestController{
 	
 	@Autowired MagacinService magacinService;
-//	@Autowired KategorijaArtikalaService kategorijaArtikalaService;
+	@Autowired KategorijaArtikalaService kategorijaArtikalaService;
 	@Autowired ArtikalService artikalService;
 	@Autowired MagacinskaKarticaService mkService;
 	
@@ -41,12 +41,12 @@ public class TestController{
 		return magaciniPage.getNumberOfElements();
 	}
 	
-//	@GetMapping(value="/kategorije")
-//	public Integer testKategorijeQuery()
-//	{
-//		Page<KategorijaArtikala> kategorijePage = kategorijaArtikalaService.getAll(new PageRequest(0, 5));
-//		return kategorijePage.getNumberOfElements();
-//	}
+	@GetMapping(value="/kategorije")
+	public Integer testKategorijeQuery()
+	{
+		Page<KategorijaArtikala> kategorijePage = kategorijaArtikalaService.getAll(new PageRequest(0, 5));
+		return kategorijePage.getNumberOfElements();
+	}
 	
 	@GetMapping(value="/artikli")
 	public List<String> testArtikliQuery()
@@ -64,7 +64,7 @@ public class TestController{
 	public List<Integer> testMkQuery(@PathVariable("sifraMagacina") Integer sifraMagacina, Pageable pageable)
 	{
 		Page<MagacinskaKartica> mkPage = mkService.getAll(sifraMagacina, pageable);
-
+		
 		List<Integer> mks = new ArrayList<>();
 		for(MagacinskaKartica mk : mkPage.getContent())
 		{

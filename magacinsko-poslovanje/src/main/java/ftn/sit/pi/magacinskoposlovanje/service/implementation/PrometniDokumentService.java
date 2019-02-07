@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +28,18 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<PrometniDokument> getAll(Pageable pageable) {
-		return prometniDokumentRepository.findAll(pageable);
+	public Page<PrometniDokument> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine,Pageable pageable)
+	{
+		return prometniDokumentRepository.findAll(sifraMagacina, idGodine, pageable);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<PrometniDokument> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, @Param("sifraPartnera") Integer sifraPartnera,Pageable pageable)
+	{
+		return prometniDokumentRepository.findAll(sifraMagacina, idGodine, sifraPartnera, pageable);
+	}
+
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)

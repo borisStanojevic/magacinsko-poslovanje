@@ -16,10 +16,8 @@ public interface MagacinskaKarticaRepository extends PagingAndSortingRepository<
 	MagacinskaKartica findByIdMagacinskeKartice(Integer idMagacinskeKartice);
 	void deleteByIdMagacinskeKartice(Integer idMagacinskeKartice);
 	
-	@Query("SELECT mk FROM MagacinskaKartica mk WHERE mk.magacin.sifraMagacina = :sifraMagacina")
-	Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, Pageable pageable);
-	
-	@Query("SELECT mk FROM MagacinskaKartica mk WHERE mk.magacin.sifraMagacina = :sifraMagacina AND mk.poslovnaGodina.idGodine = :idGodine")
-	Page<MagacinskaKartica> getAllForPoslovnaGodina(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
+	@Query("SELECT mk FROM MagacinskaKartica mk WHERE mk.magacin.sifraMagacina = :sifraMagacina"
+			+ " AND mk.poslovnaGodina.idGodine = :idGodine")
+	Page<MagacinskaKartica> findAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
 	
 }

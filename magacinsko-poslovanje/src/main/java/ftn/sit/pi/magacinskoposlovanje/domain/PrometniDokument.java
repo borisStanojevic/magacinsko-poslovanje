@@ -62,7 +62,7 @@ public class PrometniDokument implements Serializable {
 	private PoslovniPartner poslovniPartner;
 
 	// bi-directional many-to-one association to StavkePrometnogDokumenta
-	@OneToMany(mappedBy = "prometniDokument")
+	@OneToMany(mappedBy = "prometniDokument", fetch = FetchType.EAGER)
 	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta = new HashSet<>();
 
 	@Version

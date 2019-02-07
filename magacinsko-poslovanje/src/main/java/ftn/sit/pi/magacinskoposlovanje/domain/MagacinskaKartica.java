@@ -57,7 +57,7 @@ public class MagacinskaKartica implements Serializable {
 	private BigDecimal vrednostUlaza;
 
 	// bi-directional many-to-one association to AnalitikaMagacinskeKartice
-	@OneToMany(mappedBy = "magacinskaKartica")
+	@OneToMany(mappedBy = "magacinskaKartica", fetch = FetchType.EAGER)
 	private Set<AnalitikaMagacinskeKartice> analitikeMagacinskeKartice = new HashSet<>();
 
 	// bi-directional many-to-one association to Artikal

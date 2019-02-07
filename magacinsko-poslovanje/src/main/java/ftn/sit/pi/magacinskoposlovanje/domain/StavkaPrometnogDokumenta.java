@@ -32,7 +32,7 @@ public class StavkaPrometnogDokumenta implements Serializable {
 	private BigDecimal vrednost;
 
 	// bi-directional many-to-one association to Artikal
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SIFRA_ARTIKLA")
 	private Artikal artikal;
 

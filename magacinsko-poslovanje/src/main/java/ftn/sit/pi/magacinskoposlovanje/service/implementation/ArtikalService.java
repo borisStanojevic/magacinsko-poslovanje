@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +25,21 @@ public class ArtikalService implements IArtikalService {
 	public Artikal getById(Integer sifraArtikla) {
 		return artikalRepository.findBySifraArtikla(sifraArtikla);
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Artikal> getAll(Pageable pageable) {
+
+		return artikalRepository.findAll(pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Artikal> getAll(@Param("idKategorije") Integer idKategorije, Pageable pageable) {
 		// Samo proslijedjujem pageable, ne radim konkretnu implementaciju
 		// jer postoji opcija da kontroler podesimo da iz url-a izvuce
 		// sve potrebno za paginaciju (i sortiranje), kreira Pageable i samo ga proslijedi servisu
-		return artikalRepository.findAll(pageable);
+		return artikalRepository.findAll(idKategorije, pageable);
 	}
 
 	@Override
