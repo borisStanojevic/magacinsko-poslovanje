@@ -42,7 +42,7 @@ public class PoslovnaGodina implements Serializable {
 
 	@Version
 	private Integer version;
-
+	//test commit
 	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskeKartica) {
 		getMagacinskeKartice().add(magacinskeKartica);
 		magacinskeKartica.setPoslovnaGodina(this);
