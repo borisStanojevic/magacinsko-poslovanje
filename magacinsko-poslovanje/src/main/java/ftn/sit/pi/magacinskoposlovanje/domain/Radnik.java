@@ -46,6 +46,15 @@ public class Radnik implements Serializable {
 	// bi-directional many-to-one association to Preduzece
 	@OneToMany(mappedBy = "radnik")
 	private Set<Preduzece> preduzeca = new HashSet<>();
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable( name = "radnik_roles",
+				joinColumns = @JoinColumn(name = "radnik_id"),
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+	
+	
 
 	public Magacin addMagacin(Magacin magacin) {
 		getMagacini().add(magacin);
@@ -74,5 +83,13 @@ public class Radnik implements Serializable {
 
 		return preduzece;
 	}
+
+	public Radnik(String username, String imePrezime, String password) {
+		this.username = username;
+		this.imePrezime = imePrezime;
+		this.password = password;
+	}
+	
+	
 
 }
