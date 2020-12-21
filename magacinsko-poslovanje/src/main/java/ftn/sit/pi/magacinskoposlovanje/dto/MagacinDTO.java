@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,7 @@ public class MagacinDTO implements Serializable {
 	private String nazivMagacina;
 	private PreduzeceDTO preduzece;
 	private RadnikDTO radnik;
+	@JsonIgnore
 	private Set<MagacinskaKarticaDTO> magacinskeKartice;
 	private Set<PrometniDokumentDTO> prometniDokument;
 

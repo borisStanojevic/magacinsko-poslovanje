@@ -40,10 +40,12 @@ public class PrometniDokument implements Serializable {
 
 	@Column(name = "REDNI_BROJ_DOKUMETNA")
 	private Integer redniBrojDokumetna;
-
+	
+	@Enumerated(EnumType.STRING)
 	private Status status;
 
 	@Column(name = "TIP_PROMETNOG_DOKUMENTA")
+	@Enumerated(EnumType.STRING)
 	private TipPrometnogDokumenta tipPrometnogDokumenta;
 
 	// bi-directional many-to-one association to Magacin

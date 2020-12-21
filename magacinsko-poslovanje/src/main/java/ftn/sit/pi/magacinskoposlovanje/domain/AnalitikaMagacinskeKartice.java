@@ -34,9 +34,11 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 
 	private Double kolicina;
 
+	@Enumerated(EnumType.STRING)
 	private Smer smer;
 
 	@Column(name = "TIP_PROMETA")
+	@Enumerated(EnumType.STRING)
 	private TipPrometa tipPrometa;
 
 	private Double vrednost;

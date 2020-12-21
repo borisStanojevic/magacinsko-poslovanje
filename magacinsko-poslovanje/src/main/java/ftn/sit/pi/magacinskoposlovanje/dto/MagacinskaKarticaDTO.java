@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +35,9 @@ public class MagacinskaKarticaDTO implements Serializable {
 	private Double vrednostUlaza;
 	private Set<AnalitikaMagacinskeKarticeDTO> analitikeMagacinskeKartice;
 	private ArtikalDTO artikal;
+	@JsonIgnore
 	private MagacinDTO magacin;
+	@JsonIgnore
 	private PoslovnaGodinaDTO poslovnaGodina;
 
 	public static Set<MagacinskaKarticaDTO> convert(Set<MagacinskaKartica> magacinskaKarticaEntitySet) {

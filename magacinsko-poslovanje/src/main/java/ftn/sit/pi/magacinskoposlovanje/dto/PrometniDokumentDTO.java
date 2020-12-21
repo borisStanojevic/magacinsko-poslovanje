@@ -22,6 +22,10 @@ import lombok.ToString;
 @ToString
 public class PrometniDokumentDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2562294355463301143L;
 	private Integer idPrometnogDokumenta;
 	private Integer brojPrometnogDokumenta;
 	private Date datumFormiranja;

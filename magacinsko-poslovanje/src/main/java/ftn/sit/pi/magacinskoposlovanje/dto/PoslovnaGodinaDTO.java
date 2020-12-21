@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +25,9 @@ public class PoslovnaGodinaDTO implements Serializable {
 	private Integer idGodine;
 	private Date godina;
 	private Boolean zakljucena;
+	@JsonIgnore
 	private Set<MagacinskaKarticaDTO> magacinskeKartice;
+	@JsonIgnore
 	private Set<PrometniDokumentDTO> prometniDokumenti;
 
 	public static Set<PoslovnaGodinaDTO> convert(Set<PoslovnaGodina> poslovnaGodinaEntitySet) {

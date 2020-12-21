@@ -40,6 +40,7 @@ public class PoslovniPartner implements Serializable {
 	private String pib;
 
 	@Column(name = "TIP_PARTNERA")
+	@Enumerated(EnumType.STRING)
 	private TipPartnera tipPartnera;
 
 	// bi-directional many-to-one association to Mesto
