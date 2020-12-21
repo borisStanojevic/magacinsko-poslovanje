@@ -26,7 +26,7 @@ public class JedinicaMereDTO implements Serializable {
 
 	private Integer idJedMere;
 	private String nazivJediniceMere;
-	private Set<ArtikalDTO> artikli;
+	//private Set<ArtikalDTO> artikli;
 
 	public static Set<JedinicaMereDTO> convert(Set<JedinicaMere> jedinicaMereEntitySet) {
 		Set<JedinicaMereDTO> jedinicaMereDTOSet = new HashSet<>();
@@ -40,8 +40,7 @@ public class JedinicaMereDTO implements Serializable {
 	}
 
 	public JedinicaMereDTO(JedinicaMere jedinicaMere) {
-		this(jedinicaMere.getIdJedMere(), jedinicaMere.getNazivJediniceMere(),
-				ArtikalDTO.convert(jedinicaMere.getArtikli()));
+		this(jedinicaMere.getIdJedMere(), jedinicaMere.getNazivJediniceMere());
 	}
 
 }

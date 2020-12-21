@@ -10,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
@@ -35,6 +37,7 @@ public class MagacinController {
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	@GetMapping(value="/all")
 	public ResponseEntity<Set<MagacinDTO>> returnAll(){
 		
@@ -44,6 +47,16 @@ public class MagacinController {
 		
 		return new ResponseEntity<Set<MagacinDTO>>(dto,HttpStatus.OK);
 		
+	}
+	
+	@GetMapping(value="/get-by-id/{id}")
+	public ResponseEntity<MagacinDTO> getById(@PathVariable Integer id) {
+		
+		
+		Magacin magacin = magacinService.getById(id);
+		MagacinDTO magacinDTO = magacinToDTO.convert(magacin);
+		
+		return new ResponseEntity<MagacinDTO>(magacinDTO, HttpStatus.OK);
 	}
 
 }

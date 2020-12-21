@@ -25,7 +25,7 @@ public class JedinicaMereToDTO implements Converter<JedinicaMere, JedinicaMereDT
 		JedinicaMereDTO jedinicaMereDTO = new JedinicaMereDTO();
 		jedinicaMereDTO.setIdJedMere(source.getIdJedMere());
 		jedinicaMereDTO.setNazivJediniceMere(source.getNazivJediniceMere());
-		jedinicaMereDTO.setArtikli(artikalToDTO.convert(source.getArtikli()));
+		//jedinicaMereDTO.setArtikli(artikalToDTO.convert(source.getArtikli()));
 		
 		return jedinicaMereDTO;
 	}
