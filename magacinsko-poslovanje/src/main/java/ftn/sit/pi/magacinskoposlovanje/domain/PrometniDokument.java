@@ -39,7 +39,7 @@ public class PrometniDokument implements Serializable {
 	private Date datumKnjizenja;
 
 	@Column(name = "REDNI_BROJ_DOKUMETNA")
-	private Integer redniBrojDokumetna;
+	private Integer redniBrojDokumenta;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
