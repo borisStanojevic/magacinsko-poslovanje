@@ -29,7 +29,7 @@ public class ArtikalDTO implements Serializable {
 	private JedinicaMereDTO jedinicaMere;
 	private KategorijaArtikalaDTO kategorijaArtikala;
 	private Set<MagacinskaKarticaDTO> magacinskeKartice;
-	private Set<StavkePrometnogDokumentaDTO> stavkePrometnogDokumenta;
+	private Set<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta;
 
 	public static Set<ArtikalDTO> convert(Set<Artikal> artikalEntitySet) {
 		Set<ArtikalDTO> artikalDTOSet = new HashSet<>();
@@ -46,7 +46,7 @@ public class ArtikalDTO implements Serializable {
 		this(artikal.getSifraArtikla(), artikal.getNazivArtikla(), new JedinicaMereDTO(artikal.getJedinicaMere()),
 				new KategorijaArtikalaDTO(artikal.getKategorijaArtikala()),
 				MagacinskaKarticaDTO.convert(artikal.getMagacinskeKartice()),
-				StavkePrometnogDokumentaDTO.convert(artikal.getStavkePrometnogDokumenta()));
+				StavkaPrometnogDokumentaDTO.convert(artikal.getStavkePrometnogDokumenta()));
 	}
 
 }

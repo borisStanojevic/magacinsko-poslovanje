@@ -36,7 +36,7 @@ public class PrometniDokumentDTO implements Serializable {
 	private MagacinDTO magacin;
 	private PoslovnaGodinaDTO poslovnaGodina;
 	private PoslovniPartnerDTO poslovniPartner;
-	private Set<StavkePrometnogDokumentaDTO> stavkePrometnogDokumenta;
+	private Set<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta;
 
 	public static Set<PrometniDokumentDTO> convert(Set<PrometniDokument> prometniDokumentEntitySet) {
 		Set<PrometniDokumentDTO> prometniDokumentDTOSet = new HashSet<>();
@@ -56,7 +56,7 @@ public class PrometniDokumentDTO implements Serializable {
 				prometniDokument.getTipPrometnogDokumenta(), new MagacinDTO(prometniDokument.getMagacin()),
 				new PoslovnaGodinaDTO(prometniDokument.getPoslovnaGodina()),
 				new PoslovniPartnerDTO(prometniDokument.getPoslovniPartner()),
-				StavkePrometnogDokumentaDTO.convert(prometniDokument.getStavkePrometnogDokumenta()));
+				StavkaPrometnogDokumentaDTO.convert(prometniDokument.getStavkePrometnogDokumenta()));
 	}
 
 }
