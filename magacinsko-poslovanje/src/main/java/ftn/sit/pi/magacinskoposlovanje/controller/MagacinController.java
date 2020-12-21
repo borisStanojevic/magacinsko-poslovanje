@@ -51,8 +51,7 @@ public class MagacinController {
 	
 	@GetMapping(value="/get-by-id/{id}")
 	public ResponseEntity<MagacinDTO> getById(@PathVariable Integer id) {
-		
-		
+				
 		Magacin magacin = magacinService.getById(id);
 		MagacinDTO magacinDTO = magacinToDTO.convert(magacin);
 		

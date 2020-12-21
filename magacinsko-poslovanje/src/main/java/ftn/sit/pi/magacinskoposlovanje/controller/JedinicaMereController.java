@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +40,12 @@ public class JedinicaMereController {
 		return new ResponseEntity<Set<JedinicaMereDTO>>(dto, HttpStatus.OK);
 	}
 	
-	
+	@PostMapping(value="/create", consumes="application/json")
+	public ResponseEntity<?> createJedinicaMere(@RequestBody JedinicaMere jedinicaMere, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+		}
+		JedinicaMere newJedinicaMere = jedinicaMereService.add(jedinicaMere);
+		return new ResponseEntity<>(newJedinicaMere, HttpStatus.OK);
+	}
 }

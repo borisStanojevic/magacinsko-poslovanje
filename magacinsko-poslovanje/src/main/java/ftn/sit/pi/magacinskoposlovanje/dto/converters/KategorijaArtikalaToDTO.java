@@ -27,7 +27,7 @@ public class KategorijaArtikalaToDTO implements Converter<KategorijaArtikala, Ka
 		KategorijaArtikalaDTO kategorijaArtikalaDTO = new KategorijaArtikalaDTO();
 		kategorijaArtikalaDTO.setIdKategorije(source.getIdKategorije());
 		kategorijaArtikalaDTO.setNazivKategorije(source.getNazivKategorije());
-		kategorijaArtikalaDTO.setArtikli(artikalToDTO.convert(source.getArtikli()));
+		//kategorijaArtikalaDTO.setArtikli(artikalToDTO.convert(source.getArtikli()));
 		kategorijaArtikalaDTO.setPreduzece(preduzeceToDTO.convert(source.getPreduzece()));
 	
 		return kategorijaArtikalaDTO;
