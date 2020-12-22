@@ -9,11 +9,15 @@ public interface IPoslovniPartnerService {
 	
 	PoslovniPartner getById(Integer sifraPartnera);
 	Page<PoslovniPartner> getAll(Pageable pageable);
+	Page<PoslovniPartner> getByDobavljaci(Pageable pageable);
+	Page<PoslovniPartner> getByKupci(Pageable pageable);
+	Page<PoslovniPartner> getByDobavljaciKupci(Pageable pageable);
 
 	PoslovniPartner add(PoslovniPartner poslovniPartner);
 	PoslovniPartner update(PoslovniPartner PoslovniPartner);
 	
 	void delete(PoslovniPartner poslovniPartner);
 	void deleteById(Integer sifraPartnera);
+	
 
 }

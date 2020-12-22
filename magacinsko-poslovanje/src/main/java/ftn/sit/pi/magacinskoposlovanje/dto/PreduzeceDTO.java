@@ -24,10 +24,10 @@ public class PreduzeceDTO implements Serializable {
 	private String nazivPreduzeca;
 	private String pib;
 	//private Set<KategorijaArtikalaDTO> kategorijeArtikala;
-	private Set<MagacinDTO> magacini;
+	//private Set<MagacinDTO> magacini;
 	//private MestoDTO mesto;
 	private String nazivMesta;
-	private RadnikDTO radnik;
+	//private RadnikDTO radnik;
 
 	public static Set<PreduzeceDTO> convert(Set<Preduzece> preduzeceEntitySet) {
 		Set<PreduzeceDTO> preduzeceDTOSet = new HashSet<>();
@@ -42,8 +42,7 @@ public class PreduzeceDTO implements Serializable {
 
 	public PreduzeceDTO(Preduzece preduzece) {
 		this(preduzece.getSifraPreduzeca(), preduzece.getAdresaPreduzeca(), preduzece.getNazivPreduzeca(),
-				preduzece.getPib(), MagacinDTO.convert(preduzece.getMagacini()), preduzece.getMesto().getNazivMesta(),
-				new RadnikDTO(preduzece.getRadnik()));
+				preduzece.getPib(), preduzece.getMesto().getNazivMesta());
 	}
 
 }

@@ -30,6 +30,25 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	public Page<PoslovniPartner> getAll(Pageable pageable) {
 		return poslovniPartnerRepository.findAll(pageable);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<PoslovniPartner> getByDobavljaci(Pageable pageable) {
+		return poslovniPartnerRepository.findByTipPartneraD(pageable);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<PoslovniPartner> getByKupci(Pageable pageable) {
+		return poslovniPartnerRepository.findByTipPartneraK(pageable);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<PoslovniPartner> getByDobavljaciKupci(Pageable pageable) {
+		return poslovniPartnerRepository.findByTipPartneraDiK(pageable);
+	}
+	
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
