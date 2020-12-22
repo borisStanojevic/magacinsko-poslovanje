@@ -35,11 +35,11 @@ public class KategorijaArtikala implements Serializable {
 	@OneToMany(mappedBy = "kategorijaArtikala")
 	private Set<Artikal> artikli = new HashSet<>();
 
-	// bi-directional many-to-one association to Preduzece
+	/*// bi-directional many-to-one association to Preduzece
 	@ManyToOne
 	@JoinColumn(name = "SIFRA_PREDUZECA")
 	private Preduzece preduzece;
-
+*/
 	@Version
 	private Integer version;
 

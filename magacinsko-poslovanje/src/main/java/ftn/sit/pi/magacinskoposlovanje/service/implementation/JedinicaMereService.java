@@ -40,8 +40,10 @@ public class JedinicaMereService implements IJedinicaMereService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public JedinicaMere update(JedinicaMere jedinicaMere) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		JedinicaMere jedinicaMereEdit = jedinicaMereRepository.findByIdJedMere(jedinicaMere.getIdJedMere());
+		jedinicaMereEdit.setNazivJediniceMere(jedinicaMere.getNazivJediniceMere());
+		return jedinicaMereRepository.save(jedinicaMereEdit);
 	}
 
 	@Override

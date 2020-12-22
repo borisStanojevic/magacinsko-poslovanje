@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.dto.converters;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,8 @@ import ftn.sit.pi.magacinskoposlovanje.dto.PreduzeceDTO;
 @Component
 public class PreduzeceToDTO implements Converter<Preduzece, PreduzeceDTO> {
 
+	@Autowired
+	MestoToDTO mestoToDTO;
 
 	@Override
 	public PreduzeceDTO convert(Preduzece source) {
@@ -24,6 +27,8 @@ public class PreduzeceToDTO implements Converter<Preduzece, PreduzeceDTO> {
 		predDTO.setAdresaPreduzeca(source.getAdresaPreduzeca());
 		predDTO.setNazivPreduzeca(source.getNazivPreduzeca());
 		predDTO.setPib(source.getPib());
+		predDTO.setNazivMesta(source.getMesto().getNazivMesta());
+		//predDTO.setMesto(mestoToDTO.convert(source.getMesto()));
 		//kategorija artikala
 		//magacindto
 		//radnikdto

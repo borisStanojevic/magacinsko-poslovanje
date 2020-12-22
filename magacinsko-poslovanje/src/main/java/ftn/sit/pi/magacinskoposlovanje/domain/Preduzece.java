@@ -38,10 +38,10 @@ public class Preduzece implements Serializable {
 	@Size(min=8, max=8, message = "PIB mora sadrzati tacno 8 cifara")
 	private String pib;
 
-	// bi-directional many-to-one association to KategorijaArtikala
+	/*// bi-directional many-to-one association to KategorijaArtikala
 	@OneToMany(mappedBy = "preduzece")
 	private Set<KategorijaArtikala> kategorijeArtikala = new HashSet<>();
-
+*/
 	// bi-directional many-to-one association to Magacin
 	@OneToMany(mappedBy = "preduzece")
 	private Set<Magacin> magacini = new HashSet<>();
@@ -59,7 +59,7 @@ public class Preduzece implements Serializable {
 	@Version
 	private Integer version;
 
-	public KategorijaArtikala addKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
+/*	public KategorijaArtikala addKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
 		getKategorijeArtikala().add(kategorijaArtikala);
 		kategorijaArtikala.setPreduzece(this);
 
@@ -71,7 +71,7 @@ public class Preduzece implements Serializable {
 		kategorijaArtikala.setPreduzece(null);
 
 		return kategorijaArtikala;
-	}
+	}*/
 
 	public Magacin addMagacin(Magacin magacin) {
 		getMagacini().add(magacin);

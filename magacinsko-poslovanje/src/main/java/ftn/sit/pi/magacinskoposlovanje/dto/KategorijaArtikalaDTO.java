@@ -22,7 +22,7 @@ public class KategorijaArtikalaDTO implements Serializable {
 	private Integer idKategorije;
 	private String nazivKategorije;
 	private Set<ArtikalDTO> artikli;
-	private PreduzeceDTO preduzece;
+	//private PreduzeceDTO preduzece;
 
 	public static Set<KategorijaArtikalaDTO> convert(Set<KategorijaArtikala> kategorijaArtikalaEntitySet) {
 		Set<KategorijaArtikalaDTO> kategorijaArtikalaDTOSet = new HashSet<>();
@@ -37,8 +37,7 @@ public class KategorijaArtikalaDTO implements Serializable {
 
 	public KategorijaArtikalaDTO(KategorijaArtikala kategorijaArtikala) {
 		this(kategorijaArtikala.getIdKategorije(), kategorijaArtikala.getNazivKategorije(),
-				ArtikalDTO.convert(kategorijaArtikala.getArtikli()),
-				new PreduzeceDTO(kategorijaArtikala.getPreduzece()));
+				ArtikalDTO.convert(kategorijaArtikala.getArtikli()));
 	}
 
 }

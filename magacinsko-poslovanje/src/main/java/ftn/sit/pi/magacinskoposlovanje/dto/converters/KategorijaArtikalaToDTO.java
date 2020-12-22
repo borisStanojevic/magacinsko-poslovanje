@@ -16,9 +16,9 @@ public class KategorijaArtikalaToDTO implements Converter<KategorijaArtikala, Ka
 	@Autowired
 	ArtikalToDTO artikalToDTO;
 	
-	@Autowired
+	/*@Autowired
 	PreduzeceToDTO preduzeceToDTO;
-	
+	*/
 	public KategorijaArtikalaDTO convert(KategorijaArtikala source) {
 		
 		if(source == null) {
@@ -28,7 +28,7 @@ public class KategorijaArtikalaToDTO implements Converter<KategorijaArtikala, Ka
 		kategorijaArtikalaDTO.setIdKategorije(source.getIdKategorije());
 		kategorijaArtikalaDTO.setNazivKategorije(source.getNazivKategorije());
 		//kategorijaArtikalaDTO.setArtikli(artikalToDTO.convert(source.getArtikli()));
-		kategorijaArtikalaDTO.setPreduzece(preduzeceToDTO.convert(source.getPreduzece()));
+		//kategorijaArtikalaDTO.setPreduzece(preduzeceToDTO.convert(source.getPreduzece()));
 	
 		return kategorijaArtikalaDTO;
 	}

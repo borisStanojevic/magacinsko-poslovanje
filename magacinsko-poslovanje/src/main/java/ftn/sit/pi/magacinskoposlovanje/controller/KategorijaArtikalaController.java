@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,5 +49,11 @@ public class KategorijaArtikalaController {
 		}
 		KategorijaArtikala newKategorijaArtikala = kategorijaArtikalaService.add(kategorijaArtikala);
 		return new ResponseEntity<>(newKategorijaArtikala, HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/update/{id}", consumes="application/json")
+	public ResponseEntity<?> updateKategorijaArtikala(@RequestBody KategorijaArtikala kategorijaArtikala, @PathVariable Integer id) {
+		KategorijaArtikala kategorijaArtikalaUpdated = kategorijaArtikalaService.update(kategorijaArtikala);
+		return new ResponseEntity<>(kategorijaArtikalaUpdated, HttpStatus.OK);
 	}
 }

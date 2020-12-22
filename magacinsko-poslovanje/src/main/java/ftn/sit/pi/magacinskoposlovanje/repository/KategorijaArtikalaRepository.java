@@ -14,7 +14,10 @@ public interface KategorijaArtikalaRepository extends PagingAndSortingRepository
 	
 	KategorijaArtikala findByIdKategorije(Integer idKategorije);
 	
-	@Query("SELECT k FROM KategorijaArtikala k WHERE k.preduzece.sifraPreduzeca = 100")
+	/*@Query("SELECT k FROM KategorijaArtikala k WHERE k.preduzece.sifraPreduzeca = 100")
+	Page<KategorijaArtikala> getAll(Pageable pageable);*/
+	
+	@Query("SELECT k FROM KategorijaArtikala k")
 	Page<KategorijaArtikala> getAll(Pageable pageable);
 	
 }
