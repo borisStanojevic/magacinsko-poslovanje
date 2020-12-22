@@ -30,8 +30,8 @@ public class StavkaPrometnogDokumentaToDTO implements Converter<StavkaPrometnogD
 		stavkaDTO.setCena(source.getCena());
 		stavkaDTO.setKolicina(source.getKolicina());
 		stavkaDTO.setVrednost(source.getVrednost());
-		stavkaDTO.setArtikal(artikalToDTO.convert(source.getArtikal()));
-		stavkaDTO.setPrometniDokument(prometniDokumentToDTO.convert(source.getPrometniDokument()));
+		//stavkaDTO.setArtikal(artikalToDTO.convert(source.getArtikal()));
+		//stavkaDTO.setPrometniDokument(prometniDokumentToDTO.convert(source.getPrometniDokument()));
 	
 		return stavkaDTO;
 	}

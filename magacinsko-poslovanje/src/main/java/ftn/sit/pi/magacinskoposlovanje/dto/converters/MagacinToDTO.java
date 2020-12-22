@@ -39,7 +39,7 @@ public class MagacinToDTO implements Converter<Magacin, MagacinDTO> {
 		magacinDTO.setSifraMagacina(source.getSifraMagacina());
 		magacinDTO.setPreduzece(preduzeceToDTO.convert(source.getPreduzece()));
 		magacinDTO.setPrometniDokument(promDokToDTO.convert(source.getPrometniDokumenti()));
-		//magacinDTO.setMagacinskeKartice(magKarticaToDTO.convert(source.getMagacinskeKartice()));
+		magacinDTO.setMagacinskeKartice(magKarticaToDTO.convert(source.getMagacinskeKartice()));
 		return magacinDTO;
 	}
 

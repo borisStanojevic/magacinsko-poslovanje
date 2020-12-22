@@ -21,6 +21,12 @@ public class MagacinskaKarticaToDTO implements Converter<MagacinskaKartica, Maga
 	@Autowired
 	PoslovnaGodinaToDTO poslGodToDTO;
 	
+	@Autowired
+	AnalitikaMagacinskeKarticeToDTO analitikaToDTO;
+	
+	@Autowired
+	ArtikalToDTO artikalToDTO;
+	
 	@Override
 	public MagacinskaKarticaDTO convert(MagacinskaKartica source) {
 		if(source == null) {
@@ -40,6 +46,8 @@ public class MagacinskaKarticaToDTO implements Converter<MagacinskaKartica, Maga
 		magDTO.setVrednostUlaza(source.getVrednostUlaza());
 		magDTO.setVrednostPocetnogStanja(source.getVrednostPocetnogStanja());
 		magDTO.setVrednostUlaza(source.getVrednostUlaza());
+		magDTO.setArtikal(artikalToDTO.convert(source.getArtikal()));
+		magDTO.setAnalitikeMagacinskeKartice(analitikaToDTO.convert(source.getAnalitikeMagacinskeKartice()));
 		//analitika magacinske kartice
 		//magDTO.setMagacin(magacinToDTO.convert(source.getMagacin()));
 		//magDTO.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));

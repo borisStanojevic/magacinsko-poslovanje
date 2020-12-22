@@ -37,7 +37,7 @@ public class ArtikalToDTO implements Converter<Artikal, ArtikalDTO> {
 		artikalDTO.setNazivArtikla(source.getNazivArtikla());
 		artikalDTO.setJedinicaMere(jedinicaMereToDTO.convert(source.getJedinicaMere()));
 		artikalDTO.setKategorijaArtikala(kategorijaArtikalaToDTO.convert(source.getKategorijaArtikala()));
-		artikalDTO.setMagacinskeKartice(magKartToDTO.convert(source.getMagacinskeKartice()));
+		//artikalDTO.setMagacinskeKartice(magKartToDTO.convert(source.getMagacinskeKartice()));
 		artikalDTO.setStavkePrometnogDokumenta(stavkaPromDokToDTO.convert(source.getStavkePrometnogDokumenta()));
 	
 		return artikalDTO;

@@ -30,7 +30,7 @@ public class AnalitikaMagacinskeKarticeToDTO implements Converter<AnalitikaMagac
 		analitikaDTO.setSmer(source.getSmer());
 		analitikaDTO.setTipPrometa(source.getTipPrometa());
 		analitikaDTO.setVrednost(source.getVrednost());
-		analitikaDTO.setMagacinskaKartica(magKartToDTO.convert(source.getMagacinskaKartica()));
+		//analitikaDTO.setMagacinskaKartica(magKartToDTO.convert(source.getMagacinskaKartica()));
 	
 		return analitikaDTO;
 	}

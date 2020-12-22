@@ -19,6 +19,9 @@ public class PrometniDokumentToDTO implements Converter<PrometniDokument, Promet
 	@Autowired
 	PoslovniPartnerToDTO poslPartnerToDTO;
 	
+	@Autowired
+	StavkaPrometnogDokumentaToDTO stToDTO;
+	
 	@Override
 	public PrometniDokumentDTO convert(PrometniDokument source) {
 		
@@ -36,7 +39,7 @@ public class PrometniDokumentToDTO implements Converter<PrometniDokument, Promet
 		promDTO.setTipPrometnogDokumenta(source.getTipPrometnogDokumenta());
 		//.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));
 		promDTO.setPoslovniPartner(poslPartnerToDTO.convert(source.getPoslovniPartner()));
-		
+		promDTO.setStavkePrometnogDokumenta(stToDTO.convert(source.getStavkePrometnogDokumenta()));
 		
 		return promDTO;
 	}

@@ -25,7 +25,7 @@ public class MagacinDTO implements Serializable {
 	private String nazivMagacina;
 	private PreduzeceDTO preduzece;
 	private RadnikDTO radnik;
-	@JsonIgnore
+	//@JsonIgnore
 	private Set<MagacinskaKarticaDTO> magacinskeKartice;
 	private Set<PrometniDokumentDTO> prometniDokument;
 
