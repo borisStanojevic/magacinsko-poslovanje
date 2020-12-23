@@ -3,6 +3,7 @@ package ftn.sit.pi.magacinskoposlovanje.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,13 @@ public class StavkaPrometnogDokumentaService implements IStavkaPrometnogDokument
 	public Page<StavkaPrometnogDokumenta> getAll(Pageable pageable) {
 		return stavkaPromDokRepository.findAll(pageable);
 	}
+	
 
+	@Override
+	public Page<StavkaPrometnogDokumenta> getAll(@Param("idPrometnogDokumenta") Integer idPrometnogDokumenta, Pageable pageable) {
+		return stavkaPromDokRepository.findAll(idPrometnogDokumenta, pageable);
+	}
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public StavkaPrometnogDokumenta add(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
@@ -56,6 +63,7 @@ public class StavkaPrometnogDokumentaService implements IStavkaPrometnogDokument
 	public void deleteById(Integer idStavkePrometnogDokumenta) {
 		stavkaPromDokRepository.deleteByIdStavkePrometnogDokumenta(idStavkePrometnogDokumenta);
 	}
+
 	
 	
 	

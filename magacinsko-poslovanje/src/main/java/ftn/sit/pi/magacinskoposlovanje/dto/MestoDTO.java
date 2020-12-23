@@ -22,7 +22,7 @@ public class MestoDTO implements Serializable {
 	private String postanskiBroj;
 	private String drzava;
 	private String nazivMesta;
-	private Set<PoslovniPartnerDTO> poslovniPartner;
+	//private Set<PoslovniPartnerDTO> poslovniPartner;
 	private Set<PreduzeceDTO> preduzeca;
 
 	public static Set<MestoDTO> convert(Set<Mesto> mestoEntitySet) {
@@ -38,7 +38,7 @@ public class MestoDTO implements Serializable {
 
 	public MestoDTO(Mesto mesto) {
 		this(mesto.getPostanskiBroj(), mesto.getDrzava(), mesto.getNazivMesta(),
-				PoslovniPartnerDTO.convert(mesto.getPoslovniPartneri()), PreduzeceDTO.convert(mesto.getPreduzeca()));
+				PreduzeceDTO.convert(mesto.getPreduzeca()));
 	}
 
 }

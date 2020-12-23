@@ -8,10 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
@@ -38,8 +40,21 @@ public class StavkaPrometnogDokumentaController {
 		return new ResponseEntity<Set<StavkaPrometnogDokumentaDTO>>(stavkePromDokDTO, HttpStatus.OK);
 	}
 	
-/*	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> createStavka(@RequestBody StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
+	@GetMapping(value="/get-by-id-prometnog-dokumenta")
+	public ResponseEntity<Set<StavkaPrometnogDokumentaDTO>> getAll(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		
-	}*/
+		Page<StavkaPrometnogDokumenta> stavkaPromDokPage = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> stavkePromDok = new HashSet<>(stavkaPromDokPage.getContent());
+		Set<StavkaPrometnogDokumentaDTO> stavkePromDokDTO = stavkaPromDokToDTO.convert(stavkePromDok);
+		return new ResponseEntity<Set<StavkaPrometnogDokumentaDTO>>(stavkePromDokDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/create", consumes="application/json")
+	public ResponseEntity<?> createStavkaPromDok(@RequestBody StavkaPrometnogDokumenta stavkaPrometnogDokumenta, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+		}
+		StavkaPrometnogDokumenta newStavkaPromDok = stavkaPromDokService.add(stavkaPrometnogDokumenta);
+		return new ResponseEntity<>(newStavkaPromDok, HttpStatus.OK);
+	}
 }

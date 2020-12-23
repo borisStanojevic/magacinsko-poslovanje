@@ -26,7 +26,7 @@ public class PoslovniPartnerDTO implements Serializable {
 	private String pib;
 	private TipPartnera tipPartnera;
 	private MestoDTO mesto;
-	private Set<PrometniDokumentDTO> prometniDokumenti;
+	//private Set<PrometniDokumentDTO> prometniDokumenti;
 
 	public static Set<PoslovniPartnerDTO> convert(Set<PoslovniPartner> poslovniPartnerEntitySet) {
 		Set<PoslovniPartnerDTO> poslovniPartnerDTOSet = new HashSet<>();
@@ -42,8 +42,7 @@ public class PoslovniPartnerDTO implements Serializable {
 	public PoslovniPartnerDTO(PoslovniPartner poslovniPartner) {
 		this(poslovniPartner.getSifraPartnera(), poslovniPartner.getAdresaPoslovnogPartnera(),
 				poslovniPartner.getNazivPartnera(), poslovniPartner.getPib(), poslovniPartner.getTipPartnera(),
-				new MestoDTO(poslovniPartner.getMesto()),
-				PrometniDokumentDTO.convert(poslovniPartner.getPrometniDokumenti()));
+				new MestoDTO(poslovniPartner.getMesto()));
 	}
 
 }

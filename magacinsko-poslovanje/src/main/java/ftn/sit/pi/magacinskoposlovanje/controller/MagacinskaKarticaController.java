@@ -11,8 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,5 +51,14 @@ public class MagacinskaKarticaController {
 		MagacinskaKartica magagacinskaKarticaPage = magacinskaKarticaService.getById(idMagacinskeKartice);
 		MagacinskaKarticaDTO magacinskaKarticaDTO = magacinskaKarticaToDTO.convert(magagacinskaKarticaPage);
 		return new ResponseEntity<MagacinskaKarticaDTO>(magacinskaKarticaDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/create", consumes="application/json")
+	public ResponseEntity<?> createMagacinskaKartica(@RequestBody MagacinskaKartica magacinskaKartica, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+		}
+		MagacinskaKartica newMagacinskaKartica = magacinskaKarticaService.add(magacinskaKartica);
+		return new ResponseEntity<>(newMagacinskaKartica, HttpStatus.OK);
 	}
 }
