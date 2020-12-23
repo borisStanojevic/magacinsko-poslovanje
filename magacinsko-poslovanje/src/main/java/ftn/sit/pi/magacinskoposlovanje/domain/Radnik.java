@@ -48,7 +48,7 @@ public class Radnik implements Serializable {
 	private Set<Preduzece> preduzeca = new HashSet<>();
 	
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable( name = "radnik_roles",
 				joinColumns = @JoinColumn(name = "radnik_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
