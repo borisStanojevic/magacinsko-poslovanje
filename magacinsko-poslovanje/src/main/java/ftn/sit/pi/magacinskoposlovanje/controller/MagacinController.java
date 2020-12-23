@@ -28,14 +28,7 @@ public class MagacinController {
 	MagacinService magacinService;
 	
 	@Autowired
-	MagacinToDTO magacinToDTO;
-	
-	
-	
-	
-	
-	
-	
+	MagacinToDTO magacinToDTO;	
 	
 	@SuppressWarnings("deprecation")
 	@GetMapping(value="/all")
@@ -44,7 +37,7 @@ public class MagacinController {
 		Page<Magacin> magacini = magacinService.getAll(new PageRequest(0, 5));
 		Set<Magacin> magacs = new HashSet<>(magacini.getContent());
 		Set<MagacinDTO> dto = magacinToDTO.convert(magacs);
-		
+		System.out.println(magacini);
 		return new ResponseEntity<Set<MagacinDTO>>(dto,HttpStatus.OK);
 		
 	}

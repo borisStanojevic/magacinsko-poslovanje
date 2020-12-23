@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
+import ftn.sit.pi.magacinskoposlovanje.dto.converters.PoslovniPartnerToDTO;
 import ftn.sit.pi.magacinskoposlovanje.repository.PoslovniPartnerRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IPoslovniPartnerService;
 
@@ -17,6 +18,9 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 
 	@Autowired
 	private PoslovniPartnerRepository poslovniPartnerRepository;
+	
+	@Autowired
+	PoslovniPartnerToDTO poslovniPartnerToDTO;
 
 	
 	@Override
@@ -58,9 +62,15 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public PoslovniPartner update(PoslovniPartner PoslovniPartner) {
-		// TODO Auto-generated method stub
-		return null;
+	public PoslovniPartner update(PoslovniPartner poslovniPartner) {
+
+		PoslovniPartner poslovniPartnerEdit = poslovniPartnerRepository.findBySifraPartnera(poslovniPartner.getSifraPartnera());
+		poslovniPartnerEdit.setAdresaPoslovnogPartnera(poslovniPartner.getAdresaPoslovnogPartnera());
+		poslovniPartnerEdit.setNazivPartnera(poslovniPartner.getNazivPartnera());
+		poslovniPartnerEdit.setPib(poslovniPartner.getPib());
+		poslovniPartnerEdit.setTipPartnera(poslovniPartner.getTipPartnera());
+		poslovniPartnerEdit.setMesto(poslovniPartner.getMesto());
+		return poslovniPartnerRepository.save(poslovniPartnerEdit);
 	}
 
 	@Override

@@ -40,8 +40,11 @@ public class MestoService implements IMestoService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Mesto update(Mesto mesto) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Mesto mestoForEdit = mestoRepository.findByPostanskiBroj(mesto.getPostanskiBroj());
+		mestoForEdit.setDrzava(mesto.getDrzava());
+		mestoForEdit.setNazivMesta(mesto.getNazivMesta());
+		return mestoRepository.save(mestoForEdit);
 	}
 
 	@Override

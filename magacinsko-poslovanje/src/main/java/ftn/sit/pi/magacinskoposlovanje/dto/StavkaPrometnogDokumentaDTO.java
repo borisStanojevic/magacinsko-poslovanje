@@ -25,7 +25,7 @@ public class StavkaPrometnogDokumentaDTO implements Serializable {
 	private Double kolicina;
 	private Double vrednost;
 	private ArtikalDTO artikal;
-	private PrometniDokumentDTO prometniDokument;
+	//private PrometniDokumentDTO prometniDokument;
 
 	public static Set<StavkaPrometnogDokumentaDTO> convert(
 			Set<StavkaPrometnogDokumenta> stavkePrometnogDokumentaEntitySet) {
@@ -43,8 +43,7 @@ public class StavkaPrometnogDokumentaDTO implements Serializable {
 	public StavkaPrometnogDokumentaDTO(StavkaPrometnogDokumenta stavkePrometnogDokumenta) {
 		this(stavkePrometnogDokumenta.getIdStavkePrometnogDokumenta(), stavkePrometnogDokumenta.getCena(),
 				stavkePrometnogDokumenta.getKolicina(), stavkePrometnogDokumenta.getVrednost(),
-				new ArtikalDTO(stavkePrometnogDokumenta.getArtikal()),
-				new PrometniDokumentDTO(stavkePrometnogDokumenta.getPrometniDokument()));
+				new ArtikalDTO(stavkePrometnogDokumenta.getArtikal()));
 	}
 
 }

@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +38,12 @@ public class PreduzeceController {
 		Set<PreduzeceDTO> preduzeceDTO = preduzeceToDTO.convert(preduzeca);
 		
 		return new ResponseEntity<Set<PreduzeceDTO>>(preduzeceDTO, HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/update/{sifraPreduzeca}", consumes="application/json")
+	public ResponseEntity<?> updatePreduzece(@RequestBody Preduzece preduzece, 
+			@PathVariable("sifraPreduzeca") Integer sifraPreduzeca) {
+		Preduzece preduzeceUpdated = preduzeceService.update(preduzece);
+		return new ResponseEntity<>(preduzeceUpdated, HttpStatus.OK);
 	}
 }

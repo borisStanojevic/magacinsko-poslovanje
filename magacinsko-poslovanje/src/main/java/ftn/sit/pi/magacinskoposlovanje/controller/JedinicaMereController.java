@@ -51,8 +51,8 @@ public class JedinicaMereController {
 		return new ResponseEntity<>(newJedinicaMere, HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/update/{id}", consumes="application/json")
-	public ResponseEntity<?> updateJedinicaMere(@RequestBody JedinicaMere jedinicaMere, @PathVariable("id") Integer id) {
+	@PutMapping(value="/update/{idJedMere}", consumes="application/json")
+	public ResponseEntity<?> updateJedinicaMere(@RequestBody JedinicaMere jedinicaMere, @PathVariable("idJedMere") Integer idJedMere) {
 		JedinicaMere jedinicaMereUpdated = jedinicaMereService.update(jedinicaMere);
 		return new ResponseEntity<>(jedinicaMereUpdated, HttpStatus.OK);
 	}

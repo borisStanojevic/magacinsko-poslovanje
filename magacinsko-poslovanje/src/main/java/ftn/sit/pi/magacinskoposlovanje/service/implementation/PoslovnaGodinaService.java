@@ -40,8 +40,10 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PoslovnaGodina update(PoslovnaGodina poslovnaGodina) {
-		// TODO Auto-generated method stub
-		return null;
+
+		PoslovnaGodina poslovnaGodinaEdit = poslovnaGodinaRepository.findByIdGodine(poslovnaGodina.getIdGodine());
+		poslovnaGodinaEdit.setZakljucena(poslovnaGodina.getZakljucena());
+		return poslovnaGodinaRepository.save(poslovnaGodinaEdit);
 	}
 
 	@Override

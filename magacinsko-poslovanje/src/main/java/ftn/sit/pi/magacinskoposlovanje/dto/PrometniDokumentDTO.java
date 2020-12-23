@@ -33,7 +33,7 @@ public class PrometniDokumentDTO implements Serializable {
 	private Integer redniBrojDokumenta;
 	private Status status;
 	private TipPrometnogDokumenta tipPrometnogDokumenta;
-	private MagacinDTO magacin;
+	//private MagacinDTO magacin;
 	private PoslovnaGodinaDTO poslovnaGodina;
 	private PoslovniPartnerDTO poslovniPartner;
 	private Set<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta;
@@ -53,8 +53,7 @@ public class PrometniDokumentDTO implements Serializable {
 		this(prometniDokument.getIdPrometnogDokumenta(), prometniDokument.getBrojPrometnogDokumenta(),
 				prometniDokument.getDatumFormiranja(), prometniDokument.getDatumKnjizenja(),
 				prometniDokument.getRedniBrojDokumenta(), prometniDokument.getStatus(),
-				prometniDokument.getTipPrometnogDokumenta(), new MagacinDTO(prometniDokument.getMagacin()),
-				new PoslovnaGodinaDTO(prometniDokument.getPoslovnaGodina()),
+				prometniDokument.getTipPrometnogDokumenta(), new PoslovnaGodinaDTO(prometniDokument.getPoslovnaGodina()),
 				new PoslovniPartnerDTO(prometniDokument.getPoslovniPartner()),
 				StavkaPrometnogDokumentaDTO.convert(prometniDokument.getStavkePrometnogDokumenta()));
 	}

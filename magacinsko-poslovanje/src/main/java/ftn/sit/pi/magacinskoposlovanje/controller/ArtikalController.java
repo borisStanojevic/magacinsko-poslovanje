@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,14 @@ public class ArtikalController {
 		Set<ArtikalDTO> artikalDTOs = artikalToDTO.convert(artikli);
 		
 		return new ResponseEntity<Set<ArtikalDTO>>(artikalDTOs, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/get-by-sifra/{sifraArtikla}")
+	public ResponseEntity<ArtikalDTO> getBySifraArtikla(@PathVariable("sifraArtikla") Integer sifraArtikla) {
+		
+		Artikal artikal = artikalService.getById(sifraArtikla);
+		ArtikalDTO artikalDTO = artikalToDTO.convert(artikal);
+		return new ResponseEntity<ArtikalDTO>(artikalDTO, HttpStatus.OK);
 	}
 	
 }

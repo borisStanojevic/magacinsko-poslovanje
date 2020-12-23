@@ -8,7 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,5 +70,21 @@ public class PoslovniPartnerController {
 		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);
 		
 		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTO, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/create", consumes="application/json")
+	public ResponseEntity<?> createPoslovniPartner(@RequestBody PoslovniPartner poslovniPartner, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+		}
+		PoslovniPartner newPoslovniPartner = poslovniPartnerService.add(poslovniPartner);
+		return new ResponseEntity<>(newPoslovniPartner, HttpStatus.OK);
+	}
+	
+	@PutMapping(value="/update/{sifraPartnera}")
+	public ResponseEntity<?> updatePoslovniPartner(@RequestBody PoslovniPartner poslovniPartner, 
+			@PathVariable("sifraPartnera") Integer sifraPartnera) {
+		PoslovniPartner poslovniPartnerForUpdate = poslovniPartnerService.update(poslovniPartner);
+		return new ResponseEntity<>(poslovniPartnerForUpdate, HttpStatus.OK);
 	}
 }
