@@ -13,15 +13,12 @@ public interface PoslovniPartnerRepository extends PagingAndSortingRepository<Po
 	
 	PoslovniPartner findBySifraPartnera(Integer sifraPartnera);
 	
-	@Query("SELECT p FROM PoslovniPartner p WHERE p.tipPartnera = 'DOBAVLJAC'")
+	@Query("SELECT p FROM PoslovniPartner p WHERE p.tipPartnera != 'KUPAC'")
 	Page<PoslovniPartner> findByTipPartneraD(Pageable pageable);
 	
-	@Query("SELECT p FROM PoslovniPartner p WHERE p.tipPartnera = 'KUPAC'")
+	@Query("SELECT p FROM PoslovniPartner p WHERE p.tipPartnera != 'DOBAVLJAC'")
 	Page<PoslovniPartner> findByTipPartneraK(Pageable pageable);
-	
-	@Query("SELECT p FROM PoslovniPartner p WHERE p.tipPartnera = 'DOBAVLJAC_I_KUPAC'")
-	Page<PoslovniPartner> findByTipPartneraDiK(Pageable pageable);
-	
+
 	void deleteBySifraPartnera(Integer sifraPartnera);
 	
 }

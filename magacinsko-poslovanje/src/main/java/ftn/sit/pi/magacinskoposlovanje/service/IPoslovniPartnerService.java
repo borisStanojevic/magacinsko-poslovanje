@@ -11,8 +11,7 @@ public interface IPoslovniPartnerService {
 	Page<PoslovniPartner> getAll(Pageable pageable);
 	Page<PoslovniPartner> getByDobavljaci(Pageable pageable);
 	Page<PoslovniPartner> getByKupci(Pageable pageable);
-	Page<PoslovniPartner> getByDobavljaciKupci(Pageable pageable);
-
+	
 	PoslovniPartner add(PoslovniPartner poslovniPartner);
 	PoslovniPartner update(PoslovniPartner PoslovniPartner);
 	

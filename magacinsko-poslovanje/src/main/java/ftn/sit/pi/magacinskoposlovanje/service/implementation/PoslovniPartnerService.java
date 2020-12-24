@@ -46,13 +46,6 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	public Page<PoslovniPartner> getByKupci(Pageable pageable) {
 		return poslovniPartnerRepository.findByTipPartneraK(pageable);
 	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<PoslovniPartner> getByDobavljaciKupci(Pageable pageable) {
-		return poslovniPartnerRepository.findByTipPartneraDiK(pageable);
-	}
-	
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -85,7 +78,5 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	public void deleteById(Integer sifraPartnera) {
 		poslovniPartnerRepository.deleteBySifraPartnera(sifraPartnera);	
 	}
-	
-	
 	
 }

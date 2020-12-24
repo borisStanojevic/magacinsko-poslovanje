@@ -62,16 +62,6 @@ public class PoslovniPartnerController {
 		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTO, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="/dobavljaci-kupci")
-	public ResponseEntity<Set<PoslovniPartnerDTO>> getDobavljaciKupci() {
-		
-		Page<PoslovniPartner> poslovniPartnerPage = poslovniPartnerService.getByDobavljaciKupci(new PageRequest(0, 1000));
-		Set<PoslovniPartner> poslovniPartneri = new HashSet<>(poslovniPartnerPage.getContent());
-		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);
-		
-		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTO, HttpStatus.OK);
-	}
-	
 	@PostMapping(value="/create", consumes="application/json")
 	public ResponseEntity<?> createPoslovniPartner(@RequestBody PoslovniPartner poslovniPartner, Errors errors) {
 		if(errors.hasErrors()) {
