@@ -24,6 +24,12 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 	public PoslovnaGodina getById(Integer idGodine) {
 		return poslovnaGodinaRepository.findByIdGodine(idGodine);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public PoslovnaGodina getByZakljucena(Boolean isZakljucena) {
+		return poslovnaGodinaRepository.findByZakljucena(isZakljucena);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

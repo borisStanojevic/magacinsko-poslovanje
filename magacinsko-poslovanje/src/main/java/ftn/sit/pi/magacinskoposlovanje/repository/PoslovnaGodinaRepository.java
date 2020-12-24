@@ -9,6 +9,7 @@ import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 public interface PoslovnaGodinaRepository extends PagingAndSortingRepository<PoslovnaGodina, Integer> {
 	
 	PoslovnaGodina findByIdGodine(Integer idGodine);
+	PoslovnaGodina findByZakljucena(Boolean isZakljucena);
 	void deleteByIdGodine(Integer idGodine);
 	
 }

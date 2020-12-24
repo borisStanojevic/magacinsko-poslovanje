@@ -9,6 +9,7 @@ public interface IPoslovnaGodinaService {
 
 	PoslovnaGodina getById(Integer idGodine);
 	Page<PoslovnaGodina> getAll(Pageable pageable);
+	PoslovnaGodina getByZakljucena(Boolean isZakljucena);
 
 	PoslovnaGodina add(PoslovnaGodina poslovnaGodina);
 	PoslovnaGodina update(PoslovnaGodina poslovnaGodina);

@@ -27,6 +27,7 @@ public class PrometniDokument implements Serializable {
 	@Column(name = "ID_PROMETNOG_DOKUMENTA")
 	private Integer idPrometnogDokumenta;
 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "BROJ_PROMETNOG_DOKUMENTA")
 	private Integer brojPrometnogDokumenta;
 
@@ -37,10 +38,10 @@ public class PrometniDokument implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATUM_KNJIZENJA")
 	private Date datumKnjizenja;
-
+/*
 	@Column(name = "REDNI_BROJ_DOKUMETNA")
 	private Integer redniBrojDokumenta;
-	
+*/	
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
