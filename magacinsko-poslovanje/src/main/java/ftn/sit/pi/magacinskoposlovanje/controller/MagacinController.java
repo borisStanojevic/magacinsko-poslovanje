@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,4 +52,12 @@ public class MagacinController {
 		return new ResponseEntity<MagacinDTO>(magacinDTO, HttpStatus.OK);
 	}
 
+	@DeleteMapping(value="/delete")
+	public ResponseEntity<?> deleteMagacin(@RequestParam("sifraMagacina") Integer sifraMagacina) {
+		if(sifraMagacina == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		magacinService.deleteById(sifraMagacina);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

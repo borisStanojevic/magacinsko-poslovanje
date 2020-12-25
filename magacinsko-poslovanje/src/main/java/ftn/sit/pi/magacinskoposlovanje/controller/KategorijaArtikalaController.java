@@ -9,12 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.KategorijaArtikala;
@@ -55,5 +57,14 @@ public class KategorijaArtikalaController {
 	public ResponseEntity<?> updateKategorijaArtikala(@RequestBody KategorijaArtikala kategorijaArtikala, @PathVariable Integer id) {
 		KategorijaArtikala kategorijaArtikalaUpdated = kategorijaArtikalaService.update(kategorijaArtikala);
 		return new ResponseEntity<>(kategorijaArtikalaUpdated, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/delete")
+	public ResponseEntity<?> deleteKategorijaArtikla(@RequestParam("idKategorijeArtikla") Integer idKategorijeArtikla) {
+		if(idKategorijeArtikla == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		kategorijaArtikalaService.deleteById(idKategorijeArtikla);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

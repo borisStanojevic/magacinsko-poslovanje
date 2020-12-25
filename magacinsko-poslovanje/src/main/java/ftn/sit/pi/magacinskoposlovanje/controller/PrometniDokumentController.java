@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -108,5 +109,14 @@ public class PrometniDokumentController {
 		
 		
 		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/delete")
+	public ResponseEntity<?> deletePrometniDokument(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+		if(idPrometnogDokumenta == null) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		prometniDokumentService.deleteById(idPrometnogDokumenta);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

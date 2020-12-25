@@ -59,6 +59,12 @@ public class JedinicaMereController {
 		return new ResponseEntity<>(jedinicaMereUpdated, HttpStatus.OK);
 	}
 	
-	//@DeleteMapping(value="/delete")
-	//public ResponseEntity<?> deleteJedinicaMere(@RequestParam("id"))
+	@DeleteMapping(value="/delete")
+	public ResponseEntity<?> deleteJedinicaMere(@RequestParam("idJediniceMere") Integer idJediniceMere) {
+		if(idJediniceMere == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		jedinicaMereService.deleteById(idJediniceMere);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

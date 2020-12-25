@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,14 @@ public class MagacinskaKarticaController {
 		}
 		MagacinskaKartica newMagacinskaKartica = magacinskaKarticaService.add(magacinskaKartica);
 		return new ResponseEntity<>(newMagacinskaKartica, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/delete")
+	public ResponseEntity<?> deleteMagacinskaKartica(@RequestParam("idMagacinskeKartice") Integer idMagacinskeKartice) {
+		if(idMagacinskeKartice == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		magacinskaKarticaService.deleteById(idMagacinskeKartice);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

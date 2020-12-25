@@ -9,12 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
@@ -76,5 +78,14 @@ public class PoslovniPartnerController {
 			@PathVariable("sifraPartnera") Integer sifraPartnera) {
 		PoslovniPartner poslovniPartnerForUpdate = poslovniPartnerService.update(poslovniPartner);
 		return new ResponseEntity<>(poslovniPartnerForUpdate, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/delete") 
+	public ResponseEntity<?> deletePoslovniPartner(@RequestParam("sifraPartnera") Integer sifraPartnera) {
+		if(sifraPartnera == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		poslovniPartnerService.deleteById(sifraPartnera);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
