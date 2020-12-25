@@ -30,4 +30,5 @@ public interface ArtikalRepository extends PagingAndSortingRepository<Artikal, I
 	@Query("SELECT a FROM Artikal a WHERE a.kategorijaArtikala.idKategorije = :idKategorije")
 	Page<Artikal> findAll(@Param("idKategorije") Integer idKategorije, Pageable pageable);
 
+	void delete(Integer sifraArtikal);
 }

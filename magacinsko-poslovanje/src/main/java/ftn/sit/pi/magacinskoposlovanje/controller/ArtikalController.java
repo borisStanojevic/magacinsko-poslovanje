@@ -67,12 +67,14 @@ public class ArtikalController {
 		return new ResponseEntity<>(artikalUpdated, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete") 
+	@PutMapping(value="/delete") 
 	public ResponseEntity<?> deleteArtikal(@RequestParam("sifraArtikla") Integer sifraArtikla) {
 		if(sifraArtikla == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		artikalService.deleteById(sifraArtikla);
+		Artikal artikal = artikalService.getById(sifraArtikla);
+		artikal.setDeleted(true);
+		artikalService.update(artikal);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
