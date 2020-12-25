@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,12 +112,14 @@ public class PrometniDokumentController {
 		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete")
+	@PutMapping(value="/delete")
 	public ResponseEntity<?> deletePrometniDokument(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		if(idPrometnogDokumenta == null) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		prometniDokumentService.deleteById(idPrometnogDokumenta);
+		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		prometniDokument.setDeleted(true);
+		prometniDokumentService.update(prometniDokument);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

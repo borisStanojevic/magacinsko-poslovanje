@@ -59,12 +59,14 @@ public class MestoController {
 		return new ResponseEntity<>(mestoForUpdate, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete")
+	@PutMapping(value="/delete")
 	public ResponseEntity<?> deleteMesto(@RequestParam("postanskiBroj") String postanskiBroj) {
 		if(postanskiBroj == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		mestoService.deleteById(postanskiBroj);
+		Mesto mesto = mestoService.getById(postanskiBroj);
+		mesto.setDeleted(true);
+		mestoService.update(mesto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

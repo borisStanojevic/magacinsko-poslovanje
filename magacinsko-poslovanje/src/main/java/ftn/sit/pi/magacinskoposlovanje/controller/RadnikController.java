@@ -66,12 +66,14 @@ public class RadnikController {
 		return new ResponseEntity<>(radnikUpdated, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete")
+	@PutMapping(value="/delete")
 	public ResponseEntity<?> deleteRadnik(@RequestParam("idRadnika") Integer idRadnika) {
 		if(idRadnika == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		radnikService.deleteById(idRadnika);
+		Radnik radnik = radnikService.getById(idRadnika);
+		radnik.setDeleted(true);
+		radnikService.update(radnik);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

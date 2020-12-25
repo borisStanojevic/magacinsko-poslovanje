@@ -80,12 +80,14 @@ public class PoslovniPartnerController {
 		return new ResponseEntity<>(poslovniPartnerForUpdate, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete") 
+	@PutMapping(value="/delete") 
 	public ResponseEntity<?> deletePoslovniPartner(@RequestParam("sifraPartnera") Integer sifraPartnera) {
 		if(sifraPartnera == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		poslovniPartnerService.deleteById(sifraPartnera);
+		PoslovniPartner poslovniPartner = poslovniPartnerService.getById(sifraPartnera);
+		poslovniPartner.setDeleted(true);
+		poslovniPartnerService.update(poslovniPartner);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

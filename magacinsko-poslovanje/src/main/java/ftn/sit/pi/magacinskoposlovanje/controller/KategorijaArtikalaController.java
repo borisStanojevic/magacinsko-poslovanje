@@ -59,12 +59,14 @@ public class KategorijaArtikalaController {
 		return new ResponseEntity<>(kategorijaArtikalaUpdated, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value="/delete")
+	@PutMapping(value="/delete")
 	public ResponseEntity<?> deleteKategorijaArtikla(@RequestParam("idKategorijeArtikla") Integer idKategorijeArtikla) {
 		if(idKategorijeArtikla == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		kategorijaArtikalaService.deleteById(idKategorijeArtikla);
+		KategorijaArtikala kategorijaArtikala = kategorijaArtikalaService.getById(idKategorijeArtikla);
+		kategorijaArtikala.setDeleted(true);
+		kategorijaArtikalaService.update(kategorijaArtikala);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
