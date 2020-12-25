@@ -9,12 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
@@ -63,5 +65,12 @@ public class ArtikalController {
 	public ResponseEntity<?> updateArtikal(@RequestBody Artikal artikal, @PathVariable("sifraArtikla") Integer sifraArtikla) {
 		Artikal artikalUpdated = artikalService.update(artikal);
 		return new ResponseEntity<>(artikalUpdated, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value="/delete") 
+	public ResponseEntity<?> deleteArtikal(@RequestParam("sifraArtikla") Integer sifraArtikla) {
+		artikalService.getById(sifraArtikla);
+		artikalService.deleteById(sifraArtikla);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
