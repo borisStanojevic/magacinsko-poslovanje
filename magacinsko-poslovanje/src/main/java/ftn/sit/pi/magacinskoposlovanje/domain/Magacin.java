@@ -50,6 +50,9 @@ public class Magacin implements Serializable {
 
 	@Version
 	private Integer version;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
 		getMagacinskeKartice().add(magacinskaKartica);

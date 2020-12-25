@@ -51,6 +51,9 @@ public class Artikal implements Serializable {
 
 	@Version
 	private Integer version;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskaKartice) {
 		getMagacinskeKartice().add(magacinskaKartice);

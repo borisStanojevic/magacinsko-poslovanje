@@ -42,6 +42,10 @@ public class PoslovnaGodina implements Serializable {
 
 	@Version
 	private Integer version;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
+	
 	//test commit
 	public MagacinskaKartica addMagacinskaKartica(MagacinskaKartica magacinskeKartica) {
 		getMagacinskeKartice().add(magacinskeKartica);

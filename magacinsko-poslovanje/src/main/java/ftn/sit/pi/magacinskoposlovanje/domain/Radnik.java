@@ -38,6 +38,9 @@ public class Radnik implements Serializable {
 	@NotBlank(message = "Morate navesti korisnicko ime")
 	@Pattern(regexp = "^\\w{6,20}$", message = "Korisnicko ime mora biti izmedju 6 i 20 karaktera, i sadrzati samo slova, cifre i _")
 	private String username;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	// bi-directional many-to-one association to Magacin
 	@OneToMany(mappedBy = "radnik")

@@ -42,6 +42,9 @@ public class KategorijaArtikala implements Serializable {
 */
 	@Version
 	private Integer version;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	public Artikal addArtikal(Artikal artikal) {
 		getArtikli().add(artikal);

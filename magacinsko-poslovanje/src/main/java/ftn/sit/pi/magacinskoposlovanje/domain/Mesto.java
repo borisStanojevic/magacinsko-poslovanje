@@ -39,6 +39,9 @@ public class Mesto implements Serializable {
 	// bi-directional many-to-one association to Preduzece
 	@OneToMany(mappedBy = "mesto")
 	private Set<Preduzece> preduzeca = new HashSet<>();
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	public PoslovniPartner addPoslovniPartner(PoslovniPartner poslovniPartner) {
 		getPoslovniPartneri().add(poslovniPartner);

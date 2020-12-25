@@ -70,6 +70,9 @@ public class PrometniDokument implements Serializable {
 
 	@Version
 	private Integer version;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	public StavkaPrometnogDokumenta addStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta) {
 		getStavkePrometnogDokumenta().add(stavkaPrometnogDokumenta);

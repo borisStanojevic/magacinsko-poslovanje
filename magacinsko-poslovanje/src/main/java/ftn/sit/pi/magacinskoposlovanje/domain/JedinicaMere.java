@@ -30,6 +30,9 @@ public class JedinicaMere implements Serializable {
 	@Column(name = "NAZIV_JEDINICE_MERE")
 	@NotBlank(message = "Morate navesti naziv jedinice mere")
 	private String nazivJediniceMere;
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 
 	// bi-directional many-to-one association to Artikal
 	@OneToMany(mappedBy = "jedinicaMere")

@@ -43,5 +43,7 @@ public class StavkaPrometnogDokumenta implements Serializable {
 
 	@Version
 	private Integer version;
-
+	
+	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
+	private boolean deleted;
 }
