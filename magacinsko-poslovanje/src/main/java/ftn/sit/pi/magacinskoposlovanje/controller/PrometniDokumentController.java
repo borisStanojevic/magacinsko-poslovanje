@@ -1,5 +1,8 @@
 package ftn.sit.pi.magacinskoposlovanje.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
@@ -71,6 +74,15 @@ public class PrometniDokumentController {
 		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/prijemnice")
+	public ResponseEntity<Set<PrometniDokumentDTO>> getAll() {
+		
+		Page<PrometniDokument> prometniDokumentPage = prometniDokumentService.getByPrijemnica(new PageRequest(0, 1000));
+		Set<PrometniDokument> prometniDokumenti = new HashSet<>(prometniDokumentPage.getContent());
+		Set<PrometniDokumentDTO> prometniDokumentDTO = prometniDokumentToDTO.convert(prometniDokumenti);
+		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
+	}
+	
 	@GetMapping(value="/get-for-poslovni-partner")
 	public ResponseEntity<Set<PrometniDokumentDTO>> getAll(@RequestParam("sifraMagacina") Integer sifraMagacina,
 			@RequestParam("idGodine") Integer idGodine, @RequestParam("sifraPartnera") Integer sifraPartnera) {
@@ -80,6 +92,26 @@ public class PrometniDokumentController {
 		Set<PrometniDokumentDTO> prometniDokumentDTO = prometniDokumentToDTO.convert(prometniDokumenti);
 		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
 	}
+	
+	@PostMapping(value="/create", consumes="application/json")
+	public ResponseEntity<?> create(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
+		@RequestParam("datumKnjizenja") String datumKnjizenja, Errors errors) {
+		if(errors.hasErrors()) {
+			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+		}
+		PrometniDokument newPrometniDokument = new PrometniDokument();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Date date = (Date) formatter.parse(datumKnjizenja);
+		newPrometniDokument.setDatumKnjizenja(date);
+		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
+		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
+		newPrometniDokument.setMagacin(dtoToMagacin.convert(magacin));
+		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(poslovniPartner));
+		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
+		
+		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
+	}
+	
 	
 	@PostMapping(value="/create-prijemnica", consumes="application/json")
 	public ResponseEntity<?> createPrijemnica(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 

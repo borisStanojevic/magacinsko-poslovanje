@@ -28,7 +28,7 @@ public class PoslovnaGodinaToDTO implements Converter<PoslovnaGodina, PoslovnaGo
 		PoslovnaGodinaDTO poslGodDTO = new PoslovnaGodinaDTO();
 		poslGodDTO.setIdGodine(source.getIdGodine());
 		poslGodDTO.setGodina(source.getGodina());
-		poslGodDTO.setZakljucena(source.getZakljucena());
+		poslGodDTO.setZakljucena(source.isZakljucena());
 		poslGodDTO.setMagacinskeKartice(magacinskaToDTO.convert(source.getMagacinskeKartice()));
 		//poslGodDTO.setPrometniDokumenti(promDokToDTO.convert(source.getPrometniDokumenti()));
 		
