@@ -48,7 +48,7 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 	public PoslovnaGodina update(PoslovnaGodina poslovnaGodina) {
 
 		PoslovnaGodina poslovnaGodinaEdit = poslovnaGodinaRepository.findByIdGodine(poslovnaGodina.getIdGodine());
-		poslovnaGodinaEdit.setZakljucena(poslovnaGodina.getZakljucena());
+		poslovnaGodinaEdit.setZakljucena(poslovnaGodina.isZakljucena());
 		return poslovnaGodinaRepository.save(poslovnaGodinaEdit);
 	}
 

@@ -50,6 +50,8 @@ public class PoslovnaGodinaController {
 		return new ResponseEntity<PoslovnaGodinaDTO>(poslovnaGodinaDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/get-active")
+	
 	@PostMapping(value="/create", consumes="application/json")
 	public ResponseEntity<?> createPoslovnaGodina(@RequestBody PoslovnaGodina poslovnaGodina, Errors errors) {
 		if(errors.hasErrors()) {

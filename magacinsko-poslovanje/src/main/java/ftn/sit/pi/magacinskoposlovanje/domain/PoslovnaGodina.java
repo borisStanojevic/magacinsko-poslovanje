@@ -30,7 +30,8 @@ public class PoslovnaGodina implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date godina;
 
-	private Boolean zakljucena;
+	@Column(name = "zakljucena", columnDefinition = "tinyint(1) default 0")
+	private boolean zakljucena;
 
 	// bi-directional many-to-one association to MagacinskaKartica
 	@OneToMany(mappedBy = "poslovnaGodina")

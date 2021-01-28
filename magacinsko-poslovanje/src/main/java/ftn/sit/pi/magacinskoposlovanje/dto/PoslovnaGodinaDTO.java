@@ -42,7 +42,7 @@ public class PoslovnaGodinaDTO implements Serializable {
 	}
 
 	public PoslovnaGodinaDTO(PoslovnaGodina poslovnaGodina) {
-		this(poslovnaGodina.getIdGodine(), poslovnaGodina.getGodina(), poslovnaGodina.getZakljucena(),
+		this(poslovnaGodina.getIdGodine(), poslovnaGodina.getGodina(), poslovnaGodina.isZakljucena(),
 				MagacinskaKarticaDTO.convert(poslovnaGodina.getMagacinskeKartice()),
 				PrometniDokumentDTO.convert(poslovnaGodina.getPrometniDokumenti()));
 	}
