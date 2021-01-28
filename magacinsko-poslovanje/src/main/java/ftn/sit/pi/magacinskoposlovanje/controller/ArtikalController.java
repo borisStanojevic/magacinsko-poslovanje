@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
+import ftn.sit.pi.magacinskoposlovanje.domain.KategorijaArtikala;
 import ftn.sit.pi.magacinskoposlovanje.dto.ArtikalDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.ArtikalToDTO;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToArtikal;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.ArtikalService;
+import ftn.sit.pi.magacinskoposlovanje.service.implementation.KategorijaArtikalaService;
 
 @RestController
 @RequestMapping(value="/api/artikal")
@@ -33,6 +36,14 @@ public class ArtikalController {
 	
 	@Autowired
 	ArtikalToDTO artikalToDTO;
+	
+	@Autowired
+	DTOToArtikal toArtikal;
+	
+	@Autowired
+	KategorijaArtikalaService kategorijaService;
+	
+
 	
 	@GetMapping(value="/all")
 	public ResponseEntity<Set<ArtikalDTO>> getAll() {
@@ -53,11 +64,14 @@ public class ArtikalController {
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> createArtikal(@RequestBody Artikal artikal, Errors errors) {
+	public ResponseEntity<?> createArtikal(@RequestBody ArtikalDTO artikal, Errors errors) {
 		if(errors.hasErrors()) {
 			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
 		}
-		Artikal newArtikal = artikalService.add(artikal);
+		System.out.println(artikal.toString());
+	//	KategorijaArtikala kategorija = kategorijaService.getById(artikal.getKategorijaArtikala().getIdKategorije());
+		Artikal newArtikal = artikalService.add(toArtikal.convert(artikal));
+		
 		return new ResponseEntity<>(newArtikal, HttpStatus.OK);
 	}
 	
@@ -72,6 +86,7 @@ public class ArtikalController {
 		if(sifraArtikla == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 		Artikal artikal = artikalService.getById(sifraArtikla);
 		artikal.setDeleted(true);
 		artikalService.update(artikal);
