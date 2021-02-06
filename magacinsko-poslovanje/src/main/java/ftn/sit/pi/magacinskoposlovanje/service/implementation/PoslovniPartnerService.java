@@ -32,7 +32,7 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<PoslovniPartner> getAll(Pageable pageable) {
-		return poslovniPartnerRepository.findAll(pageable);
+		return poslovniPartnerRepository.findAllByDeletedFalse(pageable);
 	}
 	
 	@Override
