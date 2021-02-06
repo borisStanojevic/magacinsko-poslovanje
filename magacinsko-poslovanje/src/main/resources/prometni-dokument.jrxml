@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prometni-dokument" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="705caf48-f9d5-4b65-a919-288aa58a7397">
+	<parameter name="magacin" class="java.lang.String"/>
+	<parameter name="poslovnaGodina" class="java.lang.Integer"/>
+	<parameter name="poslovniPartner" class="java.lang.Integer"/>
+	<parameter name="brojPrometnogDokumenta" class="java.lang.Integer"/>
+	<parameter name="datumFormiranja" class="java.lang.String"/>
+	<parameter name="status" class="java.lang.String"/>
+	<parameter name="tipPrometnogDokumenta" class="java.lang.String"/>
+	<field name="redniBrojStavkePrometnogDokumenta" class="java.lang.Integer"/>
+	<field name="artikal" class="java.lang.String"/>
+	<field name="kolicina" class="java.lang.Double"/>
+	<field name="cena" class="java.lang.Double"/>
+	<field name="vrednost" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="ff97a302-9218-4c92-b712-4d4ea08ffdcc"/>
+				<textField>
+					<reportElement x="20" y="18" width="260" height="74" forecolor="#FFFFFF" uuid="2c7d8cb3-8a71-4fb0-ab3d-46875b2e9954"/>
+					<textElement>
+						<font size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{tipPrometnogDokumenta}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="40" width="260" height="66" forecolor="#FFFFFF" uuid="2c7d8cb3-8a71-4fb0-ab3d-46875b2e9954"/>
+					<textElement>
+						<font size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{datumFormiranja}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="60" width="260" height="60" forecolor="#FFFFFF" uuid="2c7d8cb3-8a71-4fb0-ab3d-46875b2e9954"/>
+					<textElement>
+						<font size="13" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{status}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="220" y="0" width="370" height="90" forecolor="#FFFFFF" uuid="9566cf26-7b10-451a-8798-e0767d7e9402"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{magacin}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="221" y="18" width="369" height="90" forecolor="#FFFFFF" uuid="9566cf26-7b10-451a-8798-e0767d7e9402"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{poslovnaGodina}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="330" y="36" width="260" height="90" forecolor="#FFFFFF" uuid="9566cf26-7b10-451a-8798-e0767d7e9402"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{poslovniPartner}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="53c0a64a-c2b0-4eff-969d-f453e5e8643c"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="56ff8e2e-6808-42bb-940a-0edf4a64d2bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e8ccbd51-5966-4d0d-ba87-f48ba1b287e3"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Redni Broj]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c8363d7e-e8cb-4ff3-81d0-ba6d385125c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a308175f-9be2-40a0-a128-79134d8572b2"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Artikal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="83b06f7e-b17d-4fdd-9a62-d10fdecb86d4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9997543b-4e0f-4635-bab0-7297c0817645"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kolicina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a5873458-22a9-4d0a-8144-960218e80f03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="458a6800-18b6-4a18-9754-c781cf2deb49"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d1b7fb51-384b-45aa-8d98-89013c99d172">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad69b2a0-2044-4166-8ac6-8ee1d95d1ffd"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vrednost]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="e432b3fc-b6a2-4600-b044-a13847cc4348"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="111" height="20" uuid="d046b517-df79-40f8-bd65-592a716c2704">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e8ccbd51-5966-4d0d-ba87-f48ba1b287e3"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{redniBrojStavkePrometnogDokumenta}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="111" y="0" width="111" height="20" uuid="00acd03a-534e-499e-a431-4d2561f4b354">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a308175f-9be2-40a0-a128-79134d8572b2"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{artikal}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="222" y="0" width="111" height="20" uuid="a5fd3d75-616f-4a08-885e-71cb4f0a0303">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9997543b-4e0f-4635-bab0-7297c0817645"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kolicina}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="333" y="0" width="111" height="20" uuid="5fc83444-d8af-4f15-ac86-788bf8cfb456">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="458a6800-18b6-4a18-9754-c781cf2deb49"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cena}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="444" y="0" width="111" height="20" uuid="44e90d01-1ab9-4d25-9adc-282113790ef3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad69b2a0-2044-4166-8ac6-8ee1d95d1ffd"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrednost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="50ef3280-f4a3-4127-952e-2342b7312162"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="8a2d4903-36c2-4e22-b8b0-ec16c1c54980"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="6d4691a6-5666-417e-8b8f-c6be07eba343"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
