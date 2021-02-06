@@ -47,8 +47,8 @@ public class AnalitikaMagacinskeKartice implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_MAGACINSKE_KARTICE")
 	private MagacinskaKartica magacinskaKartica;
-
+/*
 	@Version
 	private Integer version;
-
+*/
 }

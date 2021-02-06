@@ -67,10 +67,10 @@ public class PrometniDokument implements Serializable {
 	// bi-directional many-to-one association to StavkePrometnogDokumenta
 	@OneToMany(mappedBy = "prometniDokument", fetch = FetchType.EAGER)
 	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta = new HashSet<>();
-
+/*
 	@Version
 	private Integer version;
-	
+	*/
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
 

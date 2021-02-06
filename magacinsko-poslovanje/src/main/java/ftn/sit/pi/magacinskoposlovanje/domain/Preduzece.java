@@ -55,10 +55,10 @@ public class Preduzece implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_RADNIKA")
 	private Radnik radnik;
-
+/*
 	@Version
 	private Integer version;
-
+*/
 /*	public KategorijaArtikala addKategorijaArtikala(KategorijaArtikala kategorijaArtikala) {
 		getKategorijeArtikala().add(kategorijaArtikala);
 		kategorijaArtikala.setPreduzece(this);

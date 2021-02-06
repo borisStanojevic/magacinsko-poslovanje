@@ -40,10 +40,10 @@ public class StavkaPrometnogDokumenta implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_PROMETNOG_DOKUMENTA")
 	private PrometniDokument prometniDokument;
-
+/*
 	@Version
 	private Integer version;
-	
+	*/
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
 }

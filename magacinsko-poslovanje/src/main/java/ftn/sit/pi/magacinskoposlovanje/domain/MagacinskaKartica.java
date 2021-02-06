@@ -74,10 +74,10 @@ public class MagacinskaKartica implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "ID_GODINE")
 	private PoslovnaGodina poslovnaGodina;
-
+/*
 	@Version
 	private Integer version;
-	
+	*/
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
 

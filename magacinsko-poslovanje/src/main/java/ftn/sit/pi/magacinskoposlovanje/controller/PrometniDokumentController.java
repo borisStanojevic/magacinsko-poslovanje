@@ -1,6 +1,8 @@
 package ftn.sit.pi.magacinskoposlovanje.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -32,11 +34,13 @@ import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.dto.MagacinDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.PoslovniPartnerDTO;
+import ftn.sit.pi.magacinskoposlovanje.dto.PrijemnicaDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.PrometniDokumentDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.StavkaPrometnogDokumentaDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.PrometniDokumentToDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToMagacin;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToPoslovniPartner;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToStavkaPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.repository.PrometniDokumentRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.PoslovnaGodinaService;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.PrometniDokumentService;
@@ -63,6 +67,9 @@ public class PrometniDokumentController {
 	
 	@Autowired
 	StavkaPrometnogDokumentaService stavkaPromDokService;
+	
+	@Autowired
+	DTOToStavkaPrometnogDokumenta dtoToStavkaPrometnogDokumenta;
 	
 	@GetMapping(value="/all")
 	public ResponseEntity<Set<PrometniDokumentDTO>> getAll(@RequestParam("sifraMagacina") Integer sifraMagacina,
@@ -93,26 +100,40 @@ public class PrometniDokumentController {
 		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> create(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
-		@RequestParam("datumKnjizenja") String datumKnjizenja, Errors errors) {
-		if(errors.hasErrors()) {
+	@PostMapping(value="/create-prijemnica", consumes="application/json")
+	public ResponseEntity<?> create(@RequestBody PrijemnicaDTO prijemnica) {
+	
+	//public ResponseEntity<?> create(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
+		//@RequestParam("datumKreiranja") String datumKreiranja, @RequestBody List<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta, Errors errors) {
+		
+		/*if(errors.hasErrors()) {
 			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}
+		}*/
 		PrometniDokument newPrometniDokument = new PrometniDokument();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		Date date = (Date) formatter.parse(datumKnjizenja);
-		newPrometniDokument.setDatumKnjizenja(date);
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		//Date date = (Date) formatter.parse(prijemnica.getDatumKreiranja());
+	 
+		newPrometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
 		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
-		newPrometniDokument.setMagacin(dtoToMagacin.convert(magacin));
-		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(poslovniPartner));
+		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
+		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(prijemnica.getPoslovniPartner()));
 		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
 		
-		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(newPrometniDokument);
+		
+		for(StavkaPrometnogDokumentaDTO stavkaDTO : prijemnica.getStavkePrometnogDokumenta()) {
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = dtoToStavkaPrometnogDokumenta.convert(stavkaDTO);
+			stavkaPrometnogDokumenta.setPrometniDokument(prometniDokumentFromDB);
+			stavkaPromDokService.add(stavkaPrometnogDokumenta);
+		}
+			
+		
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	
+/*	
 	@PostMapping(value="/create-prijemnica", consumes="application/json")
 	public ResponseEntity<?> createPrijemnica(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
 			@RequestBody List<StavkaPrometnogDokumenta> stavkePrometnogDokumenta, @RequestParam("ukupnaCena") Integer ukupnaCena,
@@ -129,9 +150,9 @@ public class PrometniDokumentController {
 		PoslovnaGodina poslovnaGodina = poslovnaGodinaService.getByZakljucena(false);
 		newPrometniDokument.setPoslovnaGodina(poslovnaGodina);
 		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(poslovniPartner));
-	/*	for(StavkaPrometnogDokumenta stavkaPromDok : stavkePrometnogDokumenta) {
+		for(StavkaPrometnogDokumenta stavkaPromDok : stavkePrometnogDokumenta) {
 			newPrometniDokument.addStavkaPrometnogDokumenta(stavkaPromDok);
-		}*/
+		}
 		prometniDokumentService.add(newPrometniDokument);
 		
 		//add stavke prometnog dokumenta
@@ -142,7 +163,7 @@ public class PrometniDokumentController {
 		
 		
 		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
-	}
+	}*/
 	
 	@PutMapping(value="/delete")
 	public ResponseEntity<?> deletePrometniDokument(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {

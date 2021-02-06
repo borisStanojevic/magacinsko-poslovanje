@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
 import ftn.sit.pi.magacinskoposlovanje.domain.Status;
 import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometnogDokumenta;
@@ -32,7 +34,7 @@ public class PrometniDokumentDTO implements Serializable {
 	private Date datumKnjizenja;
 	private Status status;
 	private TipPrometnogDokumenta tipPrometnogDokumenta;
-	//private MagacinDTO magacin;
+	//private int magacinId;
 	private PoslovnaGodinaDTO poslovnaGodina;
 	private PoslovniPartnerDTO poslovniPartner;
 	private Set<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta;
@@ -56,5 +58,7 @@ public class PrometniDokumentDTO implements Serializable {
 				new PoslovniPartnerDTO(prometniDokument.getPoslovniPartner()),
 				StavkaPrometnogDokumentaDTO.convert(prometniDokument.getStavkePrometnogDokumenta()));
 	}
+	
+	
 
 }
