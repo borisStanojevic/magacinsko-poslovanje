@@ -48,10 +48,10 @@ public class Artikal implements Serializable {
 	// bi-directional many-to-one association to StavkePrometnogDokumenta
 	@OneToMany(mappedBy = "artikal")
 	private Set<StavkaPrometnogDokumenta> stavkePrometnogDokumenta = new HashSet<>();
-
+/*
 	@Version
 	private Integer version;
-	
+	*/
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
 

@@ -51,10 +51,10 @@ public class PoslovniPartner implements Serializable {
 	// bi-directional many-to-one association to PrometniDokument
 	@OneToMany(mappedBy = "poslovniPartner")
 	private Set<PrometniDokument> prometniDokumenti = new HashSet<>();
-
+/*
 	@Version
 	private Integer version;
-	
+	*/
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
 

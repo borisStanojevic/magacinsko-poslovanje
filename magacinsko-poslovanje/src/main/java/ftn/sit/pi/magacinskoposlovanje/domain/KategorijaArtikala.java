@@ -40,8 +40,8 @@ public class KategorijaArtikala implements Serializable {
 	@JoinColumn(name = "SIFRA_PREDUZECA")
 	private Preduzece preduzece;
 */
-	@Version
-	private Integer version;
+	//@Version
+	//private Integer version;
 	
 	@Column(name = "DELETED", columnDefinition = "tinyint(1) default 0")
 	private boolean deleted;
