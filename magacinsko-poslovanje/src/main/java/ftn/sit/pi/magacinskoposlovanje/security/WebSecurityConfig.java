@@ -60,7 +60,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
+	
 			.permitAll()
+			.antMatchers("/{\\d+}/{\\d+}/lager-lista").permitAll()
 			.anyRequest().authenticated()
 			.and().logout().invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID");
