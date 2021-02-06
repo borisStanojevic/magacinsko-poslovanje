@@ -28,6 +28,7 @@ import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToArtikal;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToJedinicaMere;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToKategorijaArtikala;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.ArtikalService;
+import ftn.sit.pi.magacinskoposlovanje.service.implementation.KategorijaArtikalaService;
 
 @RestController
 @RequestMapping(value="/api/artikal")
@@ -40,6 +41,7 @@ public class ArtikalController {
 	ArtikalToDTO artikalToDTO;
 	
 	@Autowired
+
 	DTOToArtikal dtoToArtikal;
 	
 	@Autowired
@@ -47,6 +49,9 @@ public class ArtikalController {
 	
 	@Autowired
 	DTOToKategorijaArtikala dtoToKategorijaArtikala;
+
+	@Autowired
+	KategorijaArtikalaService kategorijaService;
 	
 	@GetMapping(value="/all")
 	public ResponseEntity<Set<ArtikalDTO>> getAll() {
@@ -67,10 +72,12 @@ public class ArtikalController {
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
+
 	public ResponseEntity<?> createArtikal(@RequestBody ArtikalDTO artikalDTO, Errors errors) {
 		if(errors.hasErrors()) {
 			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
 		}
+		
 		JedinicaMere jedinicaMere = dtoToJedinicaMere.convert(artikalDTO.getJedinicaMere());
 		KategorijaArtikala kategorijaArtikala = dtoToKategorijaArtikala.convert(artikalDTO.getKategorijaArtikala());
 		
@@ -94,6 +101,7 @@ public class ArtikalController {
 		if(sifraArtikla == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 		Artikal artikal = artikalService.getById(sifraArtikla);
 		artikal.setDeleted(true);
 		artikalService.update(artikal);

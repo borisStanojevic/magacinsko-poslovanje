@@ -50,7 +50,7 @@ public class MagacinskaKarticaToDTO implements Converter<MagacinskaKartica, Maga
 		magDTO.setAnalitikeMagacinskeKartice(analitikaToDTO.convert(source.getAnalitikeMagacinskeKartice()));
 		//analitika magacinske kartice
 		//magDTO.setMagacin(magacinToDTO.convert(source.getMagacin()));
-		//magDTO.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));
+		magDTO.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));
 		return magDTO;
 	}
 	

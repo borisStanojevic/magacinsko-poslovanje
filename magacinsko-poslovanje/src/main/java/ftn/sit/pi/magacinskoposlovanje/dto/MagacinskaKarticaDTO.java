@@ -37,7 +37,7 @@ public class MagacinskaKarticaDTO implements Serializable {
 	private ArtikalDTO artikal;
 	@JsonIgnore
 	private MagacinDTO magacin;
-	@JsonIgnore
+	//@JsonIgnore
 	private PoslovnaGodinaDTO poslovnaGodina;
 
 	public static Set<MagacinskaKarticaDTO> convert(Set<MagacinskaKartica> magacinskaKarticaEntitySet) {
@@ -58,6 +58,7 @@ public class MagacinskaKarticaDTO implements Serializable {
 				magacinskaKartica.getUkupnaKolicina(), magacinskaKartica.getUkupnaVrednost(),
 				magacinskaKartica.getVrednostIzlaza(), magacinskaKartica.getVrednostPocetnogStanja(),
 				magacinskaKartica.getVrednostUlaza(),
+				
 				AnalitikaMagacinskeKarticeDTO.convert(magacinskaKartica.getAnalitikeMagacinskeKartice()),
 				new ArtikalDTO(magacinskaKartica.getArtikal()), new MagacinDTO(magacinskaKartica.getMagacin()),
 				new PoslovnaGodinaDTO(magacinskaKartica.getPoslovnaGodina()));

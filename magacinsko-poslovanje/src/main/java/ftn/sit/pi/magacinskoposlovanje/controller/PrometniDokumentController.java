@@ -175,4 +175,8 @@ public class PrometniDokumentController {
 		prometniDokumentService.update(prometniDokument);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	
+	//proknjizi otknjizi dokument
+	// koja logika ovde ide? sta treba uraditi?
 }
