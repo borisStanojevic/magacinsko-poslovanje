@@ -63,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 			.permitAll()
 			.antMatchers("/magacini/{\\d+}/poslovne-godine/{\\d+}/lager-lista").permitAll()
+			.antMatchers("/magacini/{\\d+}/prometni-dokumenti/{\\d+}/izvestaj").permitAll()
 			.anyRequest().authenticated()
 			.and().logout().invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID");
