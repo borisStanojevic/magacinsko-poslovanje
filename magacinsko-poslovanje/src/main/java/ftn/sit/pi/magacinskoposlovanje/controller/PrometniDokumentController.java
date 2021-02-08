@@ -32,8 +32,10 @@ import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.domain.Smer;
 import ftn.sit.pi.magacinskoposlovanje.domain.Status;
 import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
+import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometa;
 import ftn.sit.pi.magacinskoposlovanje.domain.TipPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.dto.MagacinDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.PoslovniPartnerDTO;
@@ -101,6 +103,15 @@ public class PrometniDokumentController {
 		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/otpremnice")
+	public ResponseEntity<Set<PrometniDokumentDTO>> getAllOtpremnice() {
+		
+		Page<PrometniDokument> prometniDokumentPage = prometniDokumentService.getByOtpremnica(new PageRequest(0, 1000));
+		Set<PrometniDokument> prometniDokumenti = new HashSet<>(prometniDokumentPage.getContent());
+		Set<PrometniDokumentDTO> prometniDokumentDTO = prometniDokumentToDTO.convert(prometniDokumenti);
+		return new ResponseEntity<Set<PrometniDokumentDTO>>(prometniDokumentDTO, HttpStatus.OK);
+	}
+	
 	@GetMapping(value="/get-for-poslovni-partner")
 	public ResponseEntity<Set<PrometniDokumentDTO>> getAll(@RequestParam("sifraMagacina") Integer sifraMagacina,
 			@RequestParam("idGodine") Integer idGodine, @RequestParam("sifraPartnera") Integer sifraPartnera) {
@@ -149,18 +160,27 @@ public class PrometniDokumentController {
 		for(StavkaPrometnogDokumenta stavka : setStavke) {
 			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
 			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			Double kolicinaUlaza = magacinskaKartica.getKolicinaUlaza();
+			Double vrednostUlaza = magacinskaKartica.getVrednostUlaza();
+			
 			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
 			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
-			Double kolicinaUlaza = stavka.getKolicina();
-			Double vrednostUlaza = stavka.getVrednost();
 			
-			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + kolicinaUlaza);
-			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + vrednostUlaza);
-			magacinskaKartica.setKolicinaUlaza(stavka.getKolicina());
-			magacinskaKartica.setVrednostUlaza(stavka.getKolicina() * stavka.getVrednost());
+			magacinskaKartica.setKolicinaUlaza(kolicinaUlaza + stavka.getKolicina());
+			magacinskaKartica.setVrednostUlaza(vrednostUlaza + stavka.getVrednost());
 			
-			AnalitikaMagacinskeKartice analitikaMagacinskaKartice = new AnalitikaMagacinskeKartice();
-			analitikaMagacinskaKartice.setCena(stavka.getCena());
+			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + stavka.getKolicina());
+			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + stavka.getVrednost());			
+			
+			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
+			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			analitikaMagacinskeKartice.setCena(stavka.getCena());
+			analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
+			analitikaMagacinskeKartice.setSmer(Smer.ULAZ);
+			analitikaMagacinskeKartice.setTipPrometa(TipPrometa.DOBAVLJENO);
+			analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
+			analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
+			analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);
 			
 			
 			magacinskaKarticaService.add(magacinskaKartica);			
