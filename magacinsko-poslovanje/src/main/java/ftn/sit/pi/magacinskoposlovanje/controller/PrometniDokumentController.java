@@ -232,37 +232,55 @@ public class PrometniDokumentController {
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	//DOVRSITI!!
-	@PostMapping(value="/proknjizi-otpremnicu", consumes="application/json")
-	public ResponseEntity<?> proknjiziOtpremnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+	@PostMapping(value="/proknjizi-otpremnicu/{idPrometnogDokumenta}", consumes="application/json")
+	public ResponseEntity<?> proknjiziOtpremnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
 		prometniDokument.setStatus(Status.PROKNJIZENO);
 		
-		prometniDokumentService.add(prometniDokument);
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prometniDokument);		
 		
 		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
 		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
 		for(StavkaPrometnogDokumenta stavka : setStavke) {
 			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
 			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			Double kolicinaIzlaza = magacinskaKartica.getKolicinaIzlaza();
+			if(kolicinaIzlaza == null) {
+				kolicinaIzlaza = 0.0;
+			}
+			Double vrednostIzlaza = magacinskaKartica.getVrednostIzlaza();
+			if(vrednostIzlaza == null) {
+				vrednostIzlaza = 0.0;
+			}
+			
 			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
 			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
-			Double kolicinaIzlaza = stavka.getKolicina();
-			Double vrednostIzlaza = stavka.getVrednost();
 			
-			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - kolicinaIzlaza);
-			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - vrednostIzlaza);
-			magacinskaKartica.setKolicinaIzlaza(stavka.getKolicina());
-			magacinskaKartica.setVrednostIzlaza(stavka.getKolicina() * stavka.getVrednost());
+			magacinskaKartica.setKolicinaIzlaza(kolicinaIzlaza + stavka.getKolicina());
+			magacinskaKartica.setVrednostIzlaza(vrednostIzlaza + stavka.getVrednost());
+			
+			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - stavka.getKolicina());
+			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());			
+			
+			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
+			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			analitikaMagacinskeKartice.setCena(stavka.getCena());
+			analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
+			analitikaMagacinskeKartice.setSmer(Smer.IZLAZ);
+			analitikaMagacinskeKartice.setTipPrometa(TipPrometa.OTPREMLJENO);
+			analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
+			analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
+			analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);
+			
 			
 			magacinskaKarticaService.add(magacinskaKartica);			
 		}
-		
-		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);	
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/otkazi-otpremnicu", consumes="application/json")
-	public ResponseEntity<?> otkaziOtpremnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+	@PostMapping(value="/otkazi-otpremnicu/{idPrometnogDokumenta}", consumes="application/json")
+	public ResponseEntity<?> otkaziOtpremnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
 		prometniDokument.setDeleted(true);
 		
@@ -289,8 +307,4 @@ public class PrometniDokumentController {
 		prometniDokumentService.update(prometniDokument);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	
-	//proknjizi otknjizi dokument
-	// koja logika ovde ide? sta treba uraditi?
 }

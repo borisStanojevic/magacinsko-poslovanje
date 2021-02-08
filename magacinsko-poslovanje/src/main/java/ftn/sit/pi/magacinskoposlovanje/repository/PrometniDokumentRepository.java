@@ -26,6 +26,6 @@ public interface PrometniDokumentRepository extends PagingAndSortingRepository<P
 	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'PRIJEMNICA' AND pd.deleted = 0")
 	Page<PrometniDokument> findByPrijemnica(Pageable pageable);
 	
-	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'OTPREMNICA'")
+	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'OTPREMNICA' AND pd.deleted = 0")
 	Page<PrometniDokument> findByOtpremnica(Pageable pageable);
 }
