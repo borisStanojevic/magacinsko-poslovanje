@@ -5,5 +5,5 @@ import java.io.FileNotFoundException;
 import net.sf.jasperreports.engine.JRException;
 
 public interface IPrometniDokumentIzvestajService {
-	byte[] generisiIzvestaj(int idMagacina, int idPrometnogDokumenta) throws FileNotFoundException, JRException ;
+	byte[] generisiIzvestaj(int idPrometnogDokumenta) throws FileNotFoundException, JRException ;
 }

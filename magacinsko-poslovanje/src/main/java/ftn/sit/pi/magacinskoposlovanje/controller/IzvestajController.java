@@ -52,16 +52,16 @@ public class IzvestajController {
 		return "lager-lista-" + idMagacina + "-" + poslovnaGodina + ".pdf";
 	}
 
-	@GetMapping("/magacini/{idMagacina}/prometni-dokumenti/{idPrometnogDokumenta}/izvestaj")
-	public ResponseEntity<ByteArrayResource> getAnalitikeMagacinskeKarticeIzvestaj(@PathVariable int idMagacina, @PathVariable int idPrometnogDokumenta) {
+	@GetMapping("/prometni-dokumenti/{idPrometnogDokumenta}/izvestaj")
+	public ResponseEntity<ByteArrayResource> getAnalitikeMagacinskeKarticeIzvestaj(@PathVariable int idPrometnogDokumenta) {
 		try {
-			byte[] izvestaj = prometniDokumentIzvestajService.generisiIzvestaj(idMagacina, idPrometnogDokumenta);
+			byte[] izvestaj = prometniDokumentIzvestajService.generisiIzvestaj(idPrometnogDokumenta);
 
 			ByteArrayResource byteArrayResource = new ByteArrayResource(izvestaj);
 
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.put("Content-Disposition", Collections
-					.singletonList("attachment; filename=" + constructPrometniDokumentIzvestajFileName(idMagacina, idPrometnogDokumenta)));
+					.singletonList("attachment; filename=" + constructPrometniDokumentIzvestajFileName(idPrometnogDokumenta)));
 
 			return ResponseEntity.ok().headers(responseHeaders).contentType(MediaType.APPLICATION_PDF)
 					.contentLength(byteArrayResource.contentLength()).body(byteArrayResource);
@@ -73,8 +73,8 @@ public class IzvestajController {
 		}
 	}
 	
-	private String constructPrometniDokumentIzvestajFileName(int idMagacina, int idPrometnogDokumenta) {
-		return "magacin-" + idMagacina + "_" + "prometni-dokument" + "-" +  idPrometnogDokumenta + ".pdf";
+	private String constructPrometniDokumentIzvestajFileName(int idPrometnogDokumenta) {
+		return "prometni-dokument" + "-" +  idPrometnogDokumenta + ".pdf";
 	}
 
 }

@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
+import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.domain.StavkaPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.repository.MagacinskaKarticaRepository;
+import ftn.sit.pi.magacinskoposlovanje.repository.PrometniDokumentRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IPrometniDokumentIzvestajService;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.models.LagerListaReportModel;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.models.LagerListaStavkaReportModel;
@@ -32,15 +35,15 @@ public class PrometniDokumentIzvestajService implements IPrometniDokumentIzvesta
 	private static final String REPORT_TEMPLATE_NAME = "prometni-dokument";
 
 	@Autowired
-	private MagacinskaKarticaRepository magacinskaKarticaRepository;
+	private PrometniDokumentRepository prometniDokumentRepository;
 
 	@Override
-	public byte[] generisiIzvestaj(int idMagacina, int idPrometnogDokumenta) throws FileNotFoundException, JRException {
+	public byte[] generisiIzvestaj(int idPrometnogDokumenta) throws FileNotFoundException, JRException {
 		File reportTemplateFile = loadReportTemplateFile(REPORT_TEMPLATE_NAME);
 
 		JasperReport compiledReport = compileReport(reportTemplateFile.getAbsolutePath());
 
-		JasperPrint filledReport = fillReport(compiledReport);
+		JasperPrint filledReport = fillReport(compiledReport, idPrometnogDokumenta);
 
 		return JasperExportManager.exportReportToPdf(filledReport);
 
@@ -58,17 +61,24 @@ public class PrometniDokumentIzvestajService implements IPrometniDokumentIzvesta
 		return compiledReport;
 	}
 
-	private JasperPrint fillReport(JasperReport compiledReport) throws JRException {
-		PrometniDokumentReportModel prometniDokumentReportModel = createPrometniDokumentReportModel();
+	private JasperPrint fillReport(JasperReport compiledReport, int idPrometnogDokumenta) throws JRException {
+		PrometniDokument prometniDokument = prometniDokumentRepository.findByIdPrometnogDokumenta(idPrometnogDokumenta); 
 
-		// Iterable<MagacinskaKartica> magacinskeKartice =
-		// magacinskaKarticaRepository.findAll();
-
-		// List<LagerListaStavkaReportModel> lagerListaStavkaReportModels = new
-		// ArrayList<>();
-		// for (MagacinskaKartica magacinskaKartica : magacinskeKartice) {
-		// lagerListaStavkaReportModels.add(createFromMagacinskaKartica(magacinskaKartica));
-		// }
+		PrometniDokumentReportModel prometniDokumentReportModel = new PrometniDokumentReportModel();
+		prometniDokumentReportModel.setBrojPrometnogDokumenta(prometniDokument.getBrojPrometnogDokumenta());
+		prometniDokumentReportModel.setMagacin(prometniDokument.getMagacin().getNazivMagacina());
+		prometniDokumentReportModel.setDatumFormiranja(prometniDokument.getDatumFormiranja().toString());
+		prometniDokumentReportModel.setPoslovnaGodina(prometniDokument.getPoslovnaGodina().getIdGodine());
+		prometniDokumentReportModel.setPoslovniPartner(prometniDokument.getPoslovniPartner().getSifraPartnera());
+		prometniDokumentReportModel.setStatus(prometniDokument.getStatus().toString());
+		prometniDokumentReportModel.setTipPrometnogDokumenta(prometniDokument.getTipPrometnogDokumenta().toString());
+		
+		List<PrometniDokumentStavkaReportModel> prometniDokumentStavkaReportModels = new ArrayList<>();
+		int i = 0;
+		for (StavkaPrometnogDokumenta stavkaPrometnogDokumenta : prometniDokument.getStavkePrometnogDokumenta()) {
+			prometniDokumentStavkaReportModels.add(createStavkaPrometnogDokumentaReportModelFromStavkaPrometnogDokumenta(stavkaPrometnogDokumenta, ++i));
+		}
+		prometniDokumentReportModel.setStavke(prometniDokumentStavkaReportModels);
 
 		Map<String, Object> parameters = new HashMap<>();
 
@@ -88,6 +98,7 @@ public class PrometniDokumentIzvestajService implements IPrometniDokumentIzvesta
 
 		parameters.put(PrometniDokumentReportModel.POSLOVNI_PARTNER_REPORT_TEMPLATE_KEY,
 				prometniDokumentReportModel.getPoslovniPartner());
+		
 		parameters.put(PrometniDokumentReportModel.STATUS_REPORT_TEMPLATE_KEY, prometniDokumentReportModel.getStatus());
 
 		parameters.put(PrometniDokumentReportModel.TIP_PROMETNOG_DOKUMENTA_REPORT_TEMPLATE_KEY,
@@ -101,49 +112,17 @@ public class PrometniDokumentIzvestajService implements IPrometniDokumentIzvesta
 		return filledReport;
 	}
 
-	private PrometniDokumentReportModel createPrometniDokumentReportModel() {
-		PrometniDokumentReportModel prometniDokumentReportModel = new PrometniDokumentReportModel();
-		prometniDokumentReportModel.setBrojPrometnogDokumenta(69);
-		prometniDokumentReportModel.setMagacin("mMagacin");
-		prometniDokumentReportModel.setDatumFormiranja("01/01/1990");
-		prometniDokumentReportModel.setPoslovnaGodina(1990);
-		prometniDokumentReportModel.setPoslovniPartner(101);
-		prometniDokumentReportModel.setStatus("mStatus");
-		prometniDokumentReportModel.setTipPrometnogDokumenta(new Random().nextInt(10) < 5 ? "mPrijemnica" : "mOtpremnica");
+	private PrometniDokumentStavkaReportModel createStavkaPrometnogDokumentaReportModelFromStavkaPrometnogDokumenta(StavkaPrometnogDokumenta stavkaPrometnogDokumenta, int redniBroj) {
+		PrometniDokumentStavkaReportModel prometniDokumentStavkaReportModel = new PrometniDokumentStavkaReportModel();
 
-		prometniDokumentReportModel.setStavke(createStavkePrometnogDokumenta());
 
-		return prometniDokumentReportModel;
+		prometniDokumentStavkaReportModel.setRedniBrojStavkePrometnogDokumenta(redniBroj);
+		prometniDokumentStavkaReportModel.setArtikal(stavkaPrometnogDokumenta.getArtikal().getNazivArtikla());
+		prometniDokumentStavkaReportModel.setCena(stavkaPrometnogDokumenta.getCena());
+		prometniDokumentStavkaReportModel.setKolicina(stavkaPrometnogDokumenta.getKolicina());
+		prometniDokumentStavkaReportModel.setVrednost(stavkaPrometnogDokumenta.getVrednost());
+
+
+		return prometniDokumentStavkaReportModel;
 	}
-
-	private List<PrometniDokumentStavkaReportModel> createStavkePrometnogDokumenta() {
-		List<PrometniDokumentStavkaReportModel> stavkePrometnogDokumenta = new ArrayList<>(10);
-
-		for (int i = 0; i < 10; i++) {
-			PrometniDokumentStavkaReportModel stavkaPrometnogDokumenta = new PrometniDokumentStavkaReportModel();
-
-			stavkaPrometnogDokumenta.setRedniBrojStavkePrometnogDokumenta(i + 1);
-			stavkaPrometnogDokumenta.setArtikal("Artikal " + (i + 1));
-			stavkaPrometnogDokumenta.setCena(new Random().nextDouble());
-			stavkaPrometnogDokumenta.setKolicina(new Random().nextDouble());
-			stavkaPrometnogDokumenta.setVrednost(new Random().nextDouble());
-
-			stavkePrometnogDokumenta.add(stavkaPrometnogDokumenta);
-		}
-
-		return stavkePrometnogDokumenta;
-	}
-
-	// LagerListaStavkaReportModel lagerListaStavkaReportModel = new
-	// LagerListaStavkaReportModel();
-	//
-	// lagerListaStavkaReportModel.setRedniBroj(magacinskaKartica.getRedniBrMagacinskeKar());
-	// lagerListaStavkaReportModel.setArtikal(magacinskaKartica.getArtikal().getNazivArtikla());
-	// lagerListaStavkaReportModel.setCena(magacinskaKartica.getCena());
-	// lagerListaStavkaReportModel.setKolicina(magacinskaKartica.getUkupnaKolicina());
-	// lagerListaStavkaReportModel.setVrednost(magacinskaKartica.getUkupnaVrednost());
-	//
-	// return lagerListaStavkaReportModel;
-	// }
-
 }
