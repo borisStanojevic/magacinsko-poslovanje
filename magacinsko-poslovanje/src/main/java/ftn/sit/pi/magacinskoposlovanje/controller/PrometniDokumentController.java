@@ -113,7 +113,7 @@ public class PrometniDokumentController {
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		//Date date = (Date) formatter.parse(prijemnica.getDatumKreiranja());
 	 
-		newPrometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newPrometniDokument.setDatumFormiranja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
 		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
 		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
