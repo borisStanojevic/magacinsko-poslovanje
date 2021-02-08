@@ -25,4 +25,7 @@ public interface PrometniDokumentRepository extends PagingAndSortingRepository<P
 	
 	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'PRIJEMNICA'")
 	Page<PrometniDokument> findByPrijemnica(Pageable pageable);
+	
+	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'OTPREMNICA'")
+	Page<PrometniDokument> findByOtpremnica(Pageable pageable);
 }

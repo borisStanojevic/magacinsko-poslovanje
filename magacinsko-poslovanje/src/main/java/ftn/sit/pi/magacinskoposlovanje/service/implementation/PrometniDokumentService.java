@@ -41,6 +41,12 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 	
 	@Override
 	@Transactional(readOnly = true)
+	public Page<PrometniDokument> getByOtpremnica(Pageable pageable) {
+		return prometniDokumentRepository.findByOtpremnica(pageable);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public Page<PrometniDokument> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, @Param("sifraPartnera") Integer sifraPartnera,Pageable pageable)
 	{
 		return prometniDokumentRepository.findAll(sifraMagacina, idGodine, sifraPartnera, pageable);

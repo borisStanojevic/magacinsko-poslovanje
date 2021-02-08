@@ -12,6 +12,7 @@ public interface IPrometniDokumentService {
 	Page<PrometniDokument> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine,Pageable pageable);
 	Page<PrometniDokument> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, @Param("sifraPartnera") Integer sifraPartnera ,Pageable pageable);
 	Page<PrometniDokument> getByPrijemnica(Pageable pageable);
+	Page<PrometniDokument> getByOtpremnica(Pageable pageable);
 
 	PrometniDokument add(PrometniDokument prometniDokument);
 	PrometniDokument update(PrometniDokument prometniDokument);
