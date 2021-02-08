@@ -23,7 +23,7 @@ public interface PrometniDokumentRepository extends PagingAndSortingRepository<P
 			+ " AND pd.poslovnaGodina.idGodine = :idGodine AND pd.poslovniPartner.sifraPartnera = :sifraPartnera")
 	Page<PrometniDokument> findAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, @Param("sifraPartnera") Integer sifraPartnera ,Pageable pageable);
 	
-	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'PRIJEMNICA'")
+	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'PRIJEMNICA' AND pd.deleted = 0")
 	Page<PrometniDokument> findByPrijemnica(Pageable pageable);
 	
 	@Query("SELECT pd FROM PrometniDokument pd WHERE pd.tipPrometnogDokumenta = 'OTPREMNICA'")

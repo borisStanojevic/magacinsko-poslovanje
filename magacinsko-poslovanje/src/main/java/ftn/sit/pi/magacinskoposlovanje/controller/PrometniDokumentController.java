@@ -189,12 +189,12 @@ public class PrometniDokumentController {
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/otkazi-prijemnicu", consumes="application/json")
-	public ResponseEntity<?> otkaziPrijemnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+	@PostMapping(value="/otkazi-prijemnicu/{idPrometnogDokumenta}", consumes="application/json")
+	public ResponseEntity<?> otkaziPrijemnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
 		prometniDokument.setDeleted(true);
 		
-		prometniDokumentService.add(prometniDokument);
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prometniDokument);
 		
 		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
 		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
@@ -202,8 +202,8 @@ public class PrometniDokumentController {
 			stavka.setDeleted(true);
 			stavkaPromDokService.add(stavka);			
 		}
-		
-		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 	@PostMapping(value="/create-otpremnica", consumes="application/json")
