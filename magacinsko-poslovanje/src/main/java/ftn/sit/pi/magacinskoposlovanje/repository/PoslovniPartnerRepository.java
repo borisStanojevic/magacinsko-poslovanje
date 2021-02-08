@@ -21,4 +21,6 @@ public interface PoslovniPartnerRepository extends PagingAndSortingRepository<Po
 
 	void deleteBySifraPartnera(Integer sifraPartnera);
 	
+	Page<PoslovniPartner> findAllByDeletedFalse(Pageable pageable);
+	
 }
