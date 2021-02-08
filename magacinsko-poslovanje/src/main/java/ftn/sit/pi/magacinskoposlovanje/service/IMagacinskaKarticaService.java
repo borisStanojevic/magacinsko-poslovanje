@@ -10,6 +10,7 @@ public interface IMagacinskaKarticaService {
 	
 	MagacinskaKartica getById(Integer idMagacinskeKartice);
 	Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
+	MagacinskaKartica getBySifraArtikla(Integer sifraArtikla);
 
 	MagacinskaKartica add(MagacinskaKartica magacinskaKartica);
 	MagacinskaKartica update(MagacinskaKartica magacinskaKartica);

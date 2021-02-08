@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ftn.sit.pi.magacinskoposlovanje.domain.AnalitikaMagacinskeKartice;
+import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
@@ -42,6 +45,8 @@ import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToMagacin;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToPoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToStavkaPrometnogDokumenta;
 import ftn.sit.pi.magacinskoposlovanje.repository.PrometniDokumentRepository;
+import ftn.sit.pi.magacinskoposlovanje.service.implementation.AnalitikaMagacinskeKarticeService;
+import ftn.sit.pi.magacinskoposlovanje.service.implementation.MagacinskaKarticaService;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.PoslovnaGodinaService;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.PrometniDokumentService;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.StavkaPrometnogDokumentaService;
@@ -64,6 +69,12 @@ public class PrometniDokumentController {
 	
 	@Autowired
 	PoslovnaGodinaService poslovnaGodinaService;
+	
+	@Autowired
+	MagacinskaKarticaService magacinskaKarticaService;
+	
+	@Autowired
+	AnalitikaMagacinskeKarticeService analitikaMagacinskeKarticeService;
 	
 	@Autowired
 	StavkaPrometnogDokumentaService stavkaPromDokService;
@@ -101,19 +112,13 @@ public class PrometniDokumentController {
 	}
 	
 	@PostMapping(value="/create-prijemnica", consumes="application/json")
-	public ResponseEntity<?> create(@RequestBody PrijemnicaDTO prijemnica) {
+	public ResponseEntity<?> createPrijemnica(@RequestBody PrijemnicaDTO prijemnica) {
 	
-	//public ResponseEntity<?> create(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
-		//@RequestParam("datumKreiranja") String datumKreiranja, @RequestBody List<StavkaPrometnogDokumentaDTO> stavkePrometnogDokumenta, Errors errors) {
-		
-		/*if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}*/
 		PrometniDokument newPrometniDokument = new PrometniDokument();
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		//Date date = (Date) formatter.parse(prijemnica.getDatumKreiranja());
 	 
-		newPrometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newPrometniDokument.setDatumFormiranja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
 		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
 		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
@@ -126,44 +131,133 @@ public class PrometniDokumentController {
 			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = dtoToStavkaPrometnogDokumenta.convert(stavkaDTO);
 			stavkaPrometnogDokumenta.setPrometniDokument(prometniDokumentFromDB);
 			stavkaPromDokService.add(stavkaPrometnogDokumenta);
-		}
-			
+		}			
 		
 		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-/*	
-	@PostMapping(value="/create-prijemnica", consumes="application/json")
-	public ResponseEntity<?> createPrijemnica(@RequestBody MagacinDTO magacin, @RequestBody PoslovniPartnerDTO poslovniPartner, 
-			@RequestBody List<StavkaPrometnogDokumenta> stavkePrometnogDokumenta, @RequestParam("ukupnaCena") Integer ukupnaCena,
-			@RequestParam("cenaSaRabatom") Integer cenaSaRabatom, @RequestParam("cenaSaPDV") Integer cenaSaPDV, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
+	@PostMapping(value="/proknjizi-prijemnicu/{idPrometnogDokumenta}", consumes="application/json")
+	public ResponseEntity<?> proknjiziPrijemnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		prometniDokument.setStatus(Status.PROKNJIZENO);
+		
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prometniDokument);		
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
+			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
+			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
+			Double kolicinaUlaza = stavka.getKolicina();
+			Double vrednostUlaza = stavka.getVrednost();
+			
+			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + kolicinaUlaza);
+			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + vrednostUlaza);
+			magacinskaKartica.setKolicinaUlaza(stavka.getKolicina());
+			magacinskaKartica.setVrednostUlaza(stavka.getKolicina() * stavka.getVrednost());
+			
+			AnalitikaMagacinskeKartice analitikaMagacinskaKartice = new AnalitikaMagacinskeKartice();
+			analitikaMagacinskaKartice.setCena(stavka.getCena());
+			
+			
+			magacinskaKarticaService.add(magacinskaKartica);			
 		}
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);	
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/otkazi-prijemnicu", consumes="application/json")
+	public ResponseEntity<?> otkaziPrijemnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		prometniDokument.setDeleted(true);
+		
+		prometniDokumentService.add(prometniDokument);
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			stavka.setDeleted(true);
+			stavkaPromDokService.add(stavka);			
+		}
+		
+		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+	}
+
+	@PostMapping(value="/create-otpremnica", consumes="application/json")
+	public ResponseEntity<?> createOtpremnica(@RequestBody PrijemnicaDTO prijemnica) {
+	
 		PrometniDokument newPrometniDokument = new PrometniDokument();
-		Date date = new Date(Calendar.getInstance().getTime().getTime());
-		newPrometniDokument.setDatumFormiranja(date);
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		//Date date = (Date) formatter.parse(prijemnica.getDatumKreiranja());
+	 
+		newPrometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
-		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
-		newPrometniDokument.setMagacin(dtoToMagacin.convert(magacin));
-		PoslovnaGodina poslovnaGodina = poslovnaGodinaService.getByZakljucena(false);
-		newPrometniDokument.setPoslovnaGodina(poslovnaGodina);
-		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(poslovniPartner));
-		for(StavkaPrometnogDokumenta stavkaPromDok : stavkePrometnogDokumenta) {
-			newPrometniDokument.addStavkaPrometnogDokumenta(stavkaPromDok);
+		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.OTPREMNICA);
+		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
+		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(prijemnica.getPoslovniPartner()));
+		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
+		
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(newPrometniDokument);
+		
+		for(StavkaPrometnogDokumentaDTO stavkaDTO : prijemnica.getStavkePrometnogDokumenta()) {
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = dtoToStavkaPrometnogDokumenta.convert(stavkaDTO);
+			stavkaPrometnogDokumenta.setPrometniDokument(prometniDokumentFromDB);
+			stavkaPromDokService.add(stavkaPrometnogDokumenta);
+		}			
+		
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	//DOVRSITI!!
+	@PostMapping(value="/proknjizi-otpremnicu", consumes="application/json")
+	public ResponseEntity<?> proknjiziOtpremnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		prometniDokument.setStatus(Status.PROKNJIZENO);
+		
+		prometniDokumentService.add(prometniDokument);
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
+			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
+			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
+			Double kolicinaIzlaza = stavka.getKolicina();
+			Double vrednostIzlaza = stavka.getVrednost();
+			
+			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - kolicinaIzlaza);
+			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - vrednostIzlaza);
+			magacinskaKartica.setKolicinaIzlaza(stavka.getKolicina());
+			magacinskaKartica.setVrednostIzlaza(stavka.getKolicina() * stavka.getVrednost());
+			
+			magacinskaKarticaService.add(magacinskaKartica);			
 		}
-		prometniDokumentService.add(newPrometniDokument);
 		
-		//add stavke prometnog dokumenta
-		for(StavkaPrometnogDokumenta stavkaPromDok : stavkePrometnogDokumenta) {
-			stavkaPromDokService.add(stavkaPromDok);
+		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+	}
+	
+	@PostMapping(value="/otkazi-otpremnicu", consumes="application/json")
+	public ResponseEntity<?> otkaziOtpremnicu(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
+		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		prometniDokument.setDeleted(true);
+		
+		prometniDokumentService.add(prometniDokument);
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			stavka.setDeleted(true);
+			stavkaPromDokService.add(stavka);			
 		}
-				
 		
-		
-		return new ResponseEntity<>(newPrometniDokument, HttpStatus.OK);
-	}*/
+		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+	}
+	
 	
 	@PutMapping(value="/delete")
 	public ResponseEntity<?> deletePrometniDokument(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {

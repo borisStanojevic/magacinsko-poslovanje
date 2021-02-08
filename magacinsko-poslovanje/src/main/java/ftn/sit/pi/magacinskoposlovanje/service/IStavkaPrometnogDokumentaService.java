@@ -13,6 +13,7 @@ public interface IStavkaPrometnogDokumentaService {
 	Page<StavkaPrometnogDokumenta> getAll(Pageable pageable);
 	Page<StavkaPrometnogDokumenta> getAll(@Param("idPrometnogDokumenta") Integer idPrometnogDokumenta, Pageable pageable);
 
+	
 	StavkaPrometnogDokumenta add(StavkaPrometnogDokumenta stavkaPrometnogDokumenta);
 	StavkaPrometnogDokumenta update(StavkaPrometnogDokumenta stavkaPrometnogDokumenta);
 	

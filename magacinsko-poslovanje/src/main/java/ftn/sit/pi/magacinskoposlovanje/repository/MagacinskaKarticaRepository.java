@@ -20,4 +20,7 @@ public interface MagacinskaKarticaRepository extends PagingAndSortingRepository<
 			+ " AND mk.poslovnaGodina.idGodine = :idGodine")
 	Page<MagacinskaKartica> findAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
 	
+	@Query("SELECT mk FROM MagacinskaKartica mk WHERE mk.artikal.sifraArtikla = :sifraArtikla")
+	MagacinskaKartica getBySifraArtikla(@Param("sifraArtikla") Integer sifraArtikla);
+	
 }
