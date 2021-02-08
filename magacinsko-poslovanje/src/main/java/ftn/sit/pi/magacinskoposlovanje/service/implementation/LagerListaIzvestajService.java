@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
@@ -43,7 +45,7 @@ public class LagerListaIzvestajService implements ILagerListaIzvestajService {
 
 		JasperReport compiledReport = compileReport(reportTemplateFile.getAbsolutePath());
 
-		JasperPrint filledReport = fillReport(compiledReport);
+		JasperPrint filledReport = fillReport(compiledReport, idMagacina, poslovnaGodina);
 
 		return JasperExportManager.exportReportToPdf(filledReport);
 		
@@ -61,15 +63,23 @@ public class LagerListaIzvestajService implements ILagerListaIzvestajService {
 		return compiledReport;
 	}
 
-	private JasperPrint fillReport(JasperReport compiledReport) throws JRException {
-		LagerListaReportModel lagerListaReportModel = createLagerListaReportModel();
-
-//		Iterable<MagacinskaKartica> magacinskeKartice = magacinskaKarticaRepository.findAll();
+	@SuppressWarnings("deprecation")
+	private JasperPrint fillReport(JasperReport compiledReport, int idMagacina, int poslovnaGodina) throws JRException {
+		Iterable<MagacinskaKartica> magacinskeKartice = magacinskaKarticaRepository.findAll(idMagacina, poslovnaGodina);
 		
-//		List<LagerListaStavkaReportModel> lagerListaStavkaReportModels = new ArrayList<>();		
-//		for (MagacinskaKartica magacinskaKartica : magacinskeKartice) {
-//			lagerListaStavkaReportModels.add(createFromMagacinskaKartica(magacinskaKartica));
-//		}
+		LagerListaReportModel lagerListaReportModel = new LagerListaReportModel();
+
+		List<LagerListaStavkaReportModel> lagerListaStavkaReportModels = new ArrayList<>();		
+		for (MagacinskaKartica magacinskaKartica : magacinskeKartice) {
+			if(lagerListaReportModel.getMagacin() == null) {
+				lagerListaReportModel.setMagacin(magacinskaKartica.getMagacin().getNazivMagacina());
+			}
+			if(lagerListaReportModel.getPoslovnaGodina() == 0) {
+				lagerListaReportModel.setPoslovnaGodina(magacinskaKartica.getPoslovnaGodina().getGodina().getYear());
+			}
+			
+			lagerListaStavkaReportModels.add(createLagerListaStavkaReportModelFromMagacinskaKartica(magacinskaKartica));
+		}
 		
 		JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(
 				lagerListaReportModel.getStavke());
@@ -85,34 +95,34 @@ public class LagerListaIzvestajService implements ILagerListaIzvestajService {
 		return filledReport;
 	}
 
-	private LagerListaReportModel createLagerListaReportModel() {
-		LagerListaReportModel reportModel = new LagerListaReportModel();
-		reportModel.setMagacin("MojMagacin");
-		reportModel.setPoslovnaGodina(2021);
-		reportModel.setStavke(createStavkeLagerListe());
+//	private LagerListaReportModel createLagerListaReportModel() {
+//		LagerListaReportModel reportModel = new LagerListaReportModel();
+//		reportModel.setMagacin("MojMagacin");
+//		reportModel.setPoslovnaGodina(2021);
+//		reportModel.setStavke(createStavkeLagerListe());
+//
+//		return reportModel;
+//	}
 
-		return reportModel;
-	}
-
-	private List<LagerListaStavkaReportModel> createStavkeLagerListe() {
-		List<LagerListaStavkaReportModel> stavkeLagerListe = new ArrayList<>(10);
-
-		for (int i = 0; i < 10; i++) {
-			LagerListaStavkaReportModel lagerListaStavkaReportModel = new LagerListaStavkaReportModel();
-
-			lagerListaStavkaReportModel.setRedniBroj(i + 1);
-			lagerListaStavkaReportModel.setArtikal("Artikal " + (i + 1));
-			lagerListaStavkaReportModel.setCena(new Random().nextDouble());
-			lagerListaStavkaReportModel.setKolicina(new Random().nextDouble());
-			lagerListaStavkaReportModel.setVrednost(new Random().nextDouble());
-
-			stavkeLagerListe.add(lagerListaStavkaReportModel);
-		}
-
-		return stavkeLagerListe;
-	}
+//	private List<LagerListaStavkaReportModel> createStavkeLagerListe() {
+//		List<LagerListaStavkaReportModel> stavkeLagerListe = new ArrayList<>(10);
+//
+//		for (int i = 0; i < 10; i++) {
+//			LagerListaStavkaReportModel lagerListaStavkaReportModel = new LagerListaStavkaReportModel();
+//
+//			lagerListaStavkaReportModel.setRedniBroj(i + 1);
+//			lagerListaStavkaReportModel.setArtikal("Artikal " + (i + 1));
+//			lagerListaStavkaReportModel.setCena(new Random().nextDouble());
+//			lagerListaStavkaReportModel.setKolicina(new Random().nextDouble());
+//			lagerListaStavkaReportModel.setVrednost(new Random().nextDouble());
+//
+//			stavkeLagerListe.add(lagerListaStavkaReportModel);
+//		}
+//
+//		return stavkeLagerListe;
+//	}
 	
-	private LagerListaStavkaReportModel createFromMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
+	private LagerListaStavkaReportModel createLagerListaStavkaReportModelFromMagacinskaKartica(MagacinskaKartica magacinskaKartica) {
 		LagerListaStavkaReportModel lagerListaStavkaReportModel = new LagerListaStavkaReportModel();
 		
 		lagerListaStavkaReportModel.setRedniBroj(magacinskaKartica.getRedniBrMagacinskeKar());
