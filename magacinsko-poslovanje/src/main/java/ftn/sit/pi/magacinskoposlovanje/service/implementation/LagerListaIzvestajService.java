@@ -75,11 +75,13 @@ public class LagerListaIzvestajService implements ILagerListaIzvestajService {
 				lagerListaReportModel.setMagacin(magacinskaKartica.getMagacin().getNazivMagacina());
 			}
 			if(lagerListaReportModel.getPoslovnaGodina() == 0) {
-				lagerListaReportModel.setPoslovnaGodina(magacinskaKartica.getPoslovnaGodina().getGodina().getYear());
+				lagerListaReportModel.setPoslovnaGodina(magacinskaKartica.getPoslovnaGodina().getIdGodine());
 			}
 			
 			lagerListaStavkaReportModels.add(createLagerListaStavkaReportModelFromMagacinskaKartica(magacinskaKartica));
 		}
+		
+		lagerListaReportModel.setStavke(lagerListaStavkaReportModels);
 		
 		JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(
 				lagerListaReportModel.getStavke());
