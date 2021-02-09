@@ -57,13 +57,14 @@ public class PoslovniPartnerService implements IPoslovniPartnerService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PoslovniPartner update(PoslovniPartner poslovniPartner) {
 
-		PoslovniPartner poslovniPartnerEdit = poslovniPartnerRepository.findBySifraPartnera(poslovniPartner.getSifraPartnera());
-		poslovniPartnerEdit.setAdresaPoslovnogPartnera(poslovniPartner.getAdresaPoslovnogPartnera());
-		poslovniPartnerEdit.setNazivPartnera(poslovniPartner.getNazivPartnera());
-		poslovniPartnerEdit.setPib(poslovniPartner.getPib());
-		poslovniPartnerEdit.setTipPartnera(poslovniPartner.getTipPartnera());
-		poslovniPartnerEdit.setMesto(poslovniPartner.getMesto());
-		return poslovniPartnerRepository.save(poslovniPartnerEdit);
+		PoslovniPartner poslovniPartnerToBeUpdate = poslovniPartnerRepository.findBySifraPartnera(poslovniPartner.getSifraPartnera());
+		poslovniPartnerToBeUpdate.setAdresaPoslovnogPartnera(poslovniPartner.getAdresaPoslovnogPartnera());
+		poslovniPartnerToBeUpdate.setNazivPartnera(poslovniPartner.getNazivPartnera());
+		poslovniPartnerToBeUpdate.setPib(poslovniPartner.getPib());
+		poslovniPartnerToBeUpdate.setTipPartnera(poslovniPartner.getTipPartnera());
+		poslovniPartnerToBeUpdate.setMesto(poslovniPartner.getMesto());
+		poslovniPartnerRepository.save(poslovniPartnerToBeUpdate);
+		return poslovniPartnerToBeUpdate;
 	}
 
 	@Override

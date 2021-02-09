@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.dto.PoslovniPartnerDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.PoslovniPartnerToDTO;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToPoslovniPartner;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.PoslovniPartnerService;
 
 @RestController
@@ -33,6 +34,9 @@ public class PoslovniPartnerController {
 	
 	@Autowired
 	PoslovniPartnerToDTO poslovniPartnerToDTO;
+	
+	@Autowired
+	DTOToPoslovniPartner dtoToPoslovniPartner;
 	
 	@GetMapping(value="/all") 
 	public ResponseEntity<Set<PoslovniPartnerDTO>> getAll() {
@@ -68,11 +72,11 @@ public class PoslovniPartnerController {
 		return new ResponseEntity<>(newPoslovniPartner, HttpStatus.OK);
 	}
 	
-	@PutMapping(value="/update/{sifraPartnera}")
-	public ResponseEntity<?> updatePoslovniPartner(@RequestBody PoslovniPartner poslovniPartner, 
-			@PathVariable("sifraPartnera") Integer sifraPartnera) {
-		PoslovniPartner poslovniPartnerForUpdate = poslovniPartnerService.update(poslovniPartner);
-		return new ResponseEntity<>(poslovniPartnerForUpdate, HttpStatus.OK);
+	@PutMapping(value="/update")
+	public ResponseEntity<?> updatePoslovniPartner(@RequestBody PoslovniPartnerDTO poslovniPartnerDTO) {
+		PoslovniPartner poslovniPartnerToUpdate = dtoToPoslovniPartner.convert(poslovniPartnerDTO);
+		poslovniPartnerService.update(poslovniPartnerToUpdate);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/delete") 
