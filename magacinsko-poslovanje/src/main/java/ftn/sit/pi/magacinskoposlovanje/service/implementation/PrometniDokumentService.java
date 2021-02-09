@@ -129,6 +129,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 		
 		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
 		prometniDokument.setStatus(Status.PROKNJIZENO);
+		prometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
 		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);
 		
@@ -193,6 +194,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 		
 		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
 		prometniDokument.setStatus(Status.PROKNJIZENO);
+		prometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
 		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);	
 		
