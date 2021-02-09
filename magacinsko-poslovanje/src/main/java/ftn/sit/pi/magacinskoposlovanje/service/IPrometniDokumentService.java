@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.dto.PrijemnicaDTO;
 
 public interface IPrometniDokumentService {
 
@@ -19,4 +20,6 @@ public interface IPrometniDokumentService {
 	
 	void delete(PrometniDokument prometniDokument);
 	void deleteById(Integer idPrometnogDokumenta);
+	PrometniDokument add(PrijemnicaDTO prijemnica);
+	PrometniDokument add(Integer idPrometnogDokumenta);
 }

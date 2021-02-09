@@ -124,67 +124,16 @@ public class PrometniDokumentController {
 	
 	@PostMapping(value="/create-prijemnica", consumes="application/json")
 	public ResponseEntity<?> createPrijemnica(@RequestBody PrijemnicaDTO prijemnica) {
-	
-		PrometniDokument newPrometniDokument = new PrometniDokument();
-		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		//Date date = (Date) formatter.parse(prijemnica.getDatumKreiranja());
-	 
-		newPrometniDokument.setDatumFormiranja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
-		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.PRIJEMNICA);
-		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
-		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(prijemnica.getPoslovniPartner()));
-		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
 		
-		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(newPrometniDokument);
-		
-		for(StavkaPrometnogDokumentaDTO stavkaDTO : prijemnica.getStavkePrometnogDokumenta()) {
-			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = dtoToStavkaPrometnogDokumenta.convert(stavkaDTO);
-			stavkaPrometnogDokumenta.setPrometniDokument(prometniDokumentFromDB);
-			stavkaPromDokService.add(stavkaPrometnogDokumenta);
-		}			
-		
-		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prijemnica);
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);		
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/proknjizi-prijemnicu/{idPrometnogDokumenta}", consumes="application/json")
 	public ResponseEntity<?> proknjiziPrijemnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
-		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
-		prometniDokument.setStatus(Status.PROKNJIZENO);
-		
-		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prometniDokument);		
-		
-		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
-		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
-		for(StavkaPrometnogDokumenta stavka : setStavke) {
-			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
-			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
-			Double kolicinaUlaza = magacinskaKartica.getKolicinaUlaza();
-			Double vrednostUlaza = magacinskaKartica.getVrednostUlaza();
-			
-			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
-			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
-			
-			magacinskaKartica.setKolicinaUlaza(kolicinaUlaza + stavka.getKolicina());
-			magacinskaKartica.setVrednostUlaza(vrednostUlaza + stavka.getVrednost());
-			
-			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + stavka.getKolicina());
-			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + stavka.getVrednost());			
-			
-			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
-			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-			analitikaMagacinskeKartice.setCena(stavka.getCena());
-			analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
-			analitikaMagacinskeKartice.setSmer(Smer.ULAZ);
-			analitikaMagacinskeKartice.setTipPrometa(TipPrometa.DOBAVLJENO);
-			analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
-			analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
-			analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);
-			
-			
-			magacinskaKarticaService.add(magacinskaKartica);			
-		}
+						
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(idPrometnogDokumenta);
 		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);	
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
