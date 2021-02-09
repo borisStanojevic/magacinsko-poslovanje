@@ -9,11 +9,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
+import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.ArtikalToDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToArtikal;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToJedinicaMere;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToKategorijaArtikala;
 import ftn.sit.pi.magacinskoposlovanje.repository.ArtikalRepository;
+import ftn.sit.pi.magacinskoposlovanje.repository.MagacinRepository;
+import ftn.sit.pi.magacinskoposlovanje.repository.MagacinskaKarticaRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IArtikalService;
 
 @Service
@@ -22,6 +25,9 @@ public class ArtikalService implements IArtikalService {
 	
 	@Autowired
 	private ArtikalRepository artikalRepository;
+	
+	@Autowired
+	private MagacinskaKarticaRepository magacinskaKarticaRepository;
 	
 	@Autowired
 	ArtikalToDTO artikalToDTO;
@@ -69,7 +75,13 @@ public class ArtikalService implements IArtikalService {
 		newArtikal.setNazivArtikla(artikal.getNazivArtikla());
 		newArtikal.setJedinicaMere(artikal.getJedinicaMere());
 		newArtikal.setKategorijaArtikala(artikal.getKategorijaArtikala());		
-		return artikalRepository.save(artikal);
+		artikalRepository.save(newArtikal);
+		
+		MagacinskaKartica magacinskaKartica = new MagacinskaKartica();
+		magacinskaKartica.setArtikal(newArtikal);
+		magacinskaKarticaRepository.save(magacinskaKartica);
+		
+		return newArtikal;		
 	}
 	
 	@Override
@@ -79,6 +91,7 @@ public class ArtikalService implements IArtikalService {
 		artikalToBeUpdate.setJedinicaMere(artikal.getJedinicaMere());
 		artikalToBeUpdate.setKategorijaArtikala(artikal.getKategorijaArtikala());
 		artikalRepository.save(artikalToBeUpdate);
+				
 		return artikalToBeUpdate;
 	}
 
