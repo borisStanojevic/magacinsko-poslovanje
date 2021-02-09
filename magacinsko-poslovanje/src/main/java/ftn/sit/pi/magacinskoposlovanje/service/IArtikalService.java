@@ -15,7 +15,8 @@ public interface IArtikalService {
 	Artikal add(Artikal artikal);
 	Artikal update(Artikal artikal);
 	
-	void delete(Artikal artikal);
 	void deleteById(Integer sifraArtikla);
+	Artikal update(Integer sifraArtikla);
+	Artikal delete(Integer sifraArtikla);
 	
 }

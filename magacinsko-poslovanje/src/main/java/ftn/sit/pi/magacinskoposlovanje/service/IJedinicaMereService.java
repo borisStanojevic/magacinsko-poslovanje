@@ -11,9 +11,10 @@ public interface IJedinicaMereService {
 	Page<JedinicaMere> getAll(Pageable pageable);
 	
 	JedinicaMere add(JedinicaMere jedinicaMere);
-	JedinicaMere update(JedinicaMere jedinicaMere);
+	//JedinicaMere update(JedinicaMere jedinicaMere);
 	
 	void delete(JedinicaMere jedinicaMere);
 	void deleteById(Integer idJedMere);
+	JedinicaMere update(Integer idJediniceMere);
 
 }

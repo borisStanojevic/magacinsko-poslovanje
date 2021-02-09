@@ -39,11 +39,10 @@ public class JedinicaMereService implements IJedinicaMereService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public JedinicaMere update(JedinicaMere jedinicaMere) {
-		
-		JedinicaMere jedinicaMereEdit = jedinicaMereRepository.findByIdJedMere(jedinicaMere.getIdJedMere());
-		jedinicaMereEdit.setNazivJediniceMere(jedinicaMere.getNazivJediniceMere());
-		return jedinicaMereRepository.save(jedinicaMereEdit);
+	public JedinicaMere update(Integer idJediniceMere) {		
+		JedinicaMere jedinicaMereToBeDeleted = jedinicaMereRepository.findByIdJedMere(idJediniceMere);
+		jedinicaMereToBeDeleted.setDeleted(true);
+		return jedinicaMereRepository.save(jedinicaMereToBeDeleted);
 	}
 
 	@Override

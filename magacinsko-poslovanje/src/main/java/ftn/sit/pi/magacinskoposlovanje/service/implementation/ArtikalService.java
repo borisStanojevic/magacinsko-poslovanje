@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
+import ftn.sit.pi.magacinskoposlovanje.dto.converters.ArtikalToDTO;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToArtikal;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToJedinicaMere;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToKategorijaArtikala;
 import ftn.sit.pi.magacinskoposlovanje.repository.ArtikalRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IArtikalService;
 
@@ -18,6 +22,22 @@ public class ArtikalService implements IArtikalService {
 	
 	@Autowired
 	private ArtikalRepository artikalRepository;
+	
+	@Autowired
+	ArtikalToDTO artikalToDTO;
+	
+	@Autowired
+
+	DTOToArtikal dtoToArtikal;
+	
+	@Autowired
+	DTOToJedinicaMere dtoToJedinicaMere;
+	
+	@Autowired
+	DTOToKategorijaArtikala dtoToKategorijaArtikala;
+
+	@Autowired
+	KategorijaArtikalaService kategorijaService;
 	
 	
 	@Override
@@ -45,22 +65,25 @@ public class ArtikalService implements IArtikalService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Artikal add(Artikal artikal) {
+		Artikal newArtikal = new Artikal();
+		newArtikal.setNazivArtikla(artikal.getNazivArtikla());
+		newArtikal.setJedinicaMere(artikal.getJedinicaMere());
+		newArtikal.setKategorijaArtikala(artikal.getKategorijaArtikala());		
 		return artikalRepository.save(artikal);
 	}
-
+	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
 	public Artikal update(Artikal artikal) {
-		Artikal artikalToBeUpdated = artikalRepository.findBySifraArtikla(artikal.getSifraArtikla());
-		artikalToBeUpdated.setNazivArtikla(artikal.getNazivArtikla());
-		return artikalRepository.save(artikalToBeUpdated);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(Artikal artikal) {
-		Artikal artikalToBeDeleted = artikalRepository.findBySifraArtikla(artikal.getSifraArtikla());
-		artikalRepository.delete(artikalToBeDeleted);
+	public Artikal delete(Integer sifraArtikla) {
+		Artikal artikalToBeDeleted = artikalRepository.findBySifraArtikla(sifraArtikla);
+		artikalToBeDeleted.setDeleted(true);
+		return artikalRepository.save(artikalToBeDeleted);
 	}
 
 	@Override
@@ -68,5 +91,13 @@ public class ArtikalService implements IArtikalService {
 	public void deleteById(Integer sifraArtikla) {
 		artikalRepository.deleteById(sifraArtikla);
 	}
+
+	@Override
+	public Artikal update(Integer sifraArtikla) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

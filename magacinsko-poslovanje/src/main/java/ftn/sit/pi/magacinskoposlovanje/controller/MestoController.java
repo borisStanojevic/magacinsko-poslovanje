@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ftn.sit.pi.magacinskoposlovanje.domain.Mesto;
 import ftn.sit.pi.magacinskoposlovanje.dto.MestoDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.MestoToDTO;
+import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToMesto;
 import ftn.sit.pi.magacinskoposlovanje.service.implementation.MestoService;
 
 @RestController
@@ -34,23 +35,23 @@ public class MestoController {
 	@Autowired
 	MestoToDTO mestoToDTO;
 	
+	@Autowired
+	DTOToMesto dtoToMesto;
+	
 	@GetMapping(value="/all")
 	public ResponseEntity<Set<MestoDTO>> getAll() {
 		
 		Page<Mesto> mestoPage = mestoService.getAll(new PageRequest(0, 1000));
 		Set<Mesto> mesta = new HashSet<>(mestoPage.getContent());
-		Set<MestoDTO> mestaDTO = mestoToDTO.convert(mesta);
-		
+		Set<MestoDTO> mestaDTO = mestoToDTO.convert(mesta);		
 		return new ResponseEntity<Set<MestoDTO>>(mestaDTO, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> createMesto(@RequestBody Mesto mesto, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}
-		Mesto newMesto = mestoService.add(mesto);
-		return new ResponseEntity<>(newMesto, HttpStatus.OK);
+	public ResponseEntity<?> createMesto(@RequestBody MestoDTO mestoDTO) {
+		Mesto newMesto = dtoToMesto.convert(mestoDTO);
+		mestoService.add(newMesto);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/update/{postanskiBroj}", consumes="application/json")

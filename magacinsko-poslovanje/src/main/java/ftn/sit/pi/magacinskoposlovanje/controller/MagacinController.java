@@ -39,17 +39,14 @@ public class MagacinController {
 		Page<Magacin> magacini = magacinService.getAll(new PageRequest(0, 5));
 		Set<Magacin> magacs = new HashSet<>(magacini.getContent());
 		Set<MagacinDTO> dto = magacinToDTO.convert(magacs);
-		System.out.println(magacini);
-		return new ResponseEntity<Set<MagacinDTO>>(dto,HttpStatus.OK);
-		
+		return new ResponseEntity<Set<MagacinDTO>>(dto,HttpStatus.OK);		
 	}
 	
 	@GetMapping(value="/get-by-id/{id}")
 	public ResponseEntity<MagacinDTO> getById(@PathVariable Integer id) {
 				
 		Magacin magacin = magacinService.getById(id);
-		MagacinDTO magacinDTO = magacinToDTO.convert(magacin);
-		
+		MagacinDTO magacinDTO = magacinToDTO.convert(magacin);		
 		return new ResponseEntity<MagacinDTO>(magacinDTO, HttpStatus.OK);
 	}
 

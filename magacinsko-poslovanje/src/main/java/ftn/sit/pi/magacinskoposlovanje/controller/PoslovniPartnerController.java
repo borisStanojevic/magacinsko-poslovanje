@@ -39,8 +39,7 @@ public class PoslovniPartnerController {
 		
 		Page<PoslovniPartner> poslovniPartnerPage = poslovniPartnerService.getAll(new PageRequest(0, 1000));
 		Set<PoslovniPartner> poslovniPartners = new HashSet<>(poslovniPartnerPage.getContent());
-		Set<PoslovniPartnerDTO> poslovniPartnerDTOs = poslovniPartnerToDTO.convert(poslovniPartners);
-		
+		Set<PoslovniPartnerDTO> poslovniPartnerDTOs = poslovniPartnerToDTO.convert(poslovniPartners);		
 		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTOs, HttpStatus.OK);
 	}
 	
@@ -49,8 +48,7 @@ public class PoslovniPartnerController {
 		
 		Page<PoslovniPartner> poslovniPartnerPage = poslovniPartnerService.getByDobavljaci(new PageRequest(0, 1000));
 		Set<PoslovniPartner> poslovniPartneri = new HashSet<>(poslovniPartnerPage.getContent());
-		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);
-		
+		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);		
 		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTO, HttpStatus.OK);
 	}
 	
@@ -59,16 +57,13 @@ public class PoslovniPartnerController {
 		
 		Page<PoslovniPartner> poslovniPartnerPage = poslovniPartnerService.getByKupci(new PageRequest(0, 1000));
 		Set<PoslovniPartner> poslovniPartneri = new HashSet<>(poslovniPartnerPage.getContent());
-		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);
-		
+		Set<PoslovniPartnerDTO> poslovniPartnerDTO = poslovniPartnerToDTO.convert(poslovniPartneri);		
 		return new ResponseEntity<Set<PoslovniPartnerDTO>>(poslovniPartnerDTO, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> createPoslovniPartner(@RequestBody PoslovniPartner poslovniPartner, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> createPoslovniPartner(@RequestBody PoslovniPartner poslovniPartner) {
+		
 		PoslovniPartner newPoslovniPartner = poslovniPartnerService.add(poslovniPartner);
 		return new ResponseEntity<>(newPoslovniPartner, HttpStatus.OK);
 	}

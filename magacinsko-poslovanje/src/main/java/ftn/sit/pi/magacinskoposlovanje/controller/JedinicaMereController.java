@@ -39,34 +39,26 @@ public class JedinicaMereController {
 		
 		Page<JedinicaMere> jediniceMerePage = jedinicaMereService.getAll(new PageRequest(0, 5));
 		Set<JedinicaMere> jediniceMere = new HashSet<>(jediniceMerePage.getContent());
-		Set<JedinicaMereDTO> dto = jedinicaMereToDTO.convert(jediniceMere);
-		
+		Set<JedinicaMereDTO> dto = jedinicaMereToDTO.convert(jediniceMere);		
 		return new ResponseEntity<Set<JedinicaMereDTO>>(dto, HttpStatus.OK);
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
-	public ResponseEntity<?> createJedinicaMere(@RequestBody JedinicaMere jedinicaMere, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> createJedinicaMere(@RequestBody JedinicaMere jedinicaMere) {
+		
 		JedinicaMere newJedinicaMere = jedinicaMereService.add(jedinicaMere);
 		return new ResponseEntity<>(newJedinicaMere, HttpStatus.OK);
 	}
-	
+/*	
 	@PutMapping(value="/update/{idJedMere}", consumes="application/json")
 	public ResponseEntity<?> updateJedinicaMere(@RequestBody JedinicaMere jedinicaMere, @PathVariable("idJedMere") Integer idJedMere) {
 		JedinicaMere jedinicaMereUpdated = jedinicaMereService.update(jedinicaMere);
 		return new ResponseEntity<>(jedinicaMereUpdated, HttpStatus.OK);
 	}
-	
+	*/
 	@PutMapping(value="/delete")
-	public ResponseEntity<?> deleteJedinicaMere(@RequestParam("idJediniceMere") Integer idJediniceMere) {
-		if(idJediniceMere == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		JedinicaMere jedinicaMere = jedinicaMereService.getById(idJediniceMere);
-		jedinicaMere.setDeleted(true);
-		jedinicaMereService.update(jedinicaMere);
+	public ResponseEntity<?> deleteJedinicaMere(@RequestParam("idJediniceMere") Integer idJedinicaMere) {
+		jedinicaMereService.update(idJedinicaMere);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -34,6 +34,10 @@ public class MestoService implements IMestoService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Mesto add(Mesto mesto) {
+		Mesto newMesto = new Mesto();
+		newMesto.setDrzava(mesto.getDrzava());
+		newMesto.setNazivMesta(mesto.getNazivMesta());
+		newMesto.setPostanskiBroj(mesto.getPostanskiBroj());
 		return mestoRepository.save(mesto);
 	}
 

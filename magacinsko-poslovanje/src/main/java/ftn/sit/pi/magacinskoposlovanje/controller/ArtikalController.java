@@ -41,25 +41,14 @@ public class ArtikalController {
 	ArtikalToDTO artikalToDTO;
 	
 	@Autowired
-
 	DTOToArtikal dtoToArtikal;
 	
-	@Autowired
-	DTOToJedinicaMere dtoToJedinicaMere;
-	
-	@Autowired
-	DTOToKategorijaArtikala dtoToKategorijaArtikala;
-
-	@Autowired
-	KategorijaArtikalaService kategorijaService;
-	
 	@GetMapping(value="/all")
-	public ResponseEntity<Set<ArtikalDTO>> getAll() {
+	public ResponseEntity<Set<ArtikalDTO>> getAll() {		
 		
 		Page<Artikal> artikalPage = artikalService.getAll(new PageRequest(0, 1000));
 		Set<Artikal> artikli = new HashSet<>(artikalPage.getContent());
-		Set<ArtikalDTO> artikalDTOs = artikalToDTO.convert(artikli);
-		
+		Set<ArtikalDTO> artikalDTOs = artikalToDTO.convert(artikli);		
 		return new ResponseEntity<Set<ArtikalDTO>>(artikalDTOs, HttpStatus.OK);
 	}
 	
@@ -72,39 +61,21 @@ public class ArtikalController {
 	}
 	
 	@PostMapping(value="/create", consumes="application/json")
-
-	public ResponseEntity<?> createArtikal(@RequestBody ArtikalDTO artikalDTO, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<String>(errors.getAllErrors().toString(),HttpStatus.BAD_REQUEST);
-		}
-		
-		JedinicaMere jedinicaMere = dtoToJedinicaMere.convert(artikalDTO.getJedinicaMere());
-		KategorijaArtikala kategorijaArtikala = dtoToKategorijaArtikala.convert(artikalDTO.getKategorijaArtikala());
-		
+	public ResponseEntity<?> createArtikal(@RequestBody ArtikalDTO artikalDTO) {		
 		Artikal newArtikal = dtoToArtikal.convert(artikalDTO);
-		newArtikal.setJedinicaMere(jedinicaMere);
-		newArtikal.setKategorijaArtikala(kategorijaArtikala);
-		
-		Artikal newArtikalFromDb = artikalService.add(newArtikal);
-
-		return new ResponseEntity<>(newArtikalFromDb, HttpStatus.OK);
+		artikalService.add(newArtikal);		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+/*	
 	@PutMapping(value="/update/{sifraArtikla}", consumes="application/json")
 	public ResponseEntity<?> updateArtikal(@RequestBody Artikal artikal, @PathVariable("sifraArtikla") Integer sifraArtikla) {
-		Artikal artikalUpdated = artikalService.update(artikal);
+		//Artikal artikalUpdated = artikalService.update(artikal);
 		return new ResponseEntity<>(artikalUpdated, HttpStatus.OK);
 	}
-	
+	*/
 	@PutMapping(value="/delete") 
-	public ResponseEntity<?> deleteArtikal(@RequestParam("sifraArtikla") Integer sifraArtikla) {
-		if(sifraArtikla == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		
-		Artikal artikal = artikalService.getById(sifraArtikla);
-		artikal.setDeleted(true);
-		artikalService.update(artikal);
+	public ResponseEntity<?> deleteArtikal(@RequestParam("sifraArtikla") Integer sifraArtikla) {			
+		artikalService.delete(sifraArtikla);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
