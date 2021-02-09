@@ -163,6 +163,78 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 		}
 		return prometniDokumentFromDB;
 	}
+	
+	//kreiranje otpremnice
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public PrometniDokument addOtpremnica(PrijemnicaDTO prijemnica) {
+		
+		PrometniDokument newPrometniDokument = new PrometniDokument();
+		newPrometniDokument.setDatumFormiranja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		newPrometniDokument.setStatus(Status.U_FAZI_KNJIZENJA);
+		newPrometniDokument.setTipPrometnogDokumenta(TipPrometnogDokumenta.OTPREMNICA);
+		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
+		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(prijemnica.getPoslovniPartner()));
+		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
+		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(newPrometniDokument);
+		
+		for(StavkaPrometnogDokumentaDTO stavkaDTO : prijemnica.getStavkePrometnogDokumenta()) {
+			StavkaPrometnogDokumenta stavkaPrometnogDokumenta = dtoToStavkaPrometnogDokumenta.convert(stavkaDTO);
+			stavkaPrometnogDokumenta.setPrometniDokument(prometniDokumentFromDB);
+			stavkaPromDokService.add(stavkaPrometnogDokumenta);
+		}			
+		return prometniDokumentFromDB;
+	}
+	
+	//knjizenje otpremnice
+		@Override
+		@Transactional(propagation = Propagation.REQUIRED)
+		public PrometniDokument addOtpremnicaKnjizenje(Integer idPrometnogDokumenta) {
+			
+			PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+			prometniDokument.setStatus(Status.PROKNJIZENO);
+			
+			PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);	
+			
+			Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+			Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+			for(StavkaPrometnogDokumenta stavka : setStavke) {
+				Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
+				MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+				Double kolicinaIzlaza = magacinskaKartica.getKolicinaIzlaza();
+				if(kolicinaIzlaza == null) {
+					kolicinaIzlaza = 0.0;
+				}
+				Double vrednostIzlaza = magacinskaKartica.getVrednostIzlaza();
+				if(vrednostIzlaza == null) {
+					vrednostIzlaza = 0.0;
+				}
+				
+				Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
+				Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
+				
+				magacinskaKartica.setKolicinaIzlaza(kolicinaIzlaza + stavka.getKolicina());
+				magacinskaKartica.setVrednostIzlaza(vrednostIzlaza + stavka.getVrednost());
+				
+				magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - stavka.getKolicina());
+				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());			
+				
+				AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
+				analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				analitikaMagacinskeKartice.setCena(stavka.getCena());
+				analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
+				analitikaMagacinskeKartice.setSmer(Smer.IZLAZ);
+				analitikaMagacinskeKartice.setTipPrometa(TipPrometa.OTPREMLJENO);
+				analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
+				analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
+				analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);
+				
+				
+				magacinskaKarticaService.add(magacinskaKartica);			
+			}
+			
+			return prometniDokumentFromDB;
+		}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)

@@ -22,4 +22,6 @@ public interface IPrometniDokumentService {
 	void deleteById(Integer idPrometnogDokumenta);
 	PrometniDokument add(PrijemnicaDTO prijemnica);
 	PrometniDokument add(Integer idPrometnogDokumenta);
+	PrometniDokument addOtpremnica(PrijemnicaDTO prijemnica);
+	PrometniDokument addOtpremnicaKnjizenje(Integer idPrometnogDokumenta);
 }
