@@ -137,23 +137,6 @@ public class PrometniDokumentController {
 		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);	
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
-	
-	@PostMapping(value="/otkazi-prijemnicu/{idPrometnogDokumenta}", consumes="application/json")
-	public ResponseEntity<?> otkaziPrijemnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
-		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
-		prometniDokument.setDeleted(true);
-		
-		PrometniDokument prometniDokumentFromDB = prometniDokumentService.add(prometniDokument);
-		
-		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
-		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
-		for(StavkaPrometnogDokumenta stavka : setStavke) {
-			stavka.setDeleted(true);
-			stavkaPromDokService.add(stavka);			
-		}
-		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
-		return new ResponseEntity<>(dto, HttpStatus.OK);
-	}
 
 	@PostMapping(value="/create-otpremnica", consumes="application/json")
 	public ResponseEntity<?> createOtpremnica(@RequestBody PrijemnicaDTO prijemnica) {
@@ -171,24 +154,15 @@ public class PrometniDokumentController {
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/otkazi-otpremnicu/{idPrometnogDokumenta}", consumes="application/json")
-	public ResponseEntity<?> otkaziOtpremnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
-		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
-		prometniDokument.setDeleted(true);
+	@PostMapping(value="/otkazi-dokument/{idPrometnogDokumenta}", consumes="application/json")
+	public ResponseEntity<?> otkaziPrijemnicu(@PathVariable("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		
-		prometniDokumentService.add(prometniDokument);
-		
-		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
-		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
-		for(StavkaPrometnogDokumenta stavka : setStavke) {
-			stavka.setDeleted(true);
-			stavkaPromDokService.add(stavka);			
-		}
-		
-		return new ResponseEntity<>(prometniDokument, HttpStatus.OK);
+		PrometniDokument prometniDokumentFromDB = prometniDokumentService.update(idPrometnogDokumenta);
+		PrometniDokumentDTO dto = prometniDokumentToDTO.convert(prometniDokumentFromDB);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	
+/*	
 	@PutMapping(value="/delete")
 	public ResponseEntity<?> deletePrometniDokument(@RequestParam("idPrometnogDokumenta") Integer idPrometnogDokumenta) {
 		if(idPrometnogDokumenta == null) {
@@ -199,4 +173,5 @@ public class PrometniDokumentController {
 		prometniDokumentService.update(prometniDokument);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	*/
 }

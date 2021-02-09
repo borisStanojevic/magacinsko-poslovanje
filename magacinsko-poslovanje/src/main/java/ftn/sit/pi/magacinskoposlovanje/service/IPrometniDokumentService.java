@@ -16,7 +16,7 @@ public interface IPrometniDokumentService {
 	Page<PrometniDokument> getByOtpremnica(Pageable pageable);
 
 	PrometniDokument add(PrometniDokument prometniDokument);
-	PrometniDokument update(PrometniDokument prometniDokument);
+	PrometniDokument update(Integer idPrometnogDokumenta);
 	
 	void delete(PrometniDokument prometniDokument);
 	void deleteById(Integer idPrometnogDokumenta);

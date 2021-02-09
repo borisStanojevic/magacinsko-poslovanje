@@ -66,13 +66,14 @@ public class ArtikalController {
 		artikalService.add(newArtikal);		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-/*	
-	@PutMapping(value="/update/{sifraArtikla}", consumes="application/json")
-	public ResponseEntity<?> updateArtikal(@RequestBody Artikal artikal, @PathVariable("sifraArtikla") Integer sifraArtikla) {
-		//Artikal artikalUpdated = artikalService.update(artikal);
-		return new ResponseEntity<>(artikalUpdated, HttpStatus.OK);
+
+	@PutMapping(value="/update", consumes="application/json")
+	public ResponseEntity<?> updateArtikal(@RequestBody ArtikalDTO artikalDTO) {
+		Artikal artikalToUpdate = dtoToArtikal.convert(artikalDTO);
+		artikalService.update(artikalToUpdate);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	*/
+	
 	@PutMapping(value="/delete") 
 	public ResponseEntity<?> deleteArtikal(@RequestParam("sifraArtikla") Integer sifraArtikla) {			
 		artikalService.delete(sifraArtikla);

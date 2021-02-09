@@ -127,7 +127,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PrometniDokument add(Integer idPrometnogDokumenta) {
 		
-		PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
+		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
 		prometniDokument.setStatus(Status.PROKNJIZENO);
 		
 		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);
@@ -187,60 +187,69 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 	}
 	
 	//knjizenje otpremnice
-		@Override
-		@Transactional(propagation = Propagation.REQUIRED)
-		public PrometniDokument addOtpremnicaKnjizenje(Integer idPrometnogDokumenta) {
-			
-			PrometniDokument prometniDokument = prometniDokumentService.getById(idPrometnogDokumenta);
-			prometniDokument.setStatus(Status.PROKNJIZENO);
-			
-			PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);	
-			
-			Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
-			Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
-			for(StavkaPrometnogDokumenta stavka : setStavke) {
-				Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
-				MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
-				Double kolicinaIzlaza = magacinskaKartica.getKolicinaIzlaza();
-				if(kolicinaIzlaza == null) {
-					kolicinaIzlaza = 0.0;
-				}
-				Double vrednostIzlaza = magacinskaKartica.getVrednostIzlaza();
-				if(vrednostIzlaza == null) {
-					vrednostIzlaza = 0.0;
-				}
-				
-				Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
-				Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
-				
-				magacinskaKartica.setKolicinaIzlaza(kolicinaIzlaza + stavka.getKolicina());
-				magacinskaKartica.setVrednostIzlaza(vrednostIzlaza + stavka.getVrednost());
-				
-				magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - stavka.getKolicina());
-				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());			
-				
-				AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
-				analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-				analitikaMagacinskeKartice.setCena(stavka.getCena());
-				analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
-				analitikaMagacinskeKartice.setSmer(Smer.IZLAZ);
-				analitikaMagacinskeKartice.setTipPrometa(TipPrometa.OTPREMLJENO);
-				analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
-				analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
-				analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);
-				
-				
-				magacinskaKarticaService.add(magacinskaKartica);			
-			}
-			
-			return prometniDokumentFromDB;
-		}
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public PrometniDokument update(PrometniDokument prometniDokument) {
-		// TODO Auto-generated method stub
-		return null;
+	public PrometniDokument addOtpremnicaKnjizenje(Integer idPrometnogDokumenta) {
+		
+		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
+		prometniDokument.setStatus(Status.PROKNJIZENO);
+		
+		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);	
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
+			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			Double kolicinaIzlaza = magacinskaKartica.getKolicinaIzlaza();
+			if(kolicinaIzlaza == null) {
+				kolicinaIzlaza = 0.0;
+			}
+			Double vrednostIzlaza = magacinskaKartica.getVrednostIzlaza();
+			if(vrednostIzlaza == null) {
+				vrednostIzlaza = 0.0;
+			}
+			
+			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
+			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
+			
+			magacinskaKartica.setKolicinaIzlaza(kolicinaIzlaza + stavka.getKolicina());
+			magacinskaKartica.setVrednostIzlaza(vrednostIzlaza + stavka.getVrednost());
+			
+			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - stavka.getKolicina());
+			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());			
+			
+			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
+			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+			analitikaMagacinskeKartice.setCena(stavka.getCena());
+			analitikaMagacinskeKartice.setKolicina(stavka.getKolicina());
+			analitikaMagacinskeKartice.setSmer(Smer.IZLAZ);
+			analitikaMagacinskeKartice.setTipPrometa(TipPrometa.OTPREMLJENO);
+			analitikaMagacinskeKartice.setVrednost(stavka.getVrednost());
+			analitikaMagacinskeKartice.setMagacinskaKartica(magacinskaKartica);
+			analitikaMagacinskeKarticeService.add(analitikaMagacinskeKartice);				
+			
+			magacinskaKarticaService.add(magacinskaKartica);			
+		}			
+		return prometniDokumentFromDB;
+	}
+
+	//otkazivanje prijemnice/otpremnice
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public PrometniDokument update(Integer idPrometnogDokumenta) {
+		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
+		prometniDokument.setDeleted(true);
+		
+		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);
+		
+		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
+		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
+		for(StavkaPrometnogDokumenta stavka : setStavke) {
+			stavka.setDeleted(true);
+			stavkaPromDokService.add(stavka);			
+		}		
+		return prometniDokumentFromDB;
 	}
 
 	@Override

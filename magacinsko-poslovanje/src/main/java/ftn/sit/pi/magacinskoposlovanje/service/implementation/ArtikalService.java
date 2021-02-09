@@ -74,8 +74,12 @@ public class ArtikalService implements IArtikalService {
 	
 	@Override
 	public Artikal update(Artikal artikal) {
-		// TODO Auto-generated method stub
-		return null;
+		Artikal artikalToBeUpdate = getById(artikal.getSifraArtikla());
+		artikalToBeUpdate.setNazivArtikla(artikal.getNazivArtikla());
+		artikalToBeUpdate.setJedinicaMere(artikal.getJedinicaMere());
+		artikalToBeUpdate.setKategorijaArtikala(artikal.getKategorijaArtikala());
+		artikalRepository.save(artikalToBeUpdate);
+		return artikalToBeUpdate;
 	}
 
 	@Override
