@@ -17,4 +17,6 @@ public interface MagacinRepository extends PagingAndSortingRepository<Magacin, I
 	// 100 - sifra preduzeca
 	@Query("SELECT m FROM Magacin m WHERE m.preduzece.sifraPreduzeca = 100")
 	Page<Magacin> findAll(Pageable pageable);
+
+	
 }

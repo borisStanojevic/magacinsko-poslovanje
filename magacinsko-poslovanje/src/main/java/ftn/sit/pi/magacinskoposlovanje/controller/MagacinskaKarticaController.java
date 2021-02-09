@@ -55,6 +55,14 @@ public class MagacinskaKarticaController {
 		return new ResponseEntity<MagacinskaKarticaDTO>(magacinskaKarticaDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/get-by-sifra-artikla/{sifraArtikla}")
+	public ResponseEntity<MagacinskaKarticaDTO> getBySifraArtikla(@PathVariable("sifraArtikla") Integer sifraArtikla) {
+		
+		MagacinskaKartica magagacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+		MagacinskaKarticaDTO magacinskaKarticaDTO = magacinskaKarticaToDTO.convert(magagacinskaKartica);
+		return new ResponseEntity<MagacinskaKarticaDTO>(magacinskaKarticaDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping(value="/create", consumes="application/json")
 	public ResponseEntity<?> createMagacinskaKartica(@RequestBody MagacinskaKartica magacinskaKartica, Errors errors) {
 		if(errors.hasErrors()) {

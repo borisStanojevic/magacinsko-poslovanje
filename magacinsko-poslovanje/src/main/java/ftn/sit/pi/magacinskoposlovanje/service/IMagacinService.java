@@ -16,5 +16,4 @@ public interface IMagacinService {
 	
 	void delete(Magacin magacin);
 	void deleteById(Integer sifraMagacina);
-
 }

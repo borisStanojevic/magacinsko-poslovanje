@@ -19,13 +19,12 @@ public class MagacinService implements IMagacinService {
 	@Autowired
 	private MagacinRepository magacinRepository;
 
-
 	@Override
 	@Transactional(readOnly = true)
 	public Magacin getById(Integer sifraMagacina) {
 		return magacinRepository.findBySifraMagacina(sifraMagacina);
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Magacin> getAll(Pageable pageable) {
