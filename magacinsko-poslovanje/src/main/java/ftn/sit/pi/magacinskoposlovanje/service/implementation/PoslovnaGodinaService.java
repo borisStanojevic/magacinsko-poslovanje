@@ -84,7 +84,7 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 		PoslovnaGodina trenutnaPoslovnaGodina = poslovnaGodinaRepository.findByIdGodine(idTrenutnePoslovneGodine);
 		
 		for(PrometniDokument prometniDokument : trenutnaPoslovnaGodina.getPrometniDokumenti()) {
-			if(prometniDokument.getStatus() == Status.U_FAZI_KNJIZENJA || prometniDokument.isDeleted())
+			if(prometniDokument.getStatus() == Status.U_FAZI_KNJIZENJA && prometniDokument.isDeleted() == false)
 				throw new ZakljucivanjePoslovneGodineException("Poslovna godina sadrzi prometne dokumente koji su u fazi knjizenja ili su obrisani.");
 		}
 		
