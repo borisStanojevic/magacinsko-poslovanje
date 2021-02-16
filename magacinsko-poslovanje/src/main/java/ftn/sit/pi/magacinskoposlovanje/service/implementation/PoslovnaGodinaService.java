@@ -1,5 +1,9 @@
 package ftn.sit.pi.magacinskoposlovanje.service.implementation;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,7 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
+import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
+import ftn.sit.pi.magacinskoposlovanje.domain.Status;
+import ftn.sit.pi.magacinskoposlovanje.domain.exception.ZakljucivanjePoslovneGodineException;
+import ftn.sit.pi.magacinskoposlovanje.repository.MagacinskaKarticaRepository;
 import ftn.sit.pi.magacinskoposlovanje.repository.PoslovnaGodinaRepository;
 import ftn.sit.pi.magacinskoposlovanje.service.IPoslovnaGodinaService;
 
@@ -17,6 +26,9 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 
 	@Autowired
 	private PoslovnaGodinaRepository poslovnaGodinaRepository;
+	
+	@Autowired
+	private MagacinskaKarticaRepository magacinskaKarticaRepository;
 
 	
 	@Override
@@ -65,6 +77,36 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 		poslovnaGodinaRepository.deleteByIdGodine(idGodine);
 	}
 	
-	
-	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+	public void zakljuciPoslovnuGodinu(int idTrenutnePoslovneGodine) throws ZakljucivanjePoslovneGodineException
+	{
+		PoslovnaGodina trenutnaPoslovnaGodina = poslovnaGodinaRepository.findByIdGodine(idTrenutnePoslovneGodine);
+		
+		for(PrometniDokument prometniDokument : trenutnaPoslovnaGodina.getPrometniDokumenti()) {
+			if(prometniDokument.getStatus() == Status.U_FAZI_KNJIZENJA)
+				throw new ZakljucivanjePoslovneGodineException("Poslovna godina sadrzi prometne dokumente koji su u fazi knjizenja.");
+		}
+		
+		Iterable<MagacinskaKartica> stareMagacinskeKartice = trenutnaPoslovnaGodina.getMagacinskeKartice();
+		
+		trenutnaPoslovnaGodina.setZakljucena(true);
+		poslovnaGodinaRepository.save(trenutnaPoslovnaGodina);
+		
+		PoslovnaGodina novaPoslovnaGodina = new PoslovnaGodina();
+		novaPoslovnaGodina.setGodina(new Date());
+		
+		PoslovnaGodina sacuvanaNovaPoslovnaGodina = poslovnaGodinaRepository.save(novaPoslovnaGodina);
+		
+		Set<MagacinskaKartica> noveMagacinskeKartice = new HashSet<MagacinskaKartica>();
+		stareMagacinskeKartice.forEach((magacinskaKartica) -> {
+			MagacinskaKartica novaMagacinkaKartica = magacinskaKartica;
+			novaMagacinkaKartica.setIdMagacinskeKartice(null);
+			novaMagacinkaKartica.setPoslovnaGodina(sacuvanaNovaPoslovnaGodina);
+			
+			noveMagacinskeKartice.add(novaMagacinkaKartica);
+		});
+		
+		magacinskaKarticaRepository.saveAll(noveMagacinskeKartice);
+	}
 }

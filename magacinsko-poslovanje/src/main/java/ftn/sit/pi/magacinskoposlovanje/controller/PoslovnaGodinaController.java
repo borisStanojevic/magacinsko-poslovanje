@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
+import ftn.sit.pi.magacinskoposlovanje.domain.exception.ZakljucivanjePoslovneGodineException;
 import ftn.sit.pi.magacinskoposlovanje.dto.PoslovnaGodinaDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.PoslovnaGodinaToDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.PoslovniPartnerToDTO;
@@ -67,5 +68,20 @@ public class PoslovnaGodinaController {
 		
 		PoslovnaGodina poslovnaGodinaUpdated = poslovnaGodinaService.update(poslovnaGodina);
 		return new ResponseEntity<>(poslovnaGodinaUpdated, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/{idGodine}/zakljuci")
+	public ResponseEntity<?> zakljuciPoslovnuGodinu(@PathVariable("idGodine") Integer idGodine) {
+		
+		try {
+			poslovnaGodinaService.zakljuciPoslovnuGodinu(idGodine);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (ZakljucivanjePoslovneGodineException zakljucivanjePoslovneGodineException) {
+			zakljucivanjePoslovneGodineException.printStackTrace();
+			
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		
 	}
 }

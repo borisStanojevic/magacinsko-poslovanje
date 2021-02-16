@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
+import ftn.sit.pi.magacinskoposlovanje.domain.exception.ZakljucivanjePoslovneGodineException;
 
 public interface IPoslovnaGodinaService {
 
@@ -16,4 +17,5 @@ public interface IPoslovnaGodinaService {
 	
 	void delete(PoslovnaGodina poslovnaGodina);
 	void deleteById(Integer idGodine);
+	void zakljuciPoslovnuGodinu(int idTrenutnePoslovneGodine) throws ZakljucivanjePoslovneGodineException;
 }
