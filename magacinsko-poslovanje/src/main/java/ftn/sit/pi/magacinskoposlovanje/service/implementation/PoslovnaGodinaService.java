@@ -100,9 +100,23 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 		
 		Set<MagacinskaKartica> noveMagacinskeKartice = new HashSet<MagacinskaKartica>();
 		stareMagacinskeKartice.forEach((magacinskaKartica) -> {
-			MagacinskaKartica novaMagacinkaKartica = magacinskaKartica;
-			novaMagacinkaKartica.setIdMagacinskeKartice(null);
+			MagacinskaKartica novaMagacinkaKartica = new MagacinskaKartica();
+			
+			novaMagacinkaKartica.setArtikal(magacinskaKartica.getArtikal());
 			novaMagacinkaKartica.setPoslovnaGodina(sacuvanaNovaPoslovnaGodina);
+			novaMagacinkaKartica.setAnalitikeMagacinskeKartice(magacinskaKartica.getAnalitikeMagacinskeKartice());
+			novaMagacinkaKartica.setCena(magacinskaKartica.getCena());
+			novaMagacinkaKartica.setDeleted(magacinskaKartica.isDeleted());
+			novaMagacinkaKartica.setKolicinaIzlaza(magacinskaKartica.getKolicinaIzlaza());
+			novaMagacinkaKartica.setKolicinaPocetnogStanja(magacinskaKartica.getKolicinaPocetnogStanja());
+			novaMagacinkaKartica.setKolicinaUlaza(magacinskaKartica.getKolicinaUlaza());
+			novaMagacinkaKartica.setUkupnaKolicina(magacinskaKartica.getUkupnaKolicina());
+			novaMagacinkaKartica.setUkupnaVrednost(magacinskaKartica.getUkupnaVrednost());
+			novaMagacinkaKartica.setMagacin(magacinskaKartica.getMagacin());
+			novaMagacinkaKartica.setRedniBrMagacinskeKar(magacinskaKartica.getRedniBrMagacinskeKar());
+			novaMagacinkaKartica.setVrednostIzlaza(magacinskaKartica.getVrednostIzlaza());
+			novaMagacinkaKartica.setVrednostPocetnogStanja(magacinskaKartica.getVrednostPocetnogStanja());
+			novaMagacinkaKartica.setVrednostUlaza(magacinskaKartica.getVrednostUlaza());
 			
 			noveMagacinskeKartice.add(novaMagacinkaKartica);
 		});
