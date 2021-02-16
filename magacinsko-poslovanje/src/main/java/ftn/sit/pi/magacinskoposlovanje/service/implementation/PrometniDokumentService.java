@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.AnalitikaMagacinskeKartice;
 import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
+import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 import ftn.sit.pi.magacinskoposlovanje.domain.PrometniDokument;
 import ftn.sit.pi.magacinskoposlovanje.domain.Smer;
 import ftn.sit.pi.magacinskoposlovanje.domain.Status;
@@ -130,26 +131,39 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 		PrometniDokument prometniDokument = getById(idPrometnogDokumenta);
 		prometniDokument.setStatus(Status.PROKNJIZENO);
 		prometniDokument.setDatumKnjizenja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-		
+				
 		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(prometniDokument);
+		
+		PoslovnaGodina poslovnaGodina = prometniDokument.getPoslovnaGodina();
+		Integer idGodine = poslovnaGodina.getIdGodine();
 		
 		Page<StavkaPrometnogDokumenta> pageStavkaPrometnogDokumenta = stavkaPromDokService.getAll(idPrometnogDokumenta, new PageRequest(0, 1000));
 		Set<StavkaPrometnogDokumenta> setStavke = new HashSet<>(pageStavkaPrometnogDokumenta.getContent());
 		for(StavkaPrometnogDokumenta stavka : setStavke) {
 			Integer sifraArtikla = stavka.getArtikal().getSifraArtikla();
-			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtikla(sifraArtikla);
+			MagacinskaKartica magacinskaKartica = magacinskaKarticaService.getBySifraArtiklaAndIdGodine(sifraArtikla, idGodine);
 			Double kolicinaUlaza = magacinskaKartica.getKolicinaUlaza();
 			Double vrednostUlaza = magacinskaKartica.getVrednostUlaza();
 			
 			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
 			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
 			
-			magacinskaKartica.setKolicinaUlaza(kolicinaUlaza + stavka.getKolicina());
-			magacinskaKartica.setVrednostUlaza(vrednostUlaza + stavka.getVrednost());
+			if(kolicinaUlaza ==  null && vrednostUlaza == null) {
+				magacinskaKartica.setKolicinaUlaza(stavka.getKolicina());
+				magacinskaKartica.setVrednostUlaza(stavka.getVrednost());
+			} else {
+				magacinskaKartica.setKolicinaUlaza(kolicinaUlaza + stavka.getKolicina());
+				magacinskaKartica.setVrednostUlaza(vrednostUlaza + stavka.getVrednost());
+				
+			}
 			
-			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + stavka.getKolicina());
-			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + stavka.getVrednost());			
-			
+			if(ukupnaKolicina == null && ukupnaVrednost == null) {
+				magacinskaKartica.setUkupnaKolicina(stavka.getKolicina());
+				magacinskaKartica.setUkupnaVrednost(stavka.getVrednost());
+			} else {
+				magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + stavka.getKolicina());
+				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + stavka.getVrednost());			
+			}			
 			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
 			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			analitikaMagacinskeKartice.setCena(stavka.getCena());
@@ -210,8 +224,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 			Double vrednostIzlaza = magacinskaKartica.getVrednostIzlaza();
 			if(vrednostIzlaza == null) {
 				vrednostIzlaza = 0.0;
-			}
-			
+			}			
 			Double ukupnaKolicina = magacinskaKartica.getUkupnaKolicina();
 			Double ukupnaVrednost = magacinskaKartica.getUkupnaVrednost();
 			

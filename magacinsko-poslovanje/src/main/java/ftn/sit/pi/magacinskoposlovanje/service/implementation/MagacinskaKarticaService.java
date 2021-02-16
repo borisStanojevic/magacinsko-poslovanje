@@ -39,6 +39,12 @@ public class MagacinskaKarticaService implements IMagacinskaKarticaService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public MagacinskaKartica getBySifraArtiklaAndIdGodine(Integer sifraArtikla, Integer idGodine) {
+		return magacinskaKarticaRepository.getBySifraArtiklaAndIdGodine(sifraArtikla, idGodine);
+	}
+	
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public MagacinskaKartica add(MagacinskaKartica magacinskaKartica) {
 		return magacinskaKarticaRepository.save(magacinskaKartica);

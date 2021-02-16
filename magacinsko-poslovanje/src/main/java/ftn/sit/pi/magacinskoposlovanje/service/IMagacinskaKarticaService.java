@@ -11,11 +11,12 @@ public interface IMagacinskaKarticaService {
 	MagacinskaKartica getById(Integer idMagacinskeKartice);
 	Page<MagacinskaKartica> getAll(@Param("sifraMagacina") Integer sifraMagacina, @Param("idGodine") Integer idGodine, Pageable pageable);
 	MagacinskaKartica getBySifraArtikla(Integer sifraArtikla);
+	MagacinskaKartica getBySifraArtiklaAndIdGodine(Integer sifraArtikla, Integer idGodine);
 
 	MagacinskaKartica add(MagacinskaKartica magacinskaKartica);
 	MagacinskaKartica update(MagacinskaKartica magacinskaKartica);
 	
 	void delete(MagacinskaKartica magacinskaKartica);
 	void deleteById(Integer idMagacinskeKartice);
-
+	
 }
