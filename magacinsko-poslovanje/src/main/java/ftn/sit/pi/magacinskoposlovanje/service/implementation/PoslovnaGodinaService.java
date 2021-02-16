@@ -84,8 +84,8 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 		PoslovnaGodina trenutnaPoslovnaGodina = poslovnaGodinaRepository.findByIdGodine(idTrenutnePoslovneGodine);
 		
 		for(PrometniDokument prometniDokument : trenutnaPoslovnaGodina.getPrometniDokumenti()) {
-			if(prometniDokument.getStatus() == Status.U_FAZI_KNJIZENJA)
-				throw new ZakljucivanjePoslovneGodineException("Poslovna godina sadrzi prometne dokumente koji su u fazi knjizenja.");
+			if(prometniDokument.getStatus() == Status.U_FAZI_KNJIZENJA || prometniDokument.isDeleted())
+				throw new ZakljucivanjePoslovneGodineException("Poslovna godina sadrzi prometne dokumente koji su u fazi knjizenja ili su obrisani.");
 		}
 		
 		Iterable<MagacinskaKartica> stareMagacinskeKartice = trenutnaPoslovnaGodina.getMagacinskeKartice();
@@ -104,7 +104,6 @@ public class PoslovnaGodinaService implements IPoslovnaGodinaService {
 			
 			novaMagacinkaKartica.setArtikal(magacinskaKartica.getArtikal());
 			novaMagacinkaKartica.setPoslovnaGodina(sacuvanaNovaPoslovnaGodina);
-			novaMagacinkaKartica.setAnalitikeMagacinskeKartice(magacinskaKartica.getAnalitikeMagacinskeKartice());
 			novaMagacinkaKartica.setCena(magacinskaKartica.getCena());
 			novaMagacinkaKartica.setDeleted(magacinskaKartica.isDeleted());
 			novaMagacinkaKartica.setKolicinaIzlaza(magacinskaKartica.getKolicinaIzlaza());
