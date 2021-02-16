@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.sit.pi.magacinskoposlovanje.domain.Artikal;
+import ftn.sit.pi.magacinskoposlovanje.domain.Magacin;
 import ftn.sit.pi.magacinskoposlovanje.domain.MagacinskaKartica;
+import ftn.sit.pi.magacinskoposlovanje.domain.PoslovnaGodina;
 import ftn.sit.pi.magacinskoposlovanje.dto.converters.ArtikalToDTO;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToArtikal;
 import ftn.sit.pi.magacinskoposlovanje.dto.to.entity.DTOToJedinicaMere;
@@ -45,6 +47,12 @@ public class ArtikalService implements IArtikalService {
 	@Autowired
 	KategorijaArtikalaService kategorijaService;
 	
+	@Autowired
+	MagacinService magacinService;
+	
+	@Autowired
+	PoslovnaGodinaService poslovnaGodinaService;
+	
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -78,7 +86,10 @@ public class ArtikalService implements IArtikalService {
 		artikalRepository.save(newArtikal);
 		
 		MagacinskaKartica magacinskaKartica = new MagacinskaKartica();
+		Magacin magacin = magacinService.getById(200);
 		magacinskaKartica.setArtikal(newArtikal);
+		magacinskaKartica.setMagacin(magacin);
+		magacinskaKartica.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
 		magacinskaKarticaRepository.save(magacinskaKartica);
 		
 		return newArtikal;		
