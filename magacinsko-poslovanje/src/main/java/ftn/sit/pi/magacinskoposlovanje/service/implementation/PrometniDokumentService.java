@@ -243,6 +243,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 			
 			if(stavka.getVrednost() > ukupnaVrednost) {
 				magacinskaKartica.setUkupnaVrednost(0.0);
+				magacinskaKartica.setCena(0.0);
 			} else {
 				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());						
 			}			
