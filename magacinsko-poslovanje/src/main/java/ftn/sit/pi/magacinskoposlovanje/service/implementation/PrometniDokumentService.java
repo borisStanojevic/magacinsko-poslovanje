@@ -164,6 +164,11 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 				magacinskaKartica.setUkupnaKolicina(ukupnaKolicina + stavka.getKolicina());
 				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost + stavka.getVrednost());			
 			}			
+			Double staraCena = magacinskaKartica.getCena();
+			Double novaCena = stavka.getCena();
+			
+			magacinskaKartica.setCena((staraCena + novaCena) / 2);
+			
 			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
 			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			analitikaMagacinskeKartice.setCena(stavka.getCena());
@@ -232,8 +237,12 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 			magacinskaKartica.setVrednostIzlaza(vrednostIzlaza + stavka.getVrednost());
 			
 			magacinskaKartica.setUkupnaKolicina(ukupnaKolicina - stavka.getKolicina());
-			magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());			
 			
+			if(stavka.getVrednost() > ukupnaVrednost) {
+				magacinskaKartica.setUkupnaVrednost(0.0);
+			} else {
+				magacinskaKartica.setUkupnaVrednost(ukupnaVrednost - stavka.getVrednost());						
+			}			
 			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
 			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			analitikaMagacinskeKartice.setCena(stavka.getCena());
