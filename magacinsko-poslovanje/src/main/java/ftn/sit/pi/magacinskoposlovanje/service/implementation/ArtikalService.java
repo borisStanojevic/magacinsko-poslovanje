@@ -97,6 +97,15 @@ public class ArtikalService implements IArtikalService {
 		magacinskaKartica.setMagacin(magacin);
 		magacinskaKartica.setRedniBrMagacinskeKar(redniBrMagKartice);
 		magacinskaKartica.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
+		magacinskaKartica.setCena(0.0);
+		magacinskaKartica.setKolicinaPocetnogStanja(0.0);
+		magacinskaKartica.setVrednostPocetnogStanja(0.0);
+		magacinskaKartica.setKolicinaUlaza(0.0);
+		magacinskaKartica.setVrednostUlaza(0.0);
+		magacinskaKartica.setKolicinaIzlaza(0.0);
+		magacinskaKartica.setVrednostIzlaza(0.0);
+		magacinskaKartica.setUkupnaKolicina(0.0);
+		magacinskaKartica.setUkupnaVrednost(0.0);		
 		magacinskaKarticaRepository.save(magacinskaKartica);
 		
 		return newArtikal;		
