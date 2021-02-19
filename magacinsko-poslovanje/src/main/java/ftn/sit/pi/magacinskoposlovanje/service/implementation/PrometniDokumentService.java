@@ -241,12 +241,14 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 			Double novaUkupnaKolicina = ukupnaKolicina - stavka.getKolicina(); 
 			magacinskaKartica.setUkupnaKolicina(novaUkupnaKolicina);
 			
-			if(stavka.getVrednost() > ukupnaVrednost) {
+			magacinskaKartica.setUkupnaVrednost(novaUkupnaKolicina * magacinskaKartica.getCena());						
+			
+			/*if(stavka.getVrednost() > ukupnaVrednost) {
 				magacinskaKartica.setUkupnaVrednost(0.0);
 				magacinskaKartica.setCena(0.0);
 			} else {
 				magacinskaKartica.setUkupnaVrednost(novaUkupnaKolicina * magacinskaKartica.getCena());						
-			}			
+			}	*/		
 			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
 			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 			analitikaMagacinskeKartice.setCena(stavka.getCena());
