@@ -166,8 +166,11 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 			}			
 			Double staraCena = magacinskaKartica.getCena();
 			Double novaCena = stavka.getCena();
-			
-			magacinskaKartica.setCena((staraCena + novaCena) / 2);
+			if(staraCena == 0) {
+				magacinskaKartica.setCena(novaCena);
+			} else {
+				magacinskaKartica.setCena((staraCena + novaCena) / 2);		
+			}
 			
 			AnalitikaMagacinskeKartice analitikaMagacinskeKartice = new AnalitikaMagacinskeKartice();
 			analitikaMagacinskeKartice.setDatumNastanka(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
