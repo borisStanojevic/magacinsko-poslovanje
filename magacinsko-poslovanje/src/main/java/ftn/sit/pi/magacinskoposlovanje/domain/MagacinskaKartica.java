@@ -38,7 +38,6 @@ public class MagacinskaKartica implements Serializable {
 	@Column(name = "KOLICINA_ULAZA")
 	private Double kolicinaUlaza;
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "REDNI_BR_MAGACINSKE_KAR")
 	private Integer redniBrMagacinskeKar;
 

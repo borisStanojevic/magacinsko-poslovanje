@@ -63,6 +63,13 @@ public class MagacinskaKarticaController {
 		return new ResponseEntity<MagacinskaKarticaDTO>(magacinskaKarticaDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping(value="/get-last")
+	public ResponseEntity<MagacinskaKarticaDTO> getLast() {
+		MagacinskaKartica magacinskaKartica = magacinskaKarticaService.findTopByOrderByIdDesc();
+		MagacinskaKarticaDTO magacinskaKarticaDTO = magacinskaKarticaToDTO.convert(magacinskaKartica);
+		return new ResponseEntity<MagacinskaKarticaDTO>(magacinskaKarticaDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping(value="/create", consumes="application/json")
 	public ResponseEntity<?> createMagacinskaKartica(@RequestBody MagacinskaKartica magacinskaKartica, Errors errors) {
 		if(errors.hasErrors()) {

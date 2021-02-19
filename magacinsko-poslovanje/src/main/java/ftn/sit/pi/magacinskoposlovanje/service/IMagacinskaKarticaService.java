@@ -18,5 +18,8 @@ public interface IMagacinskaKarticaService {
 	
 	void delete(MagacinskaKartica magacinskaKartica);
 	void deleteById(Integer idMagacinskeKartice);
+	//MagacinskaKartica getByLast();
+	
+	MagacinskaKartica findTopByOrderByIdDesc();
 	
 }

@@ -53,6 +53,9 @@ public class ArtikalService implements IArtikalService {
 	@Autowired
 	PoslovnaGodinaService poslovnaGodinaService;
 	
+	@Autowired
+	MagacinskaKarticaService magacinskaKarticaService;
+	
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -85,10 +88,14 @@ public class ArtikalService implements IArtikalService {
 		newArtikal.setKategorijaArtikala(artikal.getKategorijaArtikala());		
 		artikalRepository.save(newArtikal);
 		
+		MagacinskaKartica magacinskaKarticaFromDb = magacinskaKarticaService.findTopByOrderByIdDesc();
+		Integer redniBrMagKartice = magacinskaKarticaFromDb.getIdMagacinskeKartice() + 1;
+		
 		MagacinskaKartica magacinskaKartica = new MagacinskaKartica();
 		Magacin magacin = magacinService.getById(200);
 		magacinskaKartica.setArtikal(newArtikal);
 		magacinskaKartica.setMagacin(magacin);
+		magacinskaKartica.setRedniBrMagacinskeKar(redniBrMagKartice);
 		magacinskaKartica.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
 		magacinskaKarticaRepository.save(magacinskaKartica);
 		
