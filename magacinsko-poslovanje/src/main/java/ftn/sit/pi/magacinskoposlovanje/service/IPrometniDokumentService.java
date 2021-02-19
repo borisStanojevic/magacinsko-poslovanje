@@ -24,4 +24,5 @@ public interface IPrometniDokumentService {
 	PrometniDokument add(Integer idPrometnogDokumenta);
 	PrometniDokument addOtpremnica(PrijemnicaDTO prijemnica);
 	PrometniDokument addOtpremnicaKnjizenje(Integer idPrometnogDokumenta);
+	PrometniDokument findTopByOrderByIdDesc();
 }

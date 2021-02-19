@@ -100,11 +100,20 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 	{
 		return prometniDokumentRepository.findAll(sifraMagacina, idGodine, sifraPartnera, pageable);
 	}
+	
+	@Override
+	@Transactional(readOnly = true) 
+	public PrometniDokument findTopByOrderByIdDesc() {
+		return prometniDokumentRepository.findTopByOrderByIdPrometnogDokumentaDesc();
+	}
 
 	//kreiranje prijemnice
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PrometniDokument add(PrijemnicaDTO prijemnica) {
+		
+		PrometniDokument prometniDokumentFromDb = prometniDokumentService.findTopByOrderByIdDesc();
+		Integer brojPrometnogDokumenta = prometniDokumentFromDb.getIdPrometnogDokumenta() + 1;
 		
 		PrometniDokument newPrometniDokument = new PrometniDokument();
 		newPrometniDokument.setDatumFormiranja(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -113,6 +122,7 @@ public class PrometniDokumentService implements IPrometniDokumentService {
 		newPrometniDokument.setMagacin(dtoToMagacin.convert(prijemnica.getMagacin()));
 		newPrometniDokument.setPoslovniPartner(dtoToPoslovniPartner.convert(prijemnica.getPoslovniPartner()));
 		newPrometniDokument.setPoslovnaGodina(poslovnaGodinaService.getByZakljucena(false));
+		newPrometniDokument.setBrojPrometnogDokumenta(brojPrometnogDokumenta);
 		PrometniDokument prometniDokumentFromDB = prometniDokumentRepository.save(newPrometniDokument);
 		
 		for(StavkaPrometnogDokumentaDTO stavkaDTO : prijemnica.getStavkePrometnogDokumenta()) {
