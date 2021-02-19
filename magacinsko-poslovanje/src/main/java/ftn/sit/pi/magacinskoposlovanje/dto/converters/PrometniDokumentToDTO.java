@@ -36,7 +36,7 @@ public class PrometniDokumentToDTO implements Converter<PrometniDokument, Promet
 		promDTO.setDatumKnjizenja(source.getDatumKnjizenja());
 		promDTO.setStatus(source.getStatus());
 		promDTO.setTipPrometnogDokumenta(source.getTipPrometnogDokumenta());
-		//.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));
+		promDTO.setPoslovnaGodina(poslGodToDTO.convert(source.getPoslovnaGodina()));
 		promDTO.setPoslovniPartner(poslPartnerToDTO.convert(source.getPoslovniPartner()));
 		promDTO.setStavkePrometnogDokumenta(stToDTO.convert(source.getStavkePrometnogDokumenta()));
 		
